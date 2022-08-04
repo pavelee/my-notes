@@ -1,2 +1,3 @@
-# tech-tools-notes
-My personal notes about tech tools
+# My personal notes about tech tools
+
+From dozen sources: articles, courses, books, yt videos, etc.
