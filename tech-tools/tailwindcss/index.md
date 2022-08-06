@@ -2,6 +2,8 @@
 
 ## Other
 
+There is no validation of classes. If you use bad class, you have to realize on your own.
+
 ### numbering system
 
 1 rem = 4 in tailwindcss
@@ -134,3 +136,103 @@ eg.
 
 -   .hover-{classes}
 -   .focus-{classes}
+
+
+### Transition
+
+-   .transition-{properties}
+    -   none
+    -   all
+    -   colors
+    -   opacity
+    -   shadow
+    -   transform
+    -   default duration is 150ms
+-   .duration-{amount}
+    -   75
+    -   100
+    -   150
+    -   200
+    -   300
+    -   500
+    -   700
+    -   1000
+-   .delay-{amount}
+    -   75
+    -   100
+    -   150
+    -   200
+    -   300
+    -   500
+    -   700
+    -   1000
+-   .ease-{timing} (transition timing function)
+    -   linear
+    -   in
+    -   out
+    -   in-out
+
+### Transform
+
+You always need to apply at least .trasform class to enable it
+
+If you want to make it "smooth", add transition-all class
+
+-   .transform-{scale}
+    -   0
+    -   x-0
+    -   y-0
+    -   50
+    -   x-50
+    -   y-50
+    -   ...
+    -   150
+-   .rotate-{angle}
+    -   0
+    -   1
+    -   2
+    -   3
+    -   6
+    -   12
+    -   45
+    -   90
+    -   180
+-   .skew-x-{amount}
+    -   1
+    -   2
+    -   3
+    -   6
+    -   12
+-   .skew-y-{amount}
+    -   1
+    -   2
+    -   3
+    -   6
+    -   12
+-   .translate-x-{amount}
+    -   rem
+        -   0
+        -   0.5
+        -   1
+        -   ...
+    -   percentage
+        -   96
+        -   full
+        -   ...
+-   .translate-y-{amount}
+    -   rem
+        -   0
+        -   0.5
+        -   1
+        -   ...
+    -   percentage
+        -   96
+        -   full
+        -   ...
+### Animation
+
+-   .animate-{property}
+    -   spin
+    -   ping
+    -   pulce
+    -   bounce
