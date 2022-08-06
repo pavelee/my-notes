@@ -236,3 +236,55 @@ If you want to make it "smooth", add transition-all class
     -   ping
     -   pulce
     -   bounce
+
+### Gradients
+
+-   .bg-gradient-{direction}
+    -   t,tr,r,br,b,bl,l,tl
+    -   additional you need to specify from -> to
+        -   from-{color}-{shadow}
+        -   via-{color}-{shadow}
+        -   to-{color}-{shadow}
+
+to get gradient text try: bg-gradient... bg-clip-text text-transparent
+
+### Shadow
+
+-   .shadow-{size}
+    -   md
+    -   lg
+    -   xl
+    -   2xl
+    -   inner
+    -   none
+
+### Opacity
+
+-   .opacity-{percentage}
+    -   100
+    -   75
+    -   50
+    -   25
+    -   0
+
+### cursor
+
+-   .cursor-{style}
+    -   default
+    -   pointer
+    -   wait
+    -   text
+    -   move
+    -   not-allowed
+
+### select
+
+-   .select-{style}
+    -   none
+    -   text
+    -   all
+    -   auto
+
+### sr-only - only for screen readers users
+
+-   .sr-only
