@@ -1,6 +1,6 @@
 # Symfony
 
-## commands
+## handy commands
 
 ### print out all of th current configuration
 
@@ -12,4 +12,16 @@ php bin/console debug:config twig
 
 ```
 php bin/console config:dump twig
+```
+
+### print out cache pool list
+
+```
+php bin/console cache:pool:list
+```
+
+### clear out cache from selected pool
+
+```
+php bin/console cache:pool:clear cache.app
 ```
