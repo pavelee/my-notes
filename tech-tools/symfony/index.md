@@ -20,6 +20,18 @@ php bin/console config:dump twig
 php bin/console cache:pool:list
 ```
 
+### clear cache
+
+```
+php bin/console cache:clear
+```
+
+### warmup cache, build cache before the first request!
+
+```
+php bin/console cache:warmup
+```
+
 ### clear out cache from selected pool
 
 ```
