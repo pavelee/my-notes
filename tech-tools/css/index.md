@@ -8,7 +8,7 @@
 
 test
 
-~~~
+~~~js
 
 let test = 1;
 
