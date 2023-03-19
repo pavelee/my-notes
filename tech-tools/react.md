@@ -15,7 +15,7 @@ Wykorzystujemy Context API
 dodajemy context, najlepiej w osobnym pliku
 
 ```js
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 // tworzymy kontest, gdzie argumentem jest domyślny stan kontekstu
 // w przypadku przekazywanych funkcji dajemy tylko sygnature aby mieć przydatne podpowiedzi od IDE
@@ -33,6 +33,13 @@ export const MyContextProvider = ({ children }) => {
         return value;
     }
 
+    // możemy tutaj zapiąć jakieś funkcjonalności jeśli zmienia się context! fajne!
+    useEffect({
+        console.log('changed!');
+    }, [
+        test
+    ])
+
     return (
         <MyContext.Provider value={
             test,
@@ -46,4 +53,33 @@ export const MyContextProvider = ({ children }) => {
 export default MyContext;
 ```
 
-Wrapujemy nasz 
+Wrapujemy komponenty, tak wysoko jak to potrzebne, np. cała aplikacja
+
+```js
+import { MyContextProvider } from './store/MyContext';
+
+...
+
+<MyContextProvider>
+    <App />
+</MyContextProvider>
+
+```
+
+Następnie zaczynamy używać kontekstu w zaintersowanych komponentach
+
+```js
+import { useContext } from 'react'
+import MyContext from './store/MyContext';
+
+const SomeComponent = () => {
+    const mc = useContext(MyContext);
+
+    const executeDoSometing = () => {
+        mc.doSomething();
+    }
+
+    ...
+}
+
+```
