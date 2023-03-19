@@ -1,3 +1,39 @@
+## React Portals
+
+### Ogólnie
+
+W przypadku kiedy chcemy wyrenederować JSX w dowolnym miejscu aplikacji ale bez potrzeby wstrzykiwania tam komponentu
+
+Przydatne w przypadku jakiś globalnych komponentów
+
+### Wykrzytanie
+
+W dowolnym miejscu aplikacji możemy dodać element root'owy dla Portalu
+
+```js
+
+...
+<div id="modals"></div>
+...
+
+```
+
+Natępnie tworzymy nasz Portal, w tym przypadku miechanizm popup'u
+
+```js
+
+const ReactDOM from 'react'
+
+const Popup = () => {
+
+    return ReactDOM.createPortal((
+        <SomeModalComponent />
+    ), document.getElementById('modals')) // drugi argument to wskaźnik na element do którego tworzymy portal
+
+}
+
+```
+
 ## Context
 
 ### Ogólnie
