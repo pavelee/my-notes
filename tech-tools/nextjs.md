@@ -19,6 +19,74 @@ const MyPage = () => {
 export default MyPage;
 
 ```
+-   Ścieżki można zagnieżdzać
+    -   np. /portfoilio/index.js -> home.pl/portfolio
+    -   np. /portfoilio/list.js -> home.pl/portfolio/list
+-   Zagnieżone ścieżki są świetnym sposobem organizacji logiki routingu aplikacji
+-   Dynamiczne ścieżki oznaczamy kwadratowymi bracketami
+    -   np. /test/[testid].js -> home.pl/test/1
+    -   Istotne! Next.js priorytezuje bardziej konretne ścieżki (kolejność szukania ścieżki)
+        -   np. /test/list.js > test/[testid].js
+-   Dynamiczne ścieżki można zagnieżdzać w folderach
+    -   np. /[id]/[clientid].js -> home.pl/1/42
+-   Dynamiczne ścieżki można zapisać jako kolejkcje dowolnych parametrów
+    -   np. /blog/[...slug].js -> home.pl/blog/ala/ma/kota
+        -   To nam umożliwa pobranie router.query -> ['ala', 'ma', 'kota']
+
+## Routing - wyciąganie dynamicznych parametrów
+
+Dynamiczne parametry możemy wyciągnąć za pomocą hooka useRouter
+
+```js
+import { useRouter } from 'next/router';
+
+const SomePage = () => {
+    const router = useRouter();
+    const { myDynamicParam } = router.query;
+
+    return (<div>param { myDynamicParam }</div>)
+}
+
+```
+
+## Routing - Linkowanie
+
+Używanie tradycyjnych linków
+
+```html
+<a href="/somepage">jakiś link</a>
+```
+
+Niesie za sobą wady:
+
+-   Tracimy efekt Single Page Apliaction, strona zostanie przeładowania
+-   Tracimy state aplikacji! Może to być spory problem dla naszych komponentów
+
+Powinniśmy używać linków od Next.js
+
+```js
+import Link from 'next/link';
+
+const SomePage = () => {
+    return (<Link href="/somepage">jakiś link</Link>)
+}
+```
+
+Dodatkowo mechanizm optymalizuje czas ładowania strony, np. prefetching w momencie jak najeżdzamy na link itp.
+
+## Routing - Budowanie dynamicznie linku
+
+Dyniamiczny link możemy zbudować na dwa sposoby
+
+```js
+<Link href={`/somepage/${id}`}>link</Link>
+```
+
+lub
+
+```js
+<Link href={{ pathname: '/somepage/[id].js', query: {id: 1} }}>link</Link>
+``` 
 
 ## Nawigacja za pomocą motod routera
 
