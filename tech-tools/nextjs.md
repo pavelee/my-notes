@@ -120,6 +120,16 @@ const MySomeComponent = () => {
 };
 ```
 
+## API
+
+Next.js umożliwa tworzenie API działającego po stronie serwera node.js
+
+Umożliwa nam to budowanie full-stackowej aplikacji korzystając tylko z tego frameworka
+
+Aby to zadziałało musimy dodawać nasze strony (page) w katalogu api
+
+Musi to być ścieżka **pages/api**
+
 ## Dodanie customowej strony 404
 
 W folderze pages dodajemy plik **404.js**
@@ -139,10 +149,60 @@ Rekomendowana paczka https://next-auth.js.org
 Jest to gotowa bilbioteka, gotowa integracja z Next.js
 
 Instalacja:
-```
+```bash
 npm install next-auth
-```
 lub
-```
 yarn add next-auth
+```
+
+## Baza danych - MongoDB
+
+### Instalacja
+
+Instalujemy paczke mongodb
+
+```bash
+npm install mongodb
+lub
+yarn add mongodb
+```
+
+### Definiowanie konektora
+
+Dodajemy w projekcie plik db.js (lub dowolna inna nazwa)
+
+```js
+import { MongoClient } from 'mongodb';
+
+export async function connectToDatabase() {
+    return async MongoClient.connect('connection string');
+}
+```
+
+### Polaczenie w handlerze API
+
+```js
+
+import { connectToDatabase } from 'sciezka_do_pliku_dbjs';
+
+async function handler(req, res) {
+    const client = await connectToDatabase();
+}
+
+```
+
+### Dodanie rekordu
+
+```js
+
+import { connectToDatabase } from 'sciezka_do_pliku_dbjs';
+
+async function handler(req, res) {
+    const client = await connectToDatabase();
+
+    const db = client.db;
+
+    db.collection('nazwa_kolekcji'); // tworzy się w locie jeśli nie istnieje
+}
+
 ```
