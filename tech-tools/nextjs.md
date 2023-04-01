@@ -130,6 +130,23 @@ Aby to zadziałało musimy dodawać nasze strony (page) w katalogu api
 
 Musi to być ścieżka **pages/api**
 
+### Prosta końcówka API
+
+Napiszy prostą końcówkę API. Końcówka która tylko zwraca putego JSON'a
+
+np. pages/api/simple.js
+
+```js
+
+// res - odpowiedź API, możemy na to wypływać
+// req - request jaki dostaliśmy do API z nimi wszelkie informacje
+function handler(res, req) {
+    res.status(200).json({});
+    return;
+}
+
+```
+
 ## Dodanie customowej strony 404
 
 W folderze pages dodajemy plik **404.js**
@@ -142,7 +159,9 @@ const NotFoundPage = () => {
 export default NotFoundPage;
 ```
 
-## Uwierzytelnianie
+## Autoryzacja
+
+### Zależności
 
 Rekomendowana paczka https://next-auth.js.org
 
@@ -153,6 +172,18 @@ Instalacja:
 npm install next-auth
 lub
 yarn add next-auth
+```
+
+### Hashowanie hasła
+
+```js
+
+import { hash } from 'bcryptjs';
+
+export async function hashPassword(plainPassword) {
+    return await hash(plainPassword, 12); // 12 - usatwienie mocy hasła
+}
+
 ```
 
 ## Baza danych - MongoDB
@@ -203,6 +234,10 @@ async function handler(req, res) {
     const db = client.db;
 
     db.collection('nazwa_kolekcji'); // tworzy się w locie jeśli nie istnieje
+
+    const result = await db.collection('nazwa_kolekcji').insertOne({
+        data: 'data'
+    }); // result zawiera utworzony rekord
 }
 
 ```
