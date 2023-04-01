@@ -131,3 +131,18 @@ const NotFoundPage = () => {
 
 export default NotFoundPage;
 ```
+
+## Uwierzytelnianie
+
+Rekomendowana paczka https://next-auth.js.org
+
+Jest to gotowa bilbioteka, gotowa integracja z Next.js
+
+Instalacja:
+```
+npm install next-auth
+```
+lub
+```
+yarn add next-auth
+```
