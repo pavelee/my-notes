@@ -1,15 +1,16 @@
 ## Routing
 
--   Next.js jest oparty o routing "plikowy"
--   Standardowo w reactie potrzebujemy dodatkowej logiki do obsługi routingu
-    -   instalujemy react-router czy inna biblioteke
-    -   definiujemy ścieżki w kodzie
--   Next.js skanuje folder **pages** i buduje routing za nas!
-    -   /pages/index.js -> home.pl/
-    -   /pages/about.js -> home.pl/about
-    -   /pages/products/index.js -> home.pl/products
-    -   /pages/procucts/[id].js -> home.pl/products/1
--   Plik strony oczekuje tylko zwykłego komponentu. Komponent musi być domyślnie wyeksportowany
+- Next.js jest oparty o routing "plikowy"
+- Standardowo w reactie potrzebujemy dodatkowej logiki do obsługi routingu
+  - instalujemy react-router czy inna biblioteke
+  - definiujemy ścieżki w kodzie
+- Next.js skanuje folder **pages** i buduje routing za nas!
+  - /pages/index.js -> home.pl/
+  - /pages/about.js -> home.pl/about
+  - /pages/products/index.js -> home.pl/products
+  - /pages/procucts/[id].js -> home.pl/products/1
+- Plik strony oczekuje tylko zwykłego komponentu. Komponent musi być domyślnie wyeksportowany
+
 ```js
 
 const MyPage = () => {
@@ -19,19 +20,20 @@ const MyPage = () => {
 export default MyPage;
 
 ```
--   Ścieżki można zagnieżdzać
-    -   np. /portfoilio/index.js -> home.pl/portfolio
-    -   np. /portfoilio/list.js -> home.pl/portfolio/list
--   Zagnieżone ścieżki są świetnym sposobem organizacji logiki routingu aplikacji
--   Dynamiczne ścieżki oznaczamy kwadratowymi bracketami
-    -   np. /test/[testid].js -> home.pl/test/1
-    -   Istotne! Next.js priorytezuje bardziej konretne ścieżki (kolejność szukania ścieżki)
-        -   np. /test/list.js > test/[testid].js
--   Dynamiczne ścieżki można zagnieżdzać w folderach
-    -   np. /[id]/[clientid].js -> home.pl/1/42
--   Dynamiczne ścieżki można zapisać jako kolejkcje dowolnych parametrów
-    -   np. /blog/[...slug].js -> home.pl/blog/ala/ma/kota
-        -   To nam umożliwa pobranie router.query -> ['ala', 'ma', 'kota']
+
+- Ścieżki można zagnieżdzać
+  - np. /portfoilio/index.js -> home.pl/portfolio
+  - np. /portfoilio/list.js -> home.pl/portfolio/list
+- Zagnieżone ścieżki są świetnym sposobem organizacji logiki routingu aplikacji
+- Dynamiczne ścieżki oznaczamy kwadratowymi bracketami
+  - np. /test/[testid].js -> home.pl/test/1
+  - Istotne! Next.js priorytezuje bardziej konretne ścieżki (kolejność szukania ścieżki)
+    - np. /test/list.js > test/[testid].js
+- Dynamiczne ścieżki można zagnieżdzać w folderach
+  - np. /[id]/[clientid].js -> home.pl/1/42
+- Dynamiczne ścieżki można zapisać jako kolejkcje dowolnych parametrów
+  - np. /blog/[...slug].js -> home.pl/blog/ala/ma/kota
+    - To nam umożliwa pobranie router.query -> ['ala', 'ma', 'kota']
 
 ## Routing - wyciąganie dynamicznych parametrów
 
@@ -59,8 +61,8 @@ Używanie tradycyjnych linków
 
 Niesie za sobą wady:
 
--   Tracimy efekt Single Page Apliaction, strona zostanie przeładowania
--   Tracimy state aplikacji! Może to być spory problem dla naszych komponentów
+- Tracimy efekt Single Page Apliaction, strona zostanie przeładowania
+- Tracimy state aplikacji! Może to być spory problem dla naszych komponentów
 
 Powinniśmy używać linków od Next.js
 
@@ -86,7 +88,7 @@ lub
 
 ```js
 <Link href={{ pathname: '/somepage/[id].js', query: {id: 1} }}>link</Link>
-``` 
+```
 
 ## Nawigacja za pomocą motod routera
 
@@ -169,17 +171,92 @@ export default NotFoundPage;
 
 ## Autoryzacja
 
-### Zależności
+### NextAuth.js
 
-Rekomendowana paczka https://next-auth.js.org
+#### Instalacja
+
+Rekomendowana paczka <https://next-auth.js.org>
 
 Jest to gotowa bilbioteka, gotowa integracja z Next.js
 
 Instalacja:
+
 ```bash
 npm install next-auth
 lub
 yarn add next-auth
+```
+
+#### Dodajemy API
+
+NextAuth wymaga rezerwacji ścieżek API do obsługi uwierzytelniania
+
+W katalogu api dodajemy plik:
+
+```js
+/api/auth/[...nextauth].js
+```
+
+Z zawartością
+
+```js
+import NextAuth from 'next-auth';
+// można wybrać z wielu providerów np. Google, Apple itp.
+import Providers from 'next-auth/providers';
+
+// exportujemy handler od NextAuth, przekazujemy konfiguracje
+export default NextAuth({
+    session: {
+        jwt: true // zaznaczamy że chcemy używać JWT w sesji do uwierzytelniania
+    },
+    providers: [
+        Providers.Credentials({ // provider dla własnej metody uwierzytelniania
+            async authorize(credentials) { // piszemy własną metodę uwierzytelnienia
+                // credentials - to obiekt który przekazujemy podczas logowania
+                // mamy tutaj np. credentials.email
+
+                if (NotAuthorize) {
+                    // w przypadku błednych danych powinniśmy zwrócić błąd
+                    throw new Error('Bad password or login');
+                }
+
+                // zwaracamy obiekt jako sygnał że uwierzytalnianie poprawne
+                // dane zawarte w obiekcie będą trzymane w tokenie JWT
+                return {
+                    data: 'some data',
+                };
+            }
+        })
+    ]
+});
+```
+
+#### Wykonanie logowania
+
+Aby wykonać logowanie należy wykorzytać metodę **signIn** z pakietu next-auth
+
+Metoda wykonuje request pod spodem. Nie musimy już tego robić ręcznie.
+
+Przykład:
+
+```js
+import { signIn } from 'next-auth/client'; 
+
+const SomePage = () => {
+    const authenticate = async () => {
+        // zawsze dostajemy zwrtkę, patrzymy na klucz "error", jeśli pusty to znaczy poparwne uwierzytelnianie
+        const result = await signIn(
+            'credentials', // pierwszy parametr to provider
+            {  // drugi parametr to konfiguracja, przekazywany jako "credentials" obiekt do handlera
+                redirect: false, // nie chcemy redurect w przypadku błedu, domyślnie przekierowuje do strony błędu
+                login: 'jakiś login',
+                password: 'jakieś hasło',
+            }
+        );
+    }
+}
+
+export default SomePage;
 ```
 
 ### Hashowanie hasła
@@ -199,6 +276,27 @@ użycie w kodzie
 ```js
 ...
 const hashedPassword = await hashPassword(plainPassword);
+...
+```
+
+### Porównywanie hasła
+
+```js
+
+import { compare } from 'bcryptjs';
+
+export async function verifyPassword(password, hashedPassword) {
+    return await compare(password, hashedPassword);
+}
+
+```
+
+użycie w kodzie
+
+```js
+...
+const hashedPassword = await hashPassword(plainPassword);
+const isValidPassword = await hashPassword(plainPassword, hashedPassword);
 ...
 ```
 
