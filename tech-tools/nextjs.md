@@ -259,6 +259,53 @@ const SomePage = () => {
 export default SomePage;
 ```
 
+#### Sprawdzenie czy użytkownik jest zalogowany
+
+Używamy hooka **useSession** z pakietu next-auth
+
+przykład:
+
+```js
+import { useSession } from 'next-auth/client';
+
+const Component = () => {
+    // session - zawiera sesje z danymi użytkownika - jeśli istnieje to znaczy że użytkownik jest zalogowany
+    // loading - czy oczekujemy request logujący
+    const [session, loading] = useSession();
+
+    // Uwaga! Dodatkowo sprawdzamy czy przypadkiem nie czkamy na request uwierzytalniący, stad !loading
+
+    return (
+        <div>
+            Czy zalogowany?
+            { !session && !loading && <span> nie zalogowany </span> }
+            { session && <span> zalogowany </span> }
+        </div>
+    )
+
+}
+```
+
+#### Wylogowanie
+
+Używamy funkcji **singOut** z pakietu next-auth
+
+przykład
+
+```js
+import { signOut } from 'next-auth/client';
+
+const logoutHandler = () => {
+    signOut();
+}
+
+const Component = () => {
+    return (<div>
+        <button onClick={logoutHandler}>
+    </div>)
+}
+```
+
 ### Hashowanie hasła
 
 ```js
