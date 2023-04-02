@@ -147,6 +147,14 @@ function handler(res, req) {
 
 ```
 
+### Rozpoznanie metody requestu
+
+```js
+...
+const method = req.method; // np. POST
+...
+```
+
 ## Dodanie customowej strony 404
 
 W folderze pages dodajemy plik **404.js**
@@ -186,6 +194,14 @@ export async function hashPassword(plainPassword) {
 
 ```
 
+użycie w kodzie
+
+```js
+...
+const hashedPassword = await hashPassword(plainPassword);
+...
+```
+
 ## Baza danych - MongoDB
 
 ### Instalacja
@@ -219,6 +235,24 @@ import { connectToDatabase } from 'sciezka_do_pliku_dbjs';
 async function handler(req, res) {
     const client = await connectToDatabase();
 }
+
+```
+
+### Przydatne info
+
+Jeśli otwieramy połaczenie, zawsze zamykajmy na końcu skryptu
+
+```js
+
+client.close();
+
+```
+
+### Szukanie jednego rekordu
+
+```js
+
+const record = db.collection('kolekcja').findOne({}); // gdzie określamy parametry
 
 ```
 
