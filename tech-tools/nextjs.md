@@ -306,6 +306,83 @@ const Component = () => {
 }
 ```
 
+#### Chronienie ścieżek - tylko dla uwierzytelnionych
+
+##### Rozwiązanie 1 - workaround
+
+W praktyce useSession posiada bug z brakiem aktualizacji wartości loading
+
+Jako workaround możemy użyć getSession, który pobiera aktualina sesje poprzez request API
+
+przykład:
+
+```js
+import { useState, useEffect } from 'react'; // potrzebujemy aby ręcznie obsłużyć proces stanu ładowania
+import { getSession } from 'next-auth/client';
+
+const SomeComponent = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [loadedSession, setLoadedSession] = useState();
+
+    useEffect(() => {
+        getSession().then(session => {
+            // w przypadku braku uwierzytelnienia, przekierowujemy do logowania
+            if (!session) {
+                window.location.href = '/auth';
+            } else {
+                // przypadek kiedy mamy sesje i skonczyliśmy request
+                setIsLoading(false);
+            }
+        })
+    }, []);
+
+    // czekamy na decyzje o uwierzytelnieniu
+    if (isLoading) {
+        return <div>Ładowanie</div>
+    }
+
+    return (
+        <div>render something</div>
+    )
+}
+```
+
+##### Rozwiązanie 2 - Pobierane danych podczas renderingu strony (getServerSideProps)
+
+Pobieramy dane podczas generownia strony
+
+przykład
+
+```js
+import { getSession } from 'next-auth/client';
+
+const SomePage = () => {
+    return (
+        <div>render something</div>
+    )
+}
+
+export async function getServerSideProps(context) {
+    // przekazujemy request, getSession automatycznie wyciaga potrzebne dane
+    const session = await getSession({req: context.req});
+
+    if (!session) {
+        return {
+            redirect: { // feature next.js, wymuszenie przekierowania
+                destination: '/auth',
+                permanent: false, // istotne, aby było tymczasowe, brak cache przeglądarki
+            }
+        }
+    }
+
+    return {
+        props: {
+            session
+        }
+    }
+}
+```
+
 ### Hashowanie hasła
 
 ```js
