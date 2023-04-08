@@ -383,6 +383,26 @@ export async function getServerSideProps(context) {
 }
 ```
 
+#### Chronienie ścieżek - optymalizacja ilości zapytań
+
+Możemy wykorzystać Provider od next-auth aby udostępnić informacje o sesji dla podkomponentów
+
+Musimy dodać do _app.js wrapującego providera:
+
+```js
+import { Provider } from 'next-auth/client';
+
+const MyApp = ({ Component, pageProps }) => {
+    return (
+        // może się okazaż że session jest undefined, to jest ok
+        // wartość pochodzi od metod getServerSideProps ktore ladują obiekt sesji do komponentu
+        <Provider session={pageProps.session}> 
+            <Component {...pageProps} />
+        </Provider>
+    )
+}
+```
+
 ### Hashowanie hasła
 
 ```js
