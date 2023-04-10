@@ -187,6 +187,8 @@ lub
 yarn add next-auth
 ```
 
+**Istotne!** na produkcji musimy ustawić zmienna NEXTAUTH_URL z adresem pod jakim będzie działać aplikacja.
+
 #### Dodajemy API
 
 NextAuth wymaga rezerwacji ścieżek API do obsługi uwierzytelniania
@@ -400,6 +402,26 @@ const MyApp = ({ Component, pageProps }) => {
             <Component {...pageProps} />
         </Provider>
     )
+}
+```
+
+#### Chronienie ścieżek - ścieżki API
+
+Ścieżki API chronimy używając metody getSession
+
+przykład:
+
+```js
+import { getSession } from 'next-auth/client';
+
+async function handler(req, res) {
+    const session = await getSession({req: req});
+
+    // brak dostępu, zwrotka 401
+    if (!session) {
+        res.status(401);
+        return;
+    }
 }
 ```
 
