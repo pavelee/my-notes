@@ -1,3 +1,33 @@
+# Next.js
+
+## Nagłówek HEAD
+
+Next.js umozliwia konfigurowanie sekcji head strony.
+
+Wystarczy że w dowolnym miejscu użyjemy komponentu Head
+
+przykład:
+
+```js
+import Head from 'next/head';
+
+const SomePage = () => {
+
+return (
+    <div>
+        <Head>
+            <title>zmiana tytułu</title>
+        </Head>
+    </div>
+)
+
+}
+
+return SomePage;
+```
+
+Możemy nadpisywać sekcje head w dowolnych komponentach!
+
 ## Routing
 
 - Next.js jest oparty o routing "plikowy"
