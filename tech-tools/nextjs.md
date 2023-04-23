@@ -1,5 +1,38 @@
 # Next.js
 
+## _app.js
+
+Specjalny plik który jest czymś w rodzaju "index.php". Umożliwia nam nadpisywanie zachowania przy starcie aplikacji.
+
+Możemy tutaj umieścić "globalne" komponenty, np. Head, tak aby był ładowany na wszystkich stronach.
+
+## _document.js
+
+Umożliwa nadpisanie rootego dokumentu HTML, czyli jeśli szukamy zmian w rootowych dokumentcie HTML, np. inna struktura 
+
+domyślna struktura
+
+```js
+
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+
+class MyDocument extends Document {
+    render() {
+        return (
+            <Html>
+                <Head />
+                <body>
+                    {* możemy tutaj dodać jakiś globalny HTML np. div na modal *}
+                    <Main />
+                    <NextScript />
+                </body>
+            </Html>
+        )
+    }
+}
+
+```
+
 ## Nagłówek HEAD
 
 Next.js umozliwia konfigurowanie sekcji head strony.
@@ -26,7 +59,7 @@ return (
 return SomePage;
 ```
 
-Możemy nadpisywać sekcje head w dowolnych komponentach!
+Możemy nadpisywać sekcje head w dowolnych komponentach! Head jest automatycznie mergowany. Te same elementy są nadpisywane.
 
 ## Routing
 
