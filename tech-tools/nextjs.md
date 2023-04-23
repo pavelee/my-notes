@@ -8,7 +8,7 @@ Możemy tutaj umieścić "globalne" komponenty, np. Head, tak aby był ładowany
 
 ## _document.js
 
-Umożliwa nadpisanie rootego dokumentu HTML, czyli jeśli szukamy zmian w rootowych dokumentcie HTML, np. inna struktura 
+Umożliwa nadpisanie rootego dokumentu HTML, czyli jeśli szukamy zmian w rootowych dokumentcie HTML, np. inna struktura
 
 domyślna struktura
 
@@ -32,6 +32,14 @@ class MyDocument extends Document {
 }
 
 ```
+
+## Obrazki
+
+Next.js udostępnia obiekt Image
+
+- Automatycznie optymalizuje obrazki do oczekiwanego rozmiaru.
+  - trzma przetworzone obrazki w cache
+- Automatycznie używa lazy-loading
 
 ## Nagłówek HEAD
 
