@@ -1,12 +1,88 @@
 # Typescript
 
+## Ogólne
+
 - Jest to nakładka na JS
   - wprowadza silne typowanie do JS
 - kompiluje do natywnego JS'a
+- W przypadku braku jawnego typowania ts domyśla się typu po przypisanej inicacyjnej wartości
+- wszystkie typy w TS sa zapisane małymi literami np. string, number
+- Przykład typowania zmiennej
 
-- Typy TS
-  - string
-  - arrayFF
-  - Tuple
-    - Jest to array z określonymi typami elementów
-    - np. [number, string]
+```js
+let myVariable: string;
+```
+
+## Używanie
+
+- instalacja poprzez npm, instalujemy w trybie globalnym
+
+```bash
+npm install -g typescript
+```
+
+- Tworzymy plik TS np. nazwa_pliku_do_kompilacji.ts
+
+```js
+let somets: string = 'test';
+```
+
+- Następnie używamy typescript poprzez polecenie tsc
+  - W parametrze podajemy plik TS do kompilacji
+
+```js
+tsc nazwa_pliku_do_kompilacji.ts
+```
+
+## Typy TS
+
+- number
+  - 1, 5.3, -10
+- boolean
+  - true, false
+- string
+  - 'Hi', "Hi", `Hi`
+- object
+  - w przypadku braku typowania, TS ustawi domyślne typy po inicjujacej wartości kluczy
+  - domyślnie typujemy poprzez "object", natomiast to powoduje że TS nie ma informacji o typach pól, powoduje to potem problemy przy kompilacji
+
+    ```js
+    const person: object = { name: 'test' }
+    console.log(person.name); // bład kompilacji, to tylko pusty obiekt dla TS
+    ```
+
+  - jeśli chcemy określić jak powinnien być zbudowany obiekt zapisujem to jak poniżej
+
+    ```js
+    const person: { name: string } = { name: 'test' }
+    console.log(person.name); // brak błedu kompilacji! TS wie czego się spodziewać
+    ```
+
+  - w przypadku zagnieżdzania obiektu zapisujemy to jak poniżej
+
+    ```js
+    const person: {
+        id: string;
+        price: number;
+        tags: string[];
+        details: {
+            title: string;
+            description: string;
+        }
+    } = {
+        id: 'abc1',
+        price: 12.99,
+        tags: ['great-offer', 'hot-and-new'],
+        details: {
+            title: 'Red Carpet',
+            description: 'A great carpet - almost brand-new!'
+        }
+    }
+    ```
+
+- array
+  - może przechowywać dowolną kolelcje typów np. number, string itp.
+  - musimy określić typ danych w array np. string[] lub określić że typy moga być dowolne (mieszane) poprzez any[]
+- Tuple
+  - Jest to array z określonymi typami elementów
+  - np. [number, string]
