@@ -83,6 +83,35 @@ tsc nazwa_pliku_do_kompilacji.ts
 - array
   - może przechowywać dowolną kolelcje typów np. number, string itp.
   - musimy określić typ danych w array np. string[] lub określić że typy moga być dowolne (mieszane) poprzez any[]
-- Tuple
+- tuple
   - Jest to array z określonymi typami elementów
   - np. [number, string]
+- enum
+  - Typ dodany przez TS
+
+  ```js
+    enum Role { ADMIN, READ_ONLY, USER }
+  ```
+
+  - TS pod spodem zamienia to na integer, ale zystkujemy możliwość czystego kodu
+  - ewentualnie możesz ustawić wartość enum
+
+  ```js
+    enum Role { ADMIN = 'ADMIN', READ_ONLY = 'READ_ONLY', USER = 'USER' }
+  ```  
+
+- any
+  - Dowolny typ, wylaczenie komplilatora TS
+  - nie jest zalecane używanie
+
+## Union Type
+
+umożliwa wskazanie kilku typów dla zmiennej itp.
+
+np.
+
+```js
+function combine(input1 number | string, input2) {
+    
+}
+```
