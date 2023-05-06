@@ -115,3 +115,11 @@ function combine(input1 number | string, input2) {
     
 }
 ```
+
+## Typ literany
+
+W TS możemy ustawlić literalną wartość dla zmiennej. Jest to przydatne jako element syngatury funkcji
+
+```js
+funciton combine(someparam: 'first-value' | 'second-value') {}
+```
