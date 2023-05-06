@@ -141,3 +141,68 @@ Dodatkowo możemy tworzyć własne typy w TS!
 type User = { name: string; age: number };
 const u1: User = { name: 'Max', age: 30 };
 ```
+
+## Zwracany typ funkcji
+
+W TS możemy ustalić zwracany typ poprzez funkcje, jeśli tego nie zrobimy to TS automatycznie domyśli się jaki to powinnien być typ.
+
+```js
+function something(): number {
+  return 1;
+}
+```
+
+Jeżeli funkcja nie zwraca niczego powinna być void
+
+Uwaga! Funkcja nie może zwracać typu undefined, w takim przypadku powinnien być to typ void. Co ciekawe możemy typować zmienną jako undefined (zamiast void)
+
+## Typ funkcji
+
+W TS możemy oznaczyć zmienną jako funkcje (przechowuje referencje do funkcji)
+
+Możemy to określić jako "ogólnie" funkcje, natomiast to nie gwarantuje że to będzie dokładnie taka funkcja (o tej sygnaturze)
+
+```js
+let someFunction: Function;
+```
+
+W inny przypadku możemy określić synature funkcj jaka możemy przypisać do zmiennej
+
+```js
+let someFunction: (a: number, b: number) => number
+```
+
+## Przekazanie w sygnaturze callbacka
+
+Aby przekazać callback w sygnaturze funkcji, robimy tak jak poniżej
+
+```js
+function someFunction(a: number, b: number, cb: (a: number) => void) {
+  cb(a);
+}
+```
+
+## Typ unknown
+
+Jest podobny do typu any, przyjmuje dowonlną wartość natomiast posiada znaczącą różnicę. Nie może być przypisany do innej zmiennej która posiada już jakiś typ, takie lekkie zabezpiecznie
+
+```js
+let ui: unknown;
+let ux: string;
+
+ui = 5; // ok
+ui = 'Max'; // ok
+ux = ui; // blad komplilacji, nie można przypisać unknown do string!
+```
+
+## Typ never
+
+Jest to typ oznaczający że funkcja nigdy niczego nie zwraca, ale w sensie że nie wykonuje się zupełnie np.
+
+```js
+function someFunction(): never {
+  throw Error('some error, function never execute properly');
+}
+```
+
+Jest to tylko pomocne oznaczenie takie przypadku, dosyć rzadkiego
