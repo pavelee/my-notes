@@ -123,3 +123,21 @@ W TS możemy ustawlić literalną wartość dla zmiennej. Jest to przydatne jako
 ```js
 funciton combine(someparam: 'first-value' | 'second-value') {}
 ```
+
+Od teraz TS będzie pilnował czy przypadkiem nie zrobliliśmy literówki w parametrze!
+
+## Typ aliasu
+
+Umożliwa ukrycie pod aliasem bardziej skomplikowany typ np. Union czy literał
+
+```js
+type Combinable = numer | string;
+type SomeLiteral = 'someliteral' | 'otherliteral';
+```
+
+Dodatkowo możemy tworzyć własne typy w TS!
+
+```js
+type User = { name: string; age: number };
+const u1: User = { name: 'Max', age: 30 };
+```
