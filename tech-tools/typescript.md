@@ -34,6 +34,33 @@ let somets: string = 'test';
 tsc nazwa_pliku_do_kompilacji.ts
 ```
 
+### Tryb watch
+
+Umożliwia uruchomienie tryby w którym plik zostanie przekompilowany w momencie jak zajdzie jakaś zmiana
+
+```js
+tsc --watch twoj_plik.ts
+```
+
+### Tryb komplilacji całego projektu
+
+Aby kompilować wszystkie pliki w projekcie wykonujemy polecenie
+
+```js
+tsc --init
+```
+
+to nam tworzy plik tsconfig.json w projekcie, nic mie musimy z tym robić. Mamy tam konfiguracje TS (jeśli chcemy to zmieniamy)
+
+Następnie odaplamy polecenie
+
+```js
+tsc
+```
+
+aby przekompilować cały projekt lub to samo w trybie --watch
+
+
 ## Typy TS
 
 - number
