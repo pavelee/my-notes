@@ -60,7 +60,6 @@ tsc
 
 aby przekompilować cały projekt lub to samo w trybie --watch
 
-
 ## Typy TS
 
 - number
