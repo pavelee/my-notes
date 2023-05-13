@@ -1,5 +1,18 @@
 # Typescript
 
+## Triki
+
+### Oznaczenie że to nie będzie nullem
+
+Znak ! przy zmiennej/wywołaniu funkcji oznacza że deklarujemy że dana wartość nie będzie nullem. TS w takim przypadku "ufa" nam.
+
+### Przydatne rozszerzenia dla VSCode
+
+- ESLint - sprawdzanie jakości kodu
+- Prettier - CodeFormatter
+- Debugger for Chrome
+  - Wymaga opcji "sourceMap" na true
+
 ## Ogólne
 
 - Jest to nakładka na JS
@@ -84,6 +97,55 @@ aby includować pliki do kompilacji, w pliku tsconfg.js
 ```
 
 pominięte pliki w include zostana zignorowane, wiec to przydatne gdy nie chcemy robić dużej listy w exclude
+
+### Opcje tsconfig.js
+
+#### target
+
+target określa do jakiej wersji JS chcemy kompilować nasz kod TS'a. To ma znaczenia obsługi przez przeglądarki.
+
+TS umożliwa że kompiluje es5, który nie posaida let oraz const.
+
+#### lib
+
+umożliwa określenie jakie opcje posiada TS. Na przykład obsługę globalnej zmiennej document. Domyślnie posiada opcje aby to złapać.
+
+#### allowJs
+
+Umożliwa aby TS akceptował zwykły JS w samym sobie. Przydatne kiedy mamy jakies legacy i nie chcemy tego przepisywać.
+
+#### checkJS
+
+TS będzie też sprawdzał pliki .js zamias tylko .ts
+
+#### sourceMap
+
+Jak ustawimy na true to generuje nam plik .js.map plik, to powoduje że przegladarka widzi wszystkie pliki projektu. (do przetestowania)
+
+Jest to przydatna opcja do debugowania, ponieważ możemy debugować nasz kod JS w samej przegladarce.
+
+#### outDir, rootDir
+
+umożliwa zmiane struktury projektu, na przykład jak chcemy aby TS generował pliki js w katalogu dist itp.
+
+#### removeComments
+
+Usuwanie kometarzy w finalnym buildzie TS
+
+#### noEmitOnError
+
+Umożliwa zablokowanie generowania pliku TS jeśli znajdują się w nim błędy. Przydatne, domyślnie sa generowanie pliki co może prowadzić do "olewania" problemów.
+
+#### strict
+
+oznacza że wszystkie opcje sprawdzania kodu są uruchomoione.
+
+Natomiast mamy konkretne opcje
+
+- NoImplicitAny - blokuje używania parametrów które nie sa jasno określone. Nie akceptuje typu "any"
+- strictNullChecks - blokuje zmiennej które potencjalnie mogą być nullem (brak inicjacji). Na przykłąd pochodzi ze funkcji która MOŻE zwrócić null'a
+- strictFunctionTypes - sprawdzanie syngnatury funkcji
+- strictBindCallAplly - sprawdzanie czy przekazujemy wszystkie potrzebne parametry
 
 ## Typy TS
 
