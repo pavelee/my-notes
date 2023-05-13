@@ -60,6 +60,31 @@ tsc
 
 aby przekompilować cały projekt lub to samo w trybie --watch
 
+### Includowanie / Excludowanie plików
+
+Aby excludować plik z kompilacji, w pliku tsconfig.js
+
+```js
+...
+"exclude": {
+  "analytics.ts"
+  "node_modules" // warto dodać aby tego nie kompilować
+  // *.dev.ts - aby excludować wszystkie takie pliki
+  // **/*.dev.ts - aby excludować wszystkie takie pliki w dowolnym katalogu
+}
+```
+
+aby includować pliki do kompilacji, w pliku tsconfg.js
+
+```js
+"include": {
+  "app.ts",
+  ...
+}
+```
+
+pominięte pliki w include zostana zignorowane, wiec to przydatne gdy nie chcemy robić dużej listy w exclude
+
 ## Typy TS
 
 - number
