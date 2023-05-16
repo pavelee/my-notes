@@ -20,10 +20,37 @@ Znak ! przy zmiennej/wywołaniu funkcji oznacza że deklarujemy że dana wartoś
 - kompiluje do natywnego JS'a
 - W przypadku braku jawnego typowania ts domyśla się typu po przypisanej inicacyjnej wartości
 - wszystkie typy w TS sa zapisane małymi literami np. string, number
-- Przykład typowania zmiennej
+
+### Przykład typowania zmiennej
 
 ```js
 let myVariable: string;
+```
+
+### Typowanie this w metodzie
+
+```js
+class SomeClass {
+  name: string
+
+  describe(this: SomeClass) { // dzięki takiemu zapisowi mamy gwarancje że będzie to wywołane tylko z obiektu SomeClass
+    return this.name;
+  }
+}
+```
+
+### Readonly
+
+Jest to funkcjonalność TS (nie istnieje w JS). Umożliwa oznaczeni pól klasy jako tylko do odczytu.
+
+```js
+
+class SomeClass {
+  constructor(private readonly id) {
+    
+  }
+}
+
 ```
 
 ## Używanie
