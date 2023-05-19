@@ -8,18 +8,18 @@ Znak ! przy zmiennej/wywołaniu funkcji oznacza że deklarujemy że dana wartoś
 
 ### Przydatne rozszerzenia dla VSCode
 
-- ESLint - sprawdzanie jakości kodu
-- Prettier - CodeFormatter
-- Debugger for Chrome
-  - Wymaga opcji "sourceMap" na true
+-   ESLint - sprawdzanie jakości kodu
+-   Prettier - CodeFormatter
+-   Debugger for Chrome
+    -   Wymaga opcji "sourceMap" na true
 
 ## Ogólne
 
-- Jest to nakładka na JS
-  - wprowadza silne typowanie do JS
-- kompiluje do natywnego JS'a
-- W przypadku braku jawnego typowania ts domyśla się typu po przypisanej inicacyjnej wartości
-- wszystkie typy w TS sa zapisane małymi literami np. string, number
+-   Jest to nakładka na JS
+    -   wprowadza silne typowanie do JS
+-   kompiluje do natywnego JS'a
+-   W przypadku braku jawnego typowania ts domyśla się typu po przypisanej inicacyjnej wartości
+-   wszystkie typy w TS sa zapisane małymi literami np. string, number
 
 ### Przykład typowania zmiennej
 
@@ -31,11 +31,12 @@ let myVariable: string;
 
 ```js
 class SomeClass {
-  name: string
+    name: string;
 
-  describe(this: SomeClass) { // dzięki takiemu zapisowi mamy gwarancje że będzie to wywołane tylko z obiektu SomeClass
-    return this.name;
-  }
+    describe(this: SomeClass) {
+        // dzięki takiemu zapisowi mamy gwarancje że będzie to wywołane tylko z obiektu SomeClass
+        return this.name;
+    }
 }
 ```
 
@@ -47,28 +48,56 @@ Jest to funkcjonalność TS (nie istnieje w JS). Umożliwa oznaczeni pól klasy 
 
 class SomeClass {
   constructor(private readonly id) {
-    
+
   }
 }
 
 ```
 
+### protected, public
+
+protected, public to dodatek TS. Nie istnieje odpowiednik w vanilla js
+
+### Gettery i settery
+
+Możemy wykorzystać specjalny zapis js dla getterów i setterów
+
+```js
+class SomeClass {
+    private someParam: string;
+
+    // słowo kluczowe get
+    get getSomeParam() { // nazwa nie może być taka sama jak nazwa parametru
+        return this.someParam;
+    }
+
+    set setSomeParam(value: string) {
+        this.someParam = value;
+    }
+}
+
+// następnie używamy pól jak atrybutów
+
+someClassObject.getSomeParam; // zwara wartość gettera
+someClassObject.setSomeParam = 'someNewValue'; // wywołuje settera klasy
+```
+
 ## Używanie
 
-- instalacja poprzez npm, instalujemy w trybie globalnym
+-   instalacja poprzez npm, instalujemy w trybie globalnym
 
 ```bash
 npm install -g typescript
 ```
 
-- Tworzymy plik TS np. nazwa_pliku_do_kompilacji.ts
+-   Tworzymy plik TS np. nazwa_pliku_do_kompilacji.ts
 
 ```js
-let somets: string = 'test';
+let somets: string = "test";
 ```
 
-- Następnie używamy typescript poprzez polecenie tsc
-  - W parametrze podajemy plik TS do kompilacji
+-   Następnie używamy typescript poprzez polecenie tsc
+    -   W parametrze podajemy plik TS do kompilacji
 
 ```js
 tsc nazwa_pliku_do_kompilacji.ts
@@ -95,7 +124,7 @@ to nam tworzy plik tsconfig.json w projekcie, nic mie musimy z tym robić. Mamy 
 Następnie odaplamy polecenie
 
 ```js
-tsc
+tsc;
 ```
 
 aby przekompilować cały projekt lub to samo w trybie --watch
@@ -169,80 +198,82 @@ oznacza że wszystkie opcje sprawdzania kodu są uruchomoione.
 
 Natomiast mamy konkretne opcje
 
-- NoImplicitAny - blokuje używania parametrów które nie sa jasno określone. Nie akceptuje typu "any"
-- strictNullChecks - blokuje zmiennej które potencjalnie mogą być nullem (brak inicjacji). Na przykłąd pochodzi ze funkcji która MOŻE zwrócić null'a
-- strictFunctionTypes - sprawdzanie syngnatury funkcji
-- strictBindCallAplly - sprawdzanie czy przekazujemy wszystkie potrzebne parametry
+-   NoImplicitAny - blokuje używania parametrów które nie sa jasno określone. Nie akceptuje typu "any"
+-   strictNullChecks - blokuje zmiennej które potencjalnie mogą być nullem (brak inicjacji). Na przykłąd pochodzi ze funkcji która MOŻE zwrócić null'a
+-   strictFunctionTypes - sprawdzanie syngnatury funkcji
+-   strictBindCallAplly - sprawdzanie czy przekazujemy wszystkie potrzebne parametry
 
 ## Typy TS
 
-- number
-  - 1, 5.3, -10
-- boolean
-  - true, false
-- string
-  - 'Hi', "Hi", `Hi`
-- object
-  - w przypadku braku typowania, TS ustawi domyślne typy po inicjujacej wartości kluczy
-  - domyślnie typujemy poprzez "object", natomiast to powoduje że TS nie ma informacji o typach pól, powoduje to potem problemy przy kompilacji
+-   number
+    -   1, 5.3, -10
+-   boolean
+    -   true, false
+-   string
+    -   'Hi', "Hi", `Hi`
+-   object
+
+    -   w przypadku braku typowania, TS ustawi domyślne typy po inicjujacej wartości kluczy
+    -   domyślnie typujemy poprzez "object", natomiast to powoduje że TS nie ma informacji o typach pól, powoduje to potem problemy przy kompilacji
+
+        ```js
+        const person: object = { name: "test" };
+        console.log(person.name); // bład kompilacji, to tylko pusty obiekt dla TS
+        ```
+
+    -   jeśli chcemy określić jak powinnien być zbudowany obiekt zapisujem to jak poniżej
+
+        ```js
+        const person: { name: string } = { name: "test" };
+        console.log(person.name); // brak błedu kompilacji! TS wie czego się spodziewać
+        ```
+
+    -   w przypadku zagnieżdzania obiektu zapisujemy to jak poniżej
+
+        ```js
+        const person: {
+            id: string,
+            price: number,
+            tags: string[],
+            details: {
+                title: string,
+                description: string,
+            },
+        } = {
+            id: "abc1",
+            price: 12.99,
+            tags: ["great-offer", "hot-and-new"],
+            details: {
+                title: "Red Carpet",
+                description: "A great carpet - almost brand-new!",
+            },
+        };
+        ```
+
+-   array
+    -   może przechowywać dowolną kolelcje typów np. number, string itp.
+    -   musimy określić typ danych w array np. string[] lub określić że typy moga być dowolne (mieszane) poprzez any[]
+-   tuple
+    -   Jest to array z określonymi typami elementów
+    -   np. [number, string]
+-   enum
+
+    -   Typ dodany przez TS
 
     ```js
-    const person: object = { name: 'test' }
-    console.log(person.name); // bład kompilacji, to tylko pusty obiekt dla TS
+      enum Role { ADMIN, READ_ONLY, USER }
     ```
 
-  - jeśli chcemy określić jak powinnien być zbudowany obiekt zapisujem to jak poniżej
+    -   TS pod spodem zamienia to na integer, ale zystkujemy możliwość czystego kodu
+    -   ewentualnie możesz ustawić wartość enum
 
     ```js
-    const person: { name: string } = { name: 'test' }
-    console.log(person.name); // brak błedu kompilacji! TS wie czego się spodziewać
+      enum Role { ADMIN = 'ADMIN', READ_ONLY = 'READ_ONLY', USER = 'USER' }
     ```
 
-  - w przypadku zagnieżdzania obiektu zapisujemy to jak poniżej
-
-    ```js
-    const person: {
-        id: string;
-        price: number;
-        tags: string[];
-        details: {
-            title: string;
-            description: string;
-        }
-    } = {
-        id: 'abc1',
-        price: 12.99,
-        tags: ['great-offer', 'hot-and-new'],
-        details: {
-            title: 'Red Carpet',
-            description: 'A great carpet - almost brand-new!'
-        }
-    }
-    ```
-
-- array
-  - może przechowywać dowolną kolelcje typów np. number, string itp.
-  - musimy określić typ danych w array np. string[] lub określić że typy moga być dowolne (mieszane) poprzez any[]
-- tuple
-  - Jest to array z określonymi typami elementów
-  - np. [number, string]
-- enum
-  - Typ dodany przez TS
-
-  ```js
-    enum Role { ADMIN, READ_ONLY, USER }
-  ```
-
-  - TS pod spodem zamienia to na integer, ale zystkujemy możliwość czystego kodu
-  - ewentualnie możesz ustawić wartość enum
-
-  ```js
-    enum Role { ADMIN = 'ADMIN', READ_ONLY = 'READ_ONLY', USER = 'USER' }
-  ```  
-
-- any
-  - Dowolny typ, wylaczenie komplilatora TS
-  - nie jest zalecane używanie
+-   any
+    -   Dowolny typ, wylaczenie komplilatora TS
+    -   nie jest zalecane używanie
 
 ## Union Type
 
@@ -252,7 +283,7 @@ np.
 
 ```js
 function combine(input1 number | string, input2) {
-    
+
 }
 ```
 
@@ -272,14 +303,14 @@ Umożliwa ukrycie pod aliasem bardziej skomplikowany typ np. Union czy literał
 
 ```js
 type Combinable = numer | string;
-type SomeLiteral = 'someliteral' | 'otherliteral';
+type SomeLiteral = "someliteral" | "otherliteral";
 ```
 
 Dodatkowo możemy tworzyć własne typy w TS!
 
 ```js
-type User = { name: string; age: number };
-const u1: User = { name: 'Max', age: 30 };
+type User = { name: string, age: number };
+const u1: User = { name: "Max", age: 30 };
 ```
 
 ## Zwracany typ funkcji
@@ -288,7 +319,7 @@ W TS możemy ustalić zwracany typ poprzez funkcje, jeśli tego nie zrobimy to T
 
 ```js
 function something(): number {
-  return 1;
+    return 1;
 }
 ```
 
@@ -309,7 +340,7 @@ let someFunction: Function;
 W inny przypadku możemy określić synature funkcj jaka możemy przypisać do zmiennej
 
 ```js
-let someFunction: (a: number, b: number) => number
+let someFunction: (a: number, b: number) => number;
 ```
 
 ## Przekazanie w sygnaturze callbacka
@@ -318,7 +349,7 @@ Aby przekazać callback w sygnaturze funkcji, robimy tak jak poniżej
 
 ```js
 function someFunction(a: number, b: number, cb: (a: number) => void) {
-  cb(a);
+    cb(a);
 }
 ```
 
@@ -331,7 +362,7 @@ let ui: unknown;
 let ux: string;
 
 ui = 5; // ok
-ui = 'Max'; // ok
+ui = "Max"; // ok
 ux = ui; // blad komplilacji, nie można przypisać unknown do string!
 ```
 
@@ -341,8 +372,22 @@ Jest to typ oznaczający że funkcja nigdy niczego nie zwraca, ale w sensie że 
 
 ```js
 function someFunction(): never {
-  throw Error('some error, function never execute properly');
+    throw Error("some error, function never execute properly"); 
 }
 ```
 
 Jest to tylko pomocne oznaczenie takie przypadku, dosyć rzadkiego
+
+## interface
+
+Jest to specjalny typ istniejący tylko w TS
+
+```js
+interface SomeInterface {
+    name: string,
+    age: number,
+    greet(phrase: string): void;
+}
+
+let user: User;
+```
