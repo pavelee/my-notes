@@ -21,6 +21,15 @@ Znak ! przy zmiennej/wywołaniu funkcji oznacza że deklarujemy że dana wartoś
 -   W przypadku braku jawnego typowania ts domyśla się typu po przypisanej inicacyjnej wartości
 -   wszystkie typy w TS sa zapisane małymi literami np. string, number
 
+### Wymuszenie ingorowania błedów kompilatora
+
+-   @ts-ignore
+    -   ignorowanie konretnej linii kodu
+-   @ts-expect-error
+    -   podobne do powyższego ale podczas kompilacji wyrzuca informacje jeśli w tym miejscu nie mamy błedu
+-   @ts-nocheck
+    -   ignorowanie całego pliku (dodajemy u góry pliku)
+
 ### Przykład typowania zmiennej
 
 ```js
@@ -372,7 +381,7 @@ Jest to typ oznaczający że funkcja nigdy niczego nie zwraca, ale w sensie że 
 
 ```js
 function someFunction(): never {
-    throw Error("some error, function never execute properly"); 
+    throw Error("some error, function never execute properly");
 }
 ```
 
@@ -384,8 +393,8 @@ Jest to specjalny typ istniejący tylko w TS
 
 ```js
 interface SomeInterface {
-    name: string,
-    age: number,
+    name: string;
+    age: number;
     greet(phrase: string): void;
 }
 
