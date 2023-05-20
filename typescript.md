@@ -8,27 +8,27 @@ Znak ! przy zmiennej/wywołaniu funkcji oznacza że deklarujemy że dana wartoś
 
 ### Przydatne rozszerzenia dla VSCode
 
-- ESLint - sprawdzanie jakości kodu
-- Prettier - CodeFormatter
-- Debugger for Chrome
-  - Wymaga opcji "sourceMap" na true
+-   ESLint - sprawdzanie jakości kodu
+-   Prettier - CodeFormatter
+-   Debugger for Chrome
+    -   Wymaga opcji "sourceMap" na true
 
 ## Ogólne
 
-- Jest to nakładka na JS
-  - wprowadza silne typowanie do JS
-- kompiluje do natywnego JS'a
-- W przypadku braku jawnego typowania ts domyśla się typu po przypisanej inicacyjnej wartości
-- wszystkie typy w TS sa zapisane małymi literami np. string, number
+-   Jest to nakładka na JS
+    -   wprowadza silne typowanie do JS
+-   kompiluje do natywnego JS'a
+-   W przypadku braku jawnego typowania ts domyśla się typu po przypisanej inicacyjnej wartości
+-   wszystkie typy w TS sa zapisane małymi literami np. string, number
 
 ### Wymuszenie ingorowania błedów kompilatora
 
-- @ts-ignore
-  - ignorowanie konretnej linii kodu
-- @ts-expect-error
-  - podobne do powyższego ale podczas kompilacji wyrzuca informacje jeśli w tym miejscu nie mamy błedu
-- @ts-nocheck
-  - ignorowanie całego pliku (dodajemy u góry pliku)
+-   @ts-ignore
+    -   ignorowanie konretnej linii kodu
+-   @ts-expect-error
+    -   podobne do powyższego ale podczas kompilacji wyrzuca informacje jeśli w tym miejscu nie mamy błedu
+-   @ts-nocheck
+    -   ignorowanie całego pliku (dodajemy u góry pliku)
 
 ### Przykład typowania zmiennej
 
@@ -93,20 +93,20 @@ someClassObject.setSomeParam = 'someNewValue'; // wywołuje settera klasy
 
 ## Używanie
 
-- instalacja poprzez npm, instalujemy w trybie globalnym
+-   instalacja poprzez npm, instalujemy w trybie globalnym
 
 ```bash
 npm install -g typescript
 ```
 
-- Tworzymy plik TS np. nazwa_pliku_do_kompilacji.ts
+-   Tworzymy plik TS np. nazwa_pliku_do_kompilacji.ts
 
 ```js
 let somets: string = "test";
 ```
 
-- Następnie używamy typescript poprzez polecenie tsc
-  - W parametrze podajemy plik TS do kompilacji
+-   Następnie używamy typescript poprzez polecenie tsc
+    -   W parametrze podajemy plik TS do kompilacji
 
 ```js
 tsc nazwa_pliku_do_kompilacji.ts
@@ -207,82 +207,82 @@ oznacza że wszystkie opcje sprawdzania kodu są uruchomoione.
 
 Natomiast mamy konkretne opcje
 
-- NoImplicitAny - blokuje używania parametrów które nie sa jasno określone. Nie akceptuje typu "any"
-- strictNullChecks - blokuje zmiennej które potencjalnie mogą być nullem (brak inicjacji). Na przykłąd pochodzi ze funkcji która MOŻE zwrócić null'a
-- strictFunctionTypes - sprawdzanie syngnatury funkcji
-- strictBindCallAplly - sprawdzanie czy przekazujemy wszystkie potrzebne parametry
+-   NoImplicitAny - blokuje używania parametrów które nie sa jasno określone. Nie akceptuje typu "any"
+-   strictNullChecks - blokuje zmiennej które potencjalnie mogą być nullem (brak inicjacji). Na przykłąd pochodzi ze funkcji która MOŻE zwrócić null'a
+-   strictFunctionTypes - sprawdzanie syngnatury funkcji
+-   strictBindCallAplly - sprawdzanie czy przekazujemy wszystkie potrzebne parametry
 
 ## Typy TS
 
-- number
-  - 1, 5.3, -10
-- boolean
-  - true, false
-- string
-  - 'Hi', "Hi", `Hi`
-- object
+-   number
+    -   1, 5.3, -10
+-   boolean
+    -   true, false
+-   string
+    -   'Hi', "Hi", `Hi`
+-   object
 
-  - w przypadku braku typowania, TS ustawi domyślne typy po inicjujacej wartości kluczy
-  - domyślnie typujemy poprzez "object", natomiast to powoduje że TS nie ma informacji o typach pól, powoduje to potem problemy przy kompilacji
+    -   w przypadku braku typowania, TS ustawi domyślne typy po inicjujacej wartości kluczy
+    -   domyślnie typujemy poprzez "object", natomiast to powoduje że TS nie ma informacji o typach pól, powoduje to potem problemy przy kompilacji
+
+            ```js
+            const person: object = { name: "test" };
+            console.log(person.name); // bład kompilacji, to tylko pusty obiekt dla TS
+            ```
+
+    -   jeśli chcemy określić jak powinnien być zbudowany obiekt zapisujem to jak poniżej
+
+            ```js
+            const person: { name: string } = { name: "test" };
+            console.log(person.name); // brak błedu kompilacji! TS wie czego się spodziewać
+            ```
+
+    -   w przypadku zagnieżdzania obiektu zapisujemy to jak poniżej
+
+            ```js
+            const person: {
+                id: string,
+                price: number,
+                tags: string[],
+                details: {
+                    title: string,
+                    description: string,
+                },
+            } = {
+                id: "abc1",
+                price: 12.99,
+                tags: ["great-offer", "hot-and-new"],
+                details: {
+                    title: "Red Carpet",
+                    description: "A great carpet - almost brand-new!",
+                },
+            };
+            ```
+
+-   array
+    -   może przechowywać dowolną kolelcje typów np. number, string itp.
+    -   musimy określić typ danych w array np. string[] lub określić że typy moga być dowolne (mieszane) poprzez any[]
+-   tuple
+    -   Jest to array z określonymi typami elementów
+    -   np. [number, string]
+-   enum
+
+    -   Typ dodany przez TS
 
         ```js
-        const person: object = { name: "test" };
-        console.log(person.name); // bład kompilacji, to tylko pusty obiekt dla TS
+          enum Role { ADMIN, READ_ONLY, USER }
         ```
 
-  - jeśli chcemy określić jak powinnien być zbudowany obiekt zapisujem to jak poniżej
+    -   TS pod spodem zamienia to na integer, ale zystkujemy możliwość czystego kodu
+    -   ewentualnie możesz ustawić wartość enum
 
         ```js
-        const person: { name: string } = { name: "test" };
-        console.log(person.name); // brak błedu kompilacji! TS wie czego się spodziewać
+          enum Role { ADMIN = 'ADMIN', READ_ONLY = 'READ_ONLY', USER = 'USER' }
         ```
 
-  - w przypadku zagnieżdzania obiektu zapisujemy to jak poniżej
-
-        ```js
-        const person: {
-            id: string,
-            price: number,
-            tags: string[],
-            details: {
-                title: string,
-                description: string,
-            },
-        } = {
-            id: "abc1",
-            price: 12.99,
-            tags: ["great-offer", "hot-and-new"],
-            details: {
-                title: "Red Carpet",
-                description: "A great carpet - almost brand-new!",
-            },
-        };
-        ```
-
-- array
-  - może przechowywać dowolną kolelcje typów np. number, string itp.
-  - musimy określić typ danych w array np. string[] lub określić że typy moga być dowolne (mieszane) poprzez any[]
-- tuple
-  - Jest to array z określonymi typami elementów
-  - np. [number, string]
-- enum
-
-  - Typ dodany przez TS
-
-    ```js
-      enum Role { ADMIN, READ_ONLY, USER }
-    ```
-
-  - TS pod spodem zamienia to na integer, ale zystkujemy możliwość czystego kodu
-  - ewentualnie możesz ustawić wartość enum
-
-    ```js
-      enum Role { ADMIN = 'ADMIN', READ_ONLY = 'READ_ONLY', USER = 'USER' }
-    ```
-
-- any
-  - Dowolny typ, wylaczenie komplilatora TS
-  - nie jest zalecane używanie
+-   any
+    -   Dowolny typ, wylaczenie komplilatora TS
+    -   nie jest zalecane używanie
 
 ## Union Type
 
@@ -403,13 +403,14 @@ let user: User;
 
 Używamy do do opisu obiekty, alternatywą jest customwy typ ale to są odrębne koncpecje
 
-- customowy typ - opisuje typ danych
-- interfejs - opisuje obiekt
+-   customowy typ - opisuje typ danych
+-   interfejs - opisuje obiekt
 
 ### Interfejs dla klasy
 
 ```js
-interface SomeInterface { // w TS interfejs może zawierać pola oraz metody
+interface SomeInterface {
+    // w TS interfejs może zawierać pola oraz metody
     someMandatoryField: string;
 }
 
@@ -417,6 +418,24 @@ class SomeClass implements SomeInterface {
     someMandatoryField: string; // musimy przykryć interfejs
 }
 
-let someObject: SomeClass; // mamy pewność że obiekt posiada metody interfejsu  
+let someObject: SomeClass; // mamy pewność że obiekt posiada metody interfejsu
+```
 
+### Read only atrybut na interfejsie
+
+Możemy zdefinować w interfejsie atrybut jako read only, co powoduje że nie będzie możliwości zmiany
+
+```js
+interface SomeInterface { // w TS interfejs może zawierać pola oraz metody
+    readonly someMandatoryField: string;
+}
+
+class SomeClass implements SomeInterface {
+    someMandatoryField: string; // musimy przykryć interfejs
+}
+
+let someObject: SomeClass; // mamy pewność że obiekt posiada metody interfejsu
+
+someObject = new SomeClass();
+someObject.someMandatoryField = 'someValue'; // bład kompilacji
 ```
