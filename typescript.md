@@ -400,3 +400,23 @@ interface SomeInterface {
 
 let user: User;
 ```
+
+Używamy do do opisu obiekty, alternatywą jest customwy typ ale to są odrębne koncpecje
+
+- customowy typ - opisuje typ danych
+- interfejs - opisuje obiekt
+
+### Interfejs dla klasy
+
+```js
+interface SomeInterface { // w TS interfejs może zawierać pola oraz metody
+    someMandatoryField: string;
+}
+
+class SomeClass implements SomeInterface {
+    someMandatoryField: string; // musimy przykryć interfejs
+}
+
+let someObject: SomeClass; // mamy pewność że obiekt posiada metody interfejsu  
+
+```
