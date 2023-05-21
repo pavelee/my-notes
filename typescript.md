@@ -408,6 +408,8 @@ Używamy do do opisu obiekty, alternatywą jest customwy typ ale to są odrębne
 
 ### Interfejs dla klasy
 
+- Interejsy nie są tłumaczone do vanilla js, to byt istniejący tylko w TS
+
 ```js
 interface SomeInterface {
     // w TS interfejs może zawierać pola oraz metody
@@ -438,4 +440,38 @@ let someObject: SomeClass; // mamy pewność że obiekt posiada metody interfejs
 
 someObject = new SomeClass();
 someObject.someMandatoryField = 'someValue'; // bład kompilacji
+```
+
+### Interfejsy mogą dziedziczyć
+
+Interfejs może dziedziczyć po innym interfejsie
+
+```js
+interface SomeInteface1 {
+    name: string
+}
+
+interface SomeInterface2 extends SomeInteface1 {
+    surname: string
+}
+```
+
+### Interfejs może być sygnaturą dla funkcji
+
+```js
+interface SomeFunctionInterface {
+    (a: number, b: number): number;
+}
+```
+
+### Interfejsy opcjonalne parametry oraz metody
+
+- znak ? dla parametrów
+- znak ! dla metod
+
+```js
+interface SomeInterface {
+    optionalParam?: string,
+    optionalMethod! => (a: number): number
+}
 ```
