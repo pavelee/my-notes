@@ -475,3 +475,43 @@ interface SomeInterface {
     optionalMethod! => (a: number): number
 }
 ```
+
+### Intersekcja typów
+
+Możemy połczczyć różne typy w TS
+
+```js
+type Admin = {
+    name: string,
+    access: bool
+}
+
+type Employee = {
+    position: string
+}
+
+type ElevatedEmployee = Employee & Admin;
+```
+
+Możemy uzyskać podobny efekt poprzez interfejsy, natomiast w takim przypadku mamy inny operator łączenia
+
+```js
+interface Admin = {
+    name: string,
+    access: bool
+}
+
+interface Employee = {
+    position: string
+}
+
+interface ElevatedEmployee extends Employee, Admin; // połączenie dwóch interfejsów
+```
+
+Operator działa inaczej w przypadku typów prostszych, w takim przypadku szuka wspólnej części tych zmiennych
+
+```js
+type Combinable = string | number;
+type Numeric = number | boolean;
+type Universal = Combinable & Numeric; // będzie to typ numeric, bo to jest wspólne
+```
