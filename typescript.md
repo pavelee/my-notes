@@ -522,3 +522,51 @@ type Combinable = string | number;
 type Numeric = number | boolean;
 type Universal = Combinable & Numeric; // będzie to typ numeric, bo to jest wspólne
 ```
+
+### Strażnik typu - Type Guard
+
+Strażnik typu to podpowiedź dla TS że sprawdzamy czy rzeczywiście zmienna jest tym czym powinna być
+
+Pierwszy guard - typeof
+
+```js
+type Combinable = string | number;
+type Numeric = number | boolean;
+type Universal = Combinable & Numeric;
+
+function add(a: Universal, b: Universal) {
+  if (typeof a === "string" || typeof b === "string") {
+    // to jest strażnik typu, bez tego dostalibyśmy bład kompilacji. TS domyśla że przypadek stringowy rozwaliłby nam kodzik
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
+```
+
+Kolejny guard - składnia 'jakisAtrybut' in object
+
+```js
+type Admin = {
+  name: string,
+  access: boolean,
+};
+
+type Employee = {
+  position: string,
+};
+
+type UnknownEmplyee = Employee | Admin;
+
+function printEmplyee(a: UnknownEmplyee) {
+  if ("access" in a) {
+    // type guard, zapewniamy TS że to zadziała
+    console.log(a.access);
+  }
+}
+```
+
+Ostatnią opcją jest aby użyć instanceof. Uwaga! To zadziała tylko jeśli to jest istniejąca klasa w kodzie. **Nie zadziałą to dla składki TS, np. typu, czy interfejsu**
+
+```js
+instanceof NazwaKlasy
+```
