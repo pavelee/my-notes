@@ -570,3 +570,33 @@ Ostatnią opcją jest aby użyć instanceof. Uwaga! To zadziała tylko jeśli to
 ```js
 instanceof NazwaKlasy
 ```
+
+### Discriminated Unions
+
+Możemy TS podpowiedzieć typ poprzez wspólne pole np. type. Jest to technika Discriminated Unions
+
+```js
+interface Bird {
+  type: "bird";
+  flyingSpeed: number;
+}
+
+interface Horse {
+  type: "horse";
+  runingSpeed: numer;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+  let s;
+  switch (
+    animal.type // istotne dla TS, rozpoznanie jakie to typ.
+  ) {
+    case "bird": // Uwaga! TS nawet rozpoznaje jeśli zrobimy literówke w typie! Super!
+      console.log(animal.flyingSpeed); // jest ok, TS wie że to odpowiedni obiekt
+    case "horse":
+      console.log(animal.runingSpeed);
+  }
+}
+```
