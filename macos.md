@@ -13,3 +13,13 @@ export PATH=$PATH:/opt/homebrew/bin
 ```
 
 zapisujemy i gotowe!
+
+## Dodanie GIT'a
+
+W konsoli wywołujemy
+
+```bash
+git --version
+```
+
+samo to wywołanie spowoduje instalacje pakietu zawierającego git'a!
