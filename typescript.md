@@ -2,9 +2,33 @@
 
 ## Triki
 
-### Oznaczenie że to nie będzie nullem
+### Oznaczenie że to nie będzie nullem znaj !
 
 Znak ! przy zmiennej/wywołaniu funkcji oznacza że deklarujemy że dana wartość nie będzie nullem. TS w takim przypadku "ufa" nam.
+
+```js
+let someObject: {key: string};
+
+function someFunctionReturningSomeObject(): someObject | null; // przykładowa funkcja, funkcja zwrawca someObject | null
+
+let concreteSomeObject = someFunctionReturningSomeObject()!; // Uwaga! Znak ! na końcu stwierdza że mamy pewność że nie będzie to null!
+
+concreteSomeObject.key = 'someString'; // jeśli byśmy nie użyli ! w poprzedniej linijce, byśmy mieli problem z kompilacją
+```
+
+Ewentualną aleternatywą jest type guard
+
+```js
+let someObject: {key: string};
+
+function someFunctionReturningSomeObject(): someObject | null; // przykładowa funkcja, funkcja zwrawca someObject | null
+
+let concreteSomeObject = someFunctionReturningSomeObject(); // Uwaga! Znak ! na końcu stwierdza że mamy pewność że nie będzie to null!
+
+if (concreteSomeObject) { // type guard, gwarantuje że nie będzie to null <3
+  concreteSomeObject.key = 'someString'; // jeśli byśmy nie użyli ! w poprzedniej linijce, byśmy mieli problem z kompilacją
+}
+```
 
 ### Przydatne rozszerzenia dla VSCode
 
@@ -483,6 +507,8 @@ interface SomeInterface {
 }
 ```
 
+## Zaawansowane typy - Advanced types
+
 ### Intersekcja typów
 
 Możemy połczczyć różne typy w TS
@@ -600,3 +626,83 @@ function moveAnimal(animal: Animal) {
   }
 }
 ```
+
+### Castowanie typu
+
+W TS możemy castować typ
+
+```js
+// pierwszy sposób castowania elementu <NazwaTypu>
+// Uwaga! Ten sposób nie jest przyjazny w aplikacjach reaktowych, może być trakotwane jako component..
+const userInputElement = <HtmlInputElement>document.getELementById("someIdElement")!;
+
+// drugi sposób castowania elementu as NazwaTypu
+const userInputElement = document.getELementById("someIdElement")! as HtmlInputElement;
+
+userInputElement.value = 'Hiii';
+
+// kolejna alternatywa, skrótwa do castowania jak powyżej
+(userInputElement as HtmlInputElement).value = 'Hiii';
+```
+
+### Ineksowane atrybuty - Index Properties
+
+W przypadku kiedy mam potrzebe zdefinoiwania obiektu który może posiadać różne atrybuty ale konkretnego typu
+
+```js
+interface ErrorContainer { // chcemy aby mógł posiadać pola typu: email: 'błedny email', username: 'błedne znaki' itp
+  [props: string]: string // tutaj określamy że może posiadać WIELE LUB WCALE atrybutów ale MUSI być klucz string oraz wartość string
+  id: string; // jeśli chcemy dodać konkretne pole to musi się zgadzać z tym powyżej!
+  something: number; // BŁAD KOMPILACJI, nie zgadza się z dynamicznym polem
+}
+```
+
+### Preciążanie funkcji - function overloads
+
+Przeciązanie funkcji (tak jak w c++)
+
+```js
+type Combinable = string | number;
+
+function add(a: number, b: number): string;
+function add(a: string, b: string): string;
+function add(a: string, b: number): string;
+function add(a: number, b:number): string; // przeciażenie syngnatury funkcji, number będzie też pasował do implementacji
+function add(a: Combinable, b: Combinable) {
+  if (typeof a === "string" || typeof b === "string") {
+    // to jest strażnik typu, bez tego dostalibyśmy bład kompilacji. TS domyśla że przypadek stringowy rozwaliłby nam kodzik
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
+```
+
+### Opcjonalnie wywoływanie w łancuchu - Optional Chaining
+
+W przypadkiu kiedy nie wiemy czy dany atrybut istnieje możemy poinstruować TS że dane pole może nie istnieć na obiekcie
+
+```js
+const fetchedUserData = {
+  id: "u1",
+  name: "Max",
+  // job: { title: 'CEO' } // w takim przypadki będzie ok, TS został poinformowany że pole może nie istnieć, natomaist może się pojawić poźniej
+};
+
+fetchedUserData?.job?.title; // ?. oznacza że pole może nie istnieć. Jeśli pole nie istnieje to przerywa łańcuch
+
+// odpowiednik w vanilla JS, sprawdzenie czy dane istnieją
+if (fetchedUserData.job && fetchedUserData.job.title) {
+  // coś tam zrób
+}
+```
+
+### Zlewanie się nulla - Null Coalescing
+
+W przypadku kiedy chcemy aby TS przypisał konkretną wartość w przypadku kiedy wartość jest nie ustawiona (null, undefined)
+
+```js
+const userInput = undefined; // w przypadku "" (pusta wartość) to przejdzie dalej!
+const storedData = userInput ?? "DEFAULT"; // przypisz wartość DEFAULT jeśli userInput jest nie ustawiony
+```
+
+## Generyczne typy - Generics
