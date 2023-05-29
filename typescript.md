@@ -706,3 +706,46 @@ const storedData = userInput ?? "DEFAULT"; // przypisz wartość DEFAULT jeśli 
 ```
 
 ## Generyczne typy - Generics
+
+Typ generyczny to typ który jest silnie powiązany z innym typem. Główny typ finalnie zwraca swój powiązany typ, np Array złożny z string'a (Array<string>) albo promise który zwraca string (Promise<string>)
+
+Uwaga! W przypadku array mamy ten sam zapis dla:
+
+```js
+Typ Array<string> = string[]
+```
+
+Typ generyczny pozwala przewidzieć co będzie wynikiem np.
+
+```js
+let someResult = await function somePromise(): Promise<string>
+someResult.split(' '); // to działa! TS wie że zwrotką będzie string z promise (po await, czyli resolve)
+```
+
+### Generyczna funkcja
+
+W przypadu kiedy łączymy dynamiczne obiekty możemy to zdefinować jako generycznye typy
+
+```js
+function merge<T, U>(objA: T, objB: U) {
+  // Uwaga! gdybyśmy tego nie zrobili i zwracali zwykły obiekt spowodowałoby to bład kompilacji
+  return Object.assign(objA, objB);
+}
+
+const mergedObj = merge({ name: "Max" }, { age: 30 }); // TS automatycznie uzupełnia generyczne typy zgodnie z tym co wstawiliśmy do parameterów
+mergedObj.name; // brak błedu komplikacji, TS wie że to będzie obiekt jakiegoś dynamicznego typu
+
+// możemy też zdefiniować dla TS jakiego typu będą parametry przekazane do generycznej funkcji
+const mergedObj1 = merge<string, number>(...);
+```
+
+### wymuszenie konkretnego typu dla generycznych parametrów
+
+Możemy wymusić z jakiej "rodziny" typów musi być wskazany generyczny parametr
+
+```js
+// parametr T MUSI być obiektem
+function merge<T extends object, U>(objA: T, objB: U) {
+  return Object.assign(objA, objB);
+}
+```
