@@ -707,7 +707,11 @@ const storedData = userInput ?? "DEFAULT"; // przypisz wartość DEFAULT jeśli 
 
 ## Generyczne typy - Generics
 
+https://www.typescriptlang.org/docs/handbook/generics.html
+
 Typ generyczny to typ który jest silnie powiązany z innym typem. Główny typ finalnie zwraca swój powiązany typ, np Array złożny z string'a (Array<string>) albo promise który zwraca string (Promise<string>)
+
+**Generyczne typy dają nam to elastyczność z bezpieczństem typu**
 
 Uwaga! W przypadku array mamy ten sam zapis dla:
 
@@ -747,5 +751,111 @@ Możemy wymusić z jakiej "rodziny" typów musi być wskazany generyczny paramet
 // parametr T MUSI być obiektem
 function merge<T extends object, U>(objA: T, objB: U) {
   return Object.assign(objA, objB);
+}
+```
+
+### kolejny przykład funkcji generycznej
+
+```js
+interface Lengthy {
+  length: number;
+}
+
+function counterAndDescribe<T extends Lengthy>(element: T): [T, string] {
+  let dt = "Got no value";
+  if (element.length === 1) {
+    dt = "Got 1 element";
+  } else if (element.length > 1) {
+    dt = `Got ${element.length} elements`;
+  }
+  return [element, dt];
+}
+
+counterAndDescribe('some text'); // jest ok, string posiada właściwość length
+```
+
+### funkcja generyczna z dynamicznymi kluczami - keyof
+
+Przykład kiedy mamy funkcję generyczną która zwraca klucz dynamicznego obiektu
+
+```js
+function extractAndConvert<T: extends object, U extends keyof T>(obj: T, key: U) {
+  return `Value: ` + obj[key];
+}
+
+extractAndConvert({}, 'name');
+```
+
+### Klasy generyczne
+
+Tak jak funkcje, możemy tworzyć też generyczne klasy.
+
+```js
+
+class DataStorage<T> { // gdzie T może być np. string, object itp.
+  private data:T[] = [];
+
+  addItem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    this.data.splice(this.data.indexOf(item), 1);
+  }
+
+  getItems() {
+    return [...this.data];
+  }
+}
+
+const textStorage = new DataStorage<string>{}; // przychowujemy string'i
+const numberStorage = new DataStorage<number>{}; // przychowujemy number'y
+```
+
+### Typ generyczny Partial
+
+Typ Partial pozwala nam na "tymczasowe" zbudowania pustego obiektu jakiegoś konkretnego obiektu. Tak aby następnie dynamicznie dodać niezbędne pola. Może być przydatne przy tworzeniu obiektu w builderze itp.
+
+```js
+interface CurseGoal {
+  title: string;
+  description: string;
+  completeUntil: Date;
+}
+
+function createCourseGoal(
+  title: string,
+  description: string,
+  completeUntil: Date
+): CourseGoal {
+  let courseGoal: Partial<CourseGoal> = {}; // To działa! TS ma obiecane że finalnie z tego powstanie obiekt CourseGoal
+  courseGoal.title = title;
+  courseGoal.description = description;
+  courseGoal.completeUntil = completeUntil;
+  return courseGoal as CourseGoal; // Uwaga! Tutaj musimy castować ponieważ to nadal był Partial
+}
+```
+
+### Typ generyczny Readonly
+
+Readonly pomaga nam zablokować dane na jakiekolwiek zmiany
+
+```js
+const names: Readonly<string[]> = ["Max", "Anna"];
+names.push("Something"); // nie zadziała, names jest tylko do odczytu
+```
+
+### Typ generyczny vs Union type (łączenie typów)
+
+Jest znacząca różnica pomiędzy typem generycznym a unionem.
+
+Co istotne union powoduje że typy mogą być wymieszane!
+
+```js
+class UnionDataStorage {
+  private data: (string | number | boolean)[] = []; // w tym przypadku możemy mieszać typy!
+}
+class GenericDataStorage<T> {
+  private data: (T)[] = []; // w tym przypadku mozemy ustalić że będziemy mieć tylko konkretny typ! To jest lepsze!
 }
 ```
