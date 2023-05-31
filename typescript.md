@@ -30,6 +30,17 @@ if (concreteSomeObject) { // type guard, gwarantuje że nie będzie to null <3
 }
 ```
 
+### Oznaczenie że parametr nie będzie używamy
+
+Możemy oznaczyć że parametr nie będzie używany, mimo że jest zdefiniowany. Tak aby TS nie zgłaszał tego jako błąd
+
+```js
+function someFunction(_: string) {
+  // brak błedu, mimo że nie używamy parametru
+  return null;
+}
+```
+
 ### Przydatne rozszerzenia dla VSCode
 
 - ESLint - sprawdzanie jakości kodu
@@ -857,5 +868,128 @@ class UnionDataStorage {
 }
 class GenericDataStorage<T> {
   private data: (T)[] = []; // w tym przypadku mozemy ustalić że będziemy mieć tylko konkretny typ! To jest lepsze!
+}
+```
+
+## Dekoratory - Decorators
+
+Dekoratory to funkcje które dodajemy do klas, "dekorujemy"
+
+Odpala się w momencie jak klasa jest inicowana
+
+Jest to wykorzystywane w np. Angularze do generowania templatki (podpiętę pod klase komponentu)
+
+Uwaga!
+
+```
+Dekoratory wymagają w tsconfig.json opcji:
+
+- "target": "ed6"
+- "experimentalDecorators": true -> odkomentować w konfiguracji
+```
+
+przykład dekoratora
+
+```js
+function Logger(constructor: Function) {
+  // constructor to funkcja konstruktora z klasy, możemy jej użyć aby utworzyć instancje klasy do której jest podpięty dekorator
+  const someNewObj = new constructor();
+  console.log("Logging...");
+}
+
+@Logger
+class Person {
+  name = "Max";
+
+  constructor() {
+    console.log("Someting...");
+  }
+}
+```
+
+możemy też inaczje zapisać dektoratora, w taki sposób aby móc go sparametryzować
+
+```js
+function Logger(someStringParam: string) {
+  return function (onstructor: Function) {
+    // w tym przypadku zwracamy funkcje dektoratora
+    console.log("Logging...");
+  };
+}
+
+@Logger("Some passed value") // teraz możemy sparametryzować dekorator!
+class Person {
+  name = "Max";
+
+  constructor() {
+    console.log("Someting...");
+  }
+}
+```
+
+bardziej praktyczny robudowany przykład
+
+```js
+function withTemplate(template: string, hookId: string) {
+  return function (constructor: any) {
+    const hookEl = document.getElementById(hookId);
+    const p = new constructor();
+    if (hookEl) {
+      hookEl.innerHTML = template;
+      hookEl.querySelector('h1')!.textContent = p.name;
+    }
+  };
+}
+
+@withTemplate("<h1>asdas</h1>", "some-selector") // teraz możemy sparametryzować dekorator!
+class Person {
+  name = "Max";
+
+  constructor() {
+    console.log("Someting...");
+  }
+}
+```
+
+Możemy dodawać wiele dektoratów do klasy
+
+Co istotne:
+
+- Dekoratory tworzą się w kolejności od góry do dołu
+  - np. inicjacja
+- Dektoratory wykonują się w kolejności od dołu do góry
+  - już body funkcji dektoratora
+
+```js
+function Logger(someStringParam: string) {
+  console.log('LOGGER'); // to wykona się pierwsze w kolejności!
+  return function (constructor: Function) {
+    console.log('INSIDE LOGGER'); // to wykona się w czwartej kolejności
+    // w tym przypadku zwracamy funkcje dektoratora
+    console.log("Logging...");
+  };
+}
+
+function withTemplate(template: string, hookId: string) {
+  console.log('TEMPLATE'); // to wykona się w drugiej kolejności
+  return function (constructor: any) {
+    console.log('INSIDE TEMPLATE'); // to wykona się w drugiej kolejności
+    const hookEl = document.getElementById(hookId);
+    const p = new constructor();
+    if (hookEl) {
+      hookEl.innerHTML = template;
+      hookEl.querySelector('h1')!.textContent = p.name;
+    }
+  };
+}
+
+@Logger("asdas")
+@withTemplate("<h1>asdas</h1>", "some-selector") // ten dekorator jest pierwszy!
+class Person {
+  name = "Max";
+
+  constructor() {
+    console.log("Someting...");
+  }
 }
 ```
