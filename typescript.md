@@ -993,3 +993,53 @@ class Person {
   }
 }
 ```
+
+Dekoratory też możemy dodawać do
+
+- atrybutów klas
+- metod
+- parametrów metod
+
+**Uwaga! Wszystkie poniższe dekoratory odpalają się w momencie jak DEFINIUJEMY KLASE**
+
+Celem jest odpowiednie przygotowanie klasy zanim rozpocznie się wykonywanie kodu, tzw. udekorowanie klasy
+
+```js
+// target any ponieważ nie wiemy co to będzie
+// propertyName to nazwa właściwości
+function Log(target: any, propertyName: string | Symbol) {
+  console.log('dekorator atrybutu: ' + propertyName);
+}
+
+// można dodać do dowolnej metody
+funciton Log2(target: any, name: string | Symbol, descriptor: PropertyDescriptor) {
+  console.log('dekorator akcesora: ' + name)
+}
+
+// można dodać do dowolnej metody
+// position -> to jest pozycja argumentu w sygnaturze metody
+funciton Log3(target: any, name: string | Symbol, position: number) {
+  console.log('dekorator akcesora: ' + name)
+}
+
+class Product {
+  @Log
+  title: string;
+  private _price: number;
+
+  @Log2
+  set price(val: number) {
+    this._price = 0;
+  }
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this._price = p;
+  }
+
+  @Log2
+  someMethod(@Log3 someParam: string) {
+    console.log('doing nothing');
+  }
+}
+```
