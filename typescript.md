@@ -1050,7 +1050,7 @@ Dekoratory które mogą zwracać wartość to podpięte do
 
 - klasy
 - metod
-  - tutaj możemy zwrócić inny obiekt property descriptor i zmienić w jaki sposób zachowuje się metoda
+  - tutaj możemy zwrócić inny obiekt property descriptor i zmienić w jaki sposób zachowuje się metoda.
 
 Oczywiście inne mogą też zwracać, ale nie będzie to brane pod uwagę
 
