@@ -1043,3 +1043,42 @@ class Product {
   }
 }
 ```
+
+Dekoratory też mogą zwracać wartość w postaci nowego obiektu. Pozwala to dekorować obiekt customową logiką. A nawet zwrócić inny obiekt np. jakiegoś interfejsu.
+
+Dekoratory które mogą zwracać wartość to podpięte do
+
+- klasy
+- metod
+  - tutaj możemy zwrócić inny obiekt property descriptor i zmienić w jaki sposób zachowuje się metoda
+
+Oczywiście inne mogą też zwracać, ale nie będzie to brane pod uwagę
+
+```js
+function withTemplate(template: string, hookId: string) {
+  console.log('TEMPLATE'); // to wykona się w drugiej kolejności
+  return function<T extends { new (...args: any[]): {name: string}}> (originalConstructor: any) { // { name: string } po to aby TS wiedział że obiekt będzie posiadał pole name
+    return class extends originalConstructor {
+      constructor(..._: args) { // zmienna to _ aby TS nie przyczepiał się do tego że używamy tego parametru
+        super(); // inicujemy parenta czyli nasz orginalny obiekt
+        // tutaj customowa logika
+        console.log('INSIDE TEMPLATE'); // to wykona się w drugiej kolejności
+        const hookEl = document.getElementById(hookId);
+        if (hookEl) {
+          hookEl.innerHTML = template;
+          hookEl.querySelector('h1')!.textContent = this.name;
+        }
+      }
+    }
+  };
+}
+
+@withTemplate("<h1>asdas</h1>", "some-selector") // ten dekortor kompletnie zmienia naszą klasę! wow
+class Person {
+  name = "Max";
+
+  constructor() {
+    console.log("Someting...");
+  }
+}
+```
