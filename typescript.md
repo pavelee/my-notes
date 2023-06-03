@@ -879,6 +879,8 @@ Odpala się w momencie jak klasa jest inicowana
 
 Jest to wykorzystywane w np. Angularze do generowania templatki (podpiętę pod klase komponentu)
 
+Jest to forma "meta programming" czyli dodawanie kolejnch warstw logiki poprzez dekoratory
+
 Uwaga!
 
 ```
@@ -1081,4 +1083,65 @@ class Person {
     console.log("Someting...");
   }
 }
+```
+
+Wykorzystanie dektoratora do naprawy problemu scop'u this w podpiętym evencie
+
+```js
+function Autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() { // nadpisujemy metodę get tej metody
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+}
+
+class Printer {
+  message = "this works";
+
+  @Autobind
+  showMessage() {
+    console.log(this.message);
+  }
+}
+
+const p = new Printer();
+const button = document.querySelector('button')!;
+button.addEventListener('click', p.showMessage); // to zadziała!
+// w vanilla js musielibyśmy zrobić tak jak poniżej, dektorator to za nas naprawia
+// button.addEventListener('click', p.showMessage.bind(p));
+```
+
+Dektoratory dla walidacji - przykład
+
+To jest książkowy przykład użycia dekoratorów. To mogłoby być zewnętrzna biblioteka która umożliwia Ci udekrowanie klasy odpowiedniami constraintami
+
+przykład biblioteki: https://github.com/typestack/class-validator
+
+```js
+function Required() {}
+
+function PositiveNumber() {}
+
+function validate(obj: object) {}
+
+class Course {
+  @Required
+  title: string;
+  @PositiveNumber
+  price: number;
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this.price = p;
+  }
+}
+
+// poźniej w kodzie np.
+
+validate(formData); // co odpali logikę walidacji, w zależności od konfiguracji walidatorów
 ```
