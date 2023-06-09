@@ -56,3 +56,51 @@ Poprzez przeciągniecie z spotlight do dock'a
 ### Dostosuj swój zegar
 
 ![set_clock](assets/set_clock.png)
+
+### Zawsze pokazuj scrollbar i skacz do klikniętej pozycji
+
+![show_scrollbar](assets/show_scrollbar.png)
+
+### Wyłacz automatyczne reogragnizowanie przestrzeni okien
+
+Celem jest to aby nie ingerować w ustawienia okien, dzięki temu możemy to pogrupować względem swojej pracy
+
+![mission_control_re](assets/mission_control_re.png)
+
+### Finder - pokaż ściezkę oraz status
+
+ścieżka - aktualny katalog w jakim się znajdujemy
+status - stan dysku, ile miejsca jeszcze mamy
+
+![finder1](assets/finder1.png)
+
+### Finder - customizacja toolbara - pozybcie się nadmiaru opcji
+
+![finder2](assets/finder2.png)
+
+### Finder - sprawdź czy nowe okno będzie otwierało sie w tabie
+
+![finder3](assets/finder3.png)
+
+### Finder - pokazuj rozszerzenia wszystkich plików
+
+![finder4](assets/finder4.png)
+
+### Finder - dodaj Library/Biblioteka do ulubionych folderów - inaczej ciężko znaleść
+
+- Najedz na Idź
+- Wciśnij opt
+- Pokaże się Bibloteka/Library
+- Przenieś ze ścieżki do ulubionych
+
+![finder5](assets/finder5.png)
+
+### Aplikacje 
+
+- https://rectangleapp.com - rectangle
+  - Split screen dla MacOs
+- https://maccy.app - Maccy
+  - Umożliwia kopiowanie wielu rzeczy naraz
+- https://freemacsoft.net/appcleaner/ - AppCleaner
+  - Do czyszczenia aplikacji
+- https://iterm2.com/index.html - Nowoczesny terminal dla MacOs
