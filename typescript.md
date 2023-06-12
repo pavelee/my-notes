@@ -1164,3 +1164,38 @@ sposoby:
   - wspierane przez TS
   - per plik ale wystarczy jeden import (script tag)
   - potrzebny jest webpack aby uzyskać bundle (jeden plik) zamiast extra requestów po pliki
+
+### Namespaces and file bundling w TS
+
+Przykład wykorzystania namespaców w TS
+
+np. plik some_interesting_class.ts
+
+```js
+namespace App { // Uwaga musimy mieć ten sam namespace!
+  export class SomeInterestingClass { // Uwaga musimy mieć export aby typ był widoczny, tylko w przypadku kiedy chcemy aby było widoczne
+    public someName: string;
+  }
+}
+```
+
+następnie mamy nasz główny plik app.ts
+
+```js
+// poniżej specjalna składnia importu, znaki /// to specjalny zapis dla TS
+/// <reference path="some_interesting_class.ts">
+
+namespace App { // Uwaga musimy mieć ten sam namespace!
+  class SomeClassUsingInterestingClass {
+    public someInterestingAttr: SomeInterestingClass; // to możliwe bo TS widzi ten plik w imporcie
+  }
+}
+```
+
+**Uwaga!** Aby nie mieć problemów z ładowaniem plików po stronie przeglądaki musimy złaczyć nas wynik do jednego pliku. Możemy to zrobić poprzez ustawienie w konfiguracji
+
+- outFile -> np. /dist/bundle.js
+  - Uwaga! ten plik będziemy następnie ładować po stronie HTML (script tag)
+- module -> amd
+
+Minusem namespace w TS jest to że plik includowany w innym miejscu może nam dać złudzenie że nie musimy tego importować w innym. Nie ma technicznego wymogu aby importować to co realnie jest używane w pliku. Natomiast może to potem prowadzić do skomplikowanych bugów gdzie usunięcie jednego reference popsuje inny plik który na tym polegał.
