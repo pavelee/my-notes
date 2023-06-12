@@ -1145,3 +1145,22 @@ class Course {
 
 validate(formData); // co odpali logikę walidacji, w zależności od konfiguracji walidatorów
 ```
+
+## Moduły
+
+Moduły to sposób na podzielenie swojego kondu na wiele plików, tak aby potem to includować.
+
+sposoby:
+
+- Namespaces and file bundling
+  - tylko w TS
+  - grupowanie po namespace
+  - importowanie po namespace
+  - per plik lub bundluje wszystkie pilki do jednego wspólnego (automatycznie)
+- ES6 imports/Exports - ES6 modules
+  - niezalezne od TS, vanilla JS
+  - dostępny w wielu przeglądarkach
+    - przeglądarki samodzielnie importują potrzebne pliki
+  - wspierane przez TS
+  - per plik ale wystarczy jeden import (script tag)
+  - potrzebny jest webpack aby uzyskać bundle (jeden plik) zamiast extra requestów po pliki
