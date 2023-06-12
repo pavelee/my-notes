@@ -1199,3 +1199,83 @@ namespace App { // Uwaga musimy mieć ten sam namespace!
 - module -> amd
 
 Minusem namespace w TS jest to że plik includowany w innym miejscu może nam dać złudzenie że nie musimy tego importować w innym. Nie ma technicznego wymogu aby importować to co realnie jest używane w pliku. Natomiast może to potem prowadzić do skomplikowanych bugów gdzie usunięcie jednego reference popsuje inny plik który na tym polegał.
+
+### ES6 import / export
+
+W tej styuacji jest znacznie prościej.
+
+Uwaga! Domyślnie to będzie działać tylko w najnowszych przeglądarkach (wspierające ES6). Przeglądarka automatycznie dociągnie brakujacy plik poprzez request HTTP.
+
+Aby to uruchomić dla starszych przeglądarek musimy dodać do naszego stacku Webpacka (spakuje wszystko w jeden bundle)
+
+Przykład wykorzystania namespaców
+
+np. plik some_interesting_class.ts
+
+```js
+  export class SomeInterestingClass { // wystarczy sam export!
+    public someName: string;
+  }
+```
+
+następnie mamy nasz główny plik app.ts
+
+```js
+// poniżej specjalna składnia importu, znaki /// to specjalny zapis dla TS
+/// <reference path="some_interesting_class.ts">
+import { SomeInterestingClass } from 'some_interesting_class.js'; // Uwaga! tutaj końcówka musi być js, finalnie to będdzie ładowane przez przeglądarke
+
+class SomeClassUsingInterestingClass {
+  public someInterestingAttr: SomeInterestingClass; // widoczne po imporcie
+}
+```
+
+Następnie w opcjach TS musimy ustawić:
+
+- module -> ES2015
+
+oraz przy tagu script który ładuje aplikacje dodać type="module"
+
+```html
+<script type="module" src="/dist/app.js"></script>
+```
+
+Dużą zaletą takiego podejścia jest to że teraz każdy plik musi samodzielnie importować wymagane zależności. Mniej dziwnych bugów.
+
+Dodatkowo możemy:
+
+- zgrupować importy z pliku do jakiegoś agregatora np.
+
+```js
+import * as MyPackage from "some-file.js";
+new MyPackage.SomeExportedClass(); // używamy po kropce
+```
+
+- Wykonać rename importu tylko w konteście tego pliku
+
+```js
+import { SomeExportedClass as RenamedExportedClass } from "some-file.js";
+new RenamedExportedClass();
+```
+
+- Wykonać default export aby dać znać który obiekt będzie domyślnie importowany
+
+some-file.js
+
+```js
+export default SomeExportedClass {};
+```
+
+app.js
+
+```js
+import SomeExportedClass from "some-file.js"; // domyślnie importowany wieć nie potrzeba { }
+new SomeExportedClass();
+```
+
+Uwaga! Kod importowanego pliku wykonuje sie tylko jednokrotnie. Nie zależnie ile razy jest importowany!
+
+```js
+export default SomeExportedClass {};
+console.log('Jakiś log'); // zobaczymy tylko jednokrotnie, niezależnie ile razy moduł został zaimportowany
+```
