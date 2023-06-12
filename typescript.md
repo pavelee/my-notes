@@ -1148,6 +1148,13 @@ validate(formData); // co odpali logikę walidacji, w zależności od konfigura
 
 ## Moduły
 
+### Materiały
+
+- JavaScript Modules (Overview): https://medium.com/computed-comparisons/commonjs-vs-amd-vs-requirejs-vs-es6-modules-2e814b114a0b
+- More on ES Modules: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
+
+### Moduły
+
 Moduły to sposób na podzielenie swojego kondu na wiele plików, tak aby potem to includować.
 
 sposoby:
@@ -1166,6 +1173,8 @@ sposoby:
   - potrzebny jest webpack aby uzyskać bundle (jeden plik) zamiast extra requestów po pliki
 
 ### Namespaces and file bundling w TS
+
+Raczej nie zalecane, lepiej używać ES6 importów z webpackiem. To może być wartościowe dla mniejszych projektów w TS.
 
 Przykład wykorzystania namespaców w TS
 
