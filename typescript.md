@@ -1291,6 +1291,8 @@ console.log('Jakiś log'); // zobaczymy tylko jednokrotnie, niezależnie ile ra
 
 ## TS i Webpack
 
+dokumentacja webpack: https://webpack.js.org/
+
 - Webpack może nam pomóc wdrożyć importy ES6 dla starszych przeglądarek
 - Webpack pozwala nam spakować (bundle) pliki tak aby uniknąć ładowania wielu plików osobno
 - Okiestruje pliki zgodnie z konfiguracją
