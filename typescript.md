@@ -1419,7 +1419,7 @@ webpack - dev - server;
 
 ### Uruchomienie wersji produkcyjnej
 
-Dodajemy nowy plik o specjalnej nazwie:
+Dodajemy nowy plik z konfiguracją dla produkcji (nazwa może być inna):
 
 ```
 webpack.config.prod.js
@@ -1452,7 +1452,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     // publicPath: "/dist/", -> już nie potrzebne, chcemy mieć pliki na dysku a nie w pamieci
   },
-  devtool: 'none', // przestawiamy na none, nie potrzebujemy tego na produkcji
+  // devtool: 'inline-source-map', // wyrzucamy z produkcji, ale jakbyśmy zostawili to moglibyśmy debugować na prodzie
   module: {
     rules: [
       {
@@ -1466,7 +1466,7 @@ module.exports = {
     extensions: [".ts", ".js"],
   },
   plugins: [ // globalne pluginy
-    new CleanPlugin.CleanWebpackPlugin()
+    new CleanPlugin.CleanWebpackPlugin() // automatyczne czyszcze w momecnie rebuildu
   ]
 };
 ```
