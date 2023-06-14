@@ -1288,3 +1288,191 @@ Uwaga! Kod importowanego pliku wykonuje sie tylko jednokrotnie. Nie zależnie il
 export default SomeExportedClass {};
 console.log('Jakiś log'); // zobaczymy tylko jednokrotnie, niezależnie ile razy moduł został zaimportowany
 ```
+
+## TS i Webpack
+
+- Webpack może nam pomóc wdrożyć importy ES6 dla starszych przeglądarek
+- Webpack pozwala nam spakować (bundle) pliki tak aby uniknąć ładowania wielu plików osobno
+- Okiestruje pliki zgodnie z konfiguracją
+- bundluje kod, mniej potrzebnych importów
+- optymalizuje kod, mniej kodu do pobrania
+- łatwo rozwijalna konfiguracja
+
+### Instalacja webpacka
+
+```
+npm install --save-dev webpack webpack-cli webpack-dev-server typescript ts-loader
+```
+
+- webpack - pakiet ktory potrzebujemy
+- webpack-cli - CLI do webpacka
+- webpack-dev-server - hot reloading dla devowego środowiska
+- ts-loader - ładowanie TS przez webpacka, jak konwertować TS do JS
+
+### Konfiguracja TS w Webpack
+
+- target -> es6
+  - Tutaj Webpack będzie wiedział do jakiej wersji JS ma dążyć
+- module -> es2015
+- outDir -> ./dist or inny plik
+- rootDir - już nie potrzebny, webpack to przejmuje
+- sourceMap -> true
+  - to pomaga debugować kod TS
+
+### Konfiguracja Webpack
+
+#### Usuwamy wszystkie rozszerzenia .js z importów ES6
+
+Webpack tego nie oczekuje, to tylko sładania dla przegladrek z ES6
+
+#### Dodanie pliku konfiguracyjnego
+
+Dodajemy plik webpack.config.js do projektu
+
+Nastepnie dodajemy podstawową konfiguracje
+
+```js
+const path = require('path'); // corowy moduł, nie potrzeba instalacji
+
+module.exports = {
+  entry: './src/app.ts' // gdzie zaczyna się nasz projekt, główny plik
+  output: {
+    filename: 'bundle.js'
+    path: path.resolve(__dirname, 'dist') // bezwzględna ścieżka do katalogu
+  },
+  devtool: 'inline-source-map', // pakuje mapy do bundle i daje nam lepsze debugowanie
+  module: { // jak sobie radzić z konkretnymi plikami
+    rules: [
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/ // omijamy node_modules
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.ts', '.js'] // co razem pakujemy
+  }
+};
+```
+
+#### Kompilacja projektu poprzez Webpack
+
+kompilujemy projekt poprzez polecenie
+
+```
+webpack
+```
+
+#### Dodajemy bundle.js do script w HTML'u
+
+Pamiętamy o dodaniu linku script w HTML do bundle.js z Webpacka
+
+### Dodanie webpack-dev-server
+
+Po zainstalowaniu webpack-dev-server musimy poprawić naszą konfiguracje do wersji:
+
+```js
+const path = require("path");
+
+module.exports = {
+  mode: "development",
+  entry: "./src/app.ts",
+  devServer: {
+    static: [
+      {
+        directory: path.join(__dirname),
+      },
+    ],
+  },
+  output: {
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "/dist/",
+  },
+  devtool: 'inline-source-map',
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".ts", ".js"],
+  },
+};
+```
+
+zawiera nowe rzeczy potrzebne do działania webpack dev server:
+
+- mode -> development
+- publicPath -> /dist/
+
+wystarczy że wystartujemy serwer poprzez polecenie
+
+```js
+webpack - dev - server;
+```
+
+### Uruchomienie wersji produkcyjnej
+
+Dodajemy nowy plik o specjalnej nazwie:
+
+```
+webpack.config.prod.js
+```
+
+Doinstalowujemy specjalny pakiet do czyszczenia dysku w momencie przeładowania projektu
+
+```
+npm install --save-dev clean-webpack-plugin
+```
+
+aktualizujemy naszą konfiguracje:
+
+```js
+const path = require("path");
+const CleanPlugin = require('clean-webpack-plugin');
+
+module.exports = {
+  mode: "production", // wersja produkcyjna
+  entry: "./src/app.ts",
+  devServer: {
+    static: [
+      {
+        directory: path.join(__dirname),
+      },
+    ],
+  },
+  output: {
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    // publicPath: "/dist/", -> już nie potrzebne, chcemy mieć pliki na dysku a nie w pamieci
+  },
+  devtool: 'none', // przestawiamy na none, nie potrzebujemy tego na produkcji
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".ts", ".js"],
+  },
+  plugins: [ // globalne pluginy
+    new CleanPlugin.CleanWebpackPlugin()
+  ]
+};
+```
+
+Na sam koniec aktualizujemy komende do odpalenia webpacka z konfiguracją produkcyjną
+
+```
+webpack --config webpack.config.prod.js
+```
