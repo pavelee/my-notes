@@ -1392,7 +1392,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     publicPath: "/dist/",
   },
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   module: {
     rules: [
       {
@@ -1437,7 +1437,7 @@ aktualizujemy naszą konfiguracje:
 
 ```js
 const path = require("path");
-const CleanPlugin = require('clean-webpack-plugin');
+const CleanPlugin = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "production", // wersja produkcyjna
@@ -1467,9 +1467,10 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js"],
   },
-  plugins: [ // globalne pluginy
-    new CleanPlugin.CleanWebpackPlugin() // automatyczne czyszcze w momecnie rebuildu
-  ]
+  plugins: [
+    // globalne pluginy
+    new CleanPlugin.CleanWebpackPlugin(), // automatyczne czyszcze w momecnie rebuildu
+  ],
 };
 ```
 
@@ -1477,4 +1478,94 @@ Na sam koniec aktualizujemy komende do odpalenia webpacka z konfiguracją produk
 
 ```
 webpack --config webpack.config.prod.js
+```
+
+## Zewnętrzne biblioteki i TS
+
+### W jaki sposób używać JS-owej zew biblioteki w TS
+
+Problemem jest to że vanilla js nie zadziała poprawnie w TS, będziemy mieć błedy ponieważ TS oczekuje kodu TS.
+
+Rozwiązaniem jest poszukanie tzw. types dla biblioteki. np. dla lodash szukamy @types/lodash
+
+```js
+npm install --save-dev @types/lodash
+```
+
+takie bibliotki to zbiory tylko typów, mają nazwy np. uniq.d.ts gdzie d oznacza że to dekorator.
+
+### Co w przypadku kiedy nie istnieją typy?
+
+#### Przypadek globalnej zmiennej
+
+Na przykład na stronie mamy zdefiniowaną zmienną globalna
+
+```js
+var globalna = "zmienna";
+```
+
+Aby zadziałało nam to w TS musimy zadeklarować jej istnienie, wraz z typem jakie oczekujemy. Jeżeli to coś zewnętrznego zawsze możemy użyć typu any.
+
+```js
+declare var globalna: string;
+declare var jakasZewnetrznaZmienna: any;
+```
+
+#### class-transformer - automatyczna zamiana JSON (raw data) do klas
+
+https://github.com/typestack/class-transformer
+
+```js
+npm install --save class-transfomer reflect-metadata
+```
+
+proste użycie
+
+```js
+import "reflect-metadata";
+import { plainToClass } from "class-transformer";
+
+const products = [
+  { title: "xx", price: 29 },
+  { title: "yy", price: 33 },
+];
+
+const convertedToClasses = plainToClass(NazwaKlasy, products); // super skrócik, konwertuje do klas
+```
+
+#### class-validator - walidacja poprzez dekoratory
+
+https://github.com/typestack/class-validator
+
+```js
+npm install class-validator --save
+```
+
+proste użycie
+
+```js
+import { IsNotEmpty, IsNumber, IsPositive } from "class-validator";
+
+class Product {
+  @IsNotEmpty()
+  title: string;
+  @IsNumber()
+  @IsPositive()
+  price: number;
+
+  // i tak dalej...
+}
+```
+
+i następnie walidujemy
+
+```js
+import { validate } from "class-validator";
+
+const p = new Prodct(); // cos tutaj inicujemy
+validate(p).then((errors) => {
+  if (errors.length > 0) {
+    console.log(errors);
+  }
+});
 ```
