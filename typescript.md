@@ -1486,6 +1486,8 @@ webpack --config webpack.config.prod.js
 
 Problemem jest to że vanilla js nie zadziała poprawnie w TS, będziemy mieć błedy ponieważ TS oczekuje kodu TS.
 
+**Uwaga! Jest to do uruchomienia bo mimo wszystko pod spodem jest JS, ale będziemy mieć błedy walidacji. Jeśli wyłączymy przerywanie kompilacji to uruchomimy mimio wszystko nasz projekt. Natomiast możemy mieć potem problemy ze zbudowaniem produkcyjnej wersji.**
+
 Rozwiązaniem jest poszukanie tzw. types dla biblioteki. np. dla lodash szukamy @types/lodash
 
 ```js
