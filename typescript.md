@@ -1571,3 +1571,5 @@ validate(p).then((errors) => {
   }
 });
 ```
+
+## React & TS
