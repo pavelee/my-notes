@@ -1573,3 +1573,50 @@ validate(p).then((errors) => {
 ```
 
 ## React & TS
+
+### Typowanie w przypadku useState
+
+```js
+import React, { useState } from "react";
+
+const SomeComponent = () => {
+  const [someParam, setSomeParam] = useState < string > ""; // typ generyczny, możemy zdefininiować czym to będzie!
+};
+```
+
+## Node.js & TS
+
+### Konfiguracja projektu
+
+#### Inicjalizacja projektu
+
+```
+npm init
+```
+
+```
+tsc --init
+```
+
+#### Ustawienia typescript
+
+- target -> es2018
+- moduleResolution -> node (nowa pozycja)
+- outDir -> ./dist
+- rootDir -> ./src
+
+#### Piszemy kod!
+
+Następnie dodaj folder src i zacznij pisać kod!
+
+### Konfiguracja express.js
+
+```
+npm install --save express body-parser
+```
+
+nodemon - automatycznie restartuje node.js przy zmianie plików
+
+```
+npm install --save-dev nodemon
+```
