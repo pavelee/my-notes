@@ -1,5 +1,42 @@
 # Typescript
 
+## Podstawy Type Safety
+
+-   po co type checker?
+    -   redukujemy naszą odpowiedzaloność za sprawdzanie typów
+    -   zaufanie do kompilatora, mamy większy komfort pracy
+    -   wychwytywanie błedów wcześniej, w compile-time zamiast runtime
+        -   mniej debugowania!
+    -   nie potrzebujemy testów dla poprawności struktur, type checker to już robi za nas
+    -   typ to podpowiedź, szczególnie dla innych programistów którzy używają nas kod
+        -   pozwala zapisać intencje programisty
+-   ogranicznia TypeScripty
+    -   nie sprawdziwmy poprawności odpowiedzi z API
+        -   to jest nieznane do momentu odpalenia kodu
+    -   warunki wyścigu (race conditions)
+        -   problem kiedy TypeScript nie jest pewien czy zmienna jest już zainciowana
+        -   tutaj możemy to potwierdzić że tak będzie poprzez znak ! ale bierzemy na siebie odpowiedzalność
+    -   niektóre operacje JS koercja, TypeScript pozwala na to co już silnie wrosło w JS-owa tradycje
+        -   {} + ''
+        -   100 / 0 -> to przejdzie chociaż i tak dostaniemy wynik w postaci inifinity
+-   kompilator powiada nam gdzie kod może się wywalić
+    -   znajdujemy błędy we wczesnym etapie
+-   nie powinniśmy czekać z upgradewaniem wersji TS, czym później tym to będzie trudniejsze
+    -   to jak z pull requestami, czym dłużej leża tym merge będzie trudniejszy
+-   TS możemy wypróbować online -> https://www.typescriptlang.org/play
+    -   Też się sprawdza do testowania nowej wersji
+    -   Nowe wersje wychodzą średnio co 2 miesiące :o
+-   jest to przydatne w przypadku dzielenie się kodem
+    -   my sami znamy nasz kod, inny nie koniecznie
+-   jeśli jest jaka korzyść, to musi być cena
+    -   tutaj ceną jest potrzeba znajmości typów
+-   popularne type checkery w świecie JS
+    -   TypeScript
+    -   Flow
+    -   PureScript
+    -   Hegel
+-   Najlepszym wyborem jest TypeScript ponieważ jest najbardziej popularny
+
 ## Triki
 
 ### Oznaczenie że to nie będzie nullem znaj !
@@ -36,34 +73,34 @@ Możemy oznaczyć że parametr nie będzie używany, mimo że jest zdefiniowany.
 
 ```js
 function someFunction(_: string) {
-  // brak błedu, mimo że nie używamy parametru
-  return null;
+    // brak błedu, mimo że nie używamy parametru
+    return null;
 }
 ```
 
 ### Przydatne rozszerzenia dla VSCode
 
-- ESLint - sprawdzanie jakości kodu
-- Prettier - CodeFormatter
-- Debugger for Chrome
-  - Wymaga opcji "sourceMap" na true
+-   ESLint - sprawdzanie jakości kodu
+-   Prettier - CodeFormatter
+-   Debugger for Chrome
+    -   Wymaga opcji "sourceMap" na true
 
 ## Ogólne
 
-- Jest to nakładka na JS
-  - wprowadza silne typowanie do JS
-- kompiluje do natywnego JS'a
-- W przypadku braku jawnego typowania ts domyśla się typu po przypisanej inicacyjnej wartości
-- wszystkie typy w TS sa zapisane małymi literami np. string, number
+-   Jest to nakładka na JS
+    -   wprowadza silne typowanie do JS
+-   kompiluje do natywnego JS'a
+-   W przypadku braku jawnego typowania ts domyśla się typu po przypisanej inicacyjnej wartości
+-   wszystkie typy w TS sa zapisane małymi literami np. string, number
 
 ### Wymuszenie ingorowania błedów kompilatora
 
-- @ts-ignore
-  - ignorowanie konretnej linii kodu
-- @ts-expect-error
-  - podobne do powyższego ale podczas kompilacji wyrzuca informacje jeśli w tym miejscu nie mamy błedu
-- @ts-nocheck
-  - ignorowanie całego pliku (dodajemy u góry pliku)
+-   @ts-ignore
+    -   ignorowanie konretnej linii kodu
+-   @ts-expect-error
+    -   podobne do powyższego ale podczas kompilacji wyrzuca informacje jeśli w tym miejscu nie mamy błedu
+-   @ts-nocheck
+    -   ignorowanie całego pliku (dodajemy u góry pliku)
 
 Powyzsza adnotacje dodajemy jako komentarz
 
@@ -82,12 +119,12 @@ let myVariable: string;
 
 ```js
 class SomeClass {
-  name: string;
+    name: string;
 
-  describe(this: SomeClass) {
-    // dzięki takiemu zapisowi mamy gwarancje że będzie to wywołane tylko z obiektu SomeClass
-    return this.name;
-  }
+    describe(this: SomeClass) {
+        // dzięki takiemu zapisowi mamy gwarancje że będzie to wywołane tylko z obiektu SomeClass
+        return this.name;
+    }
 }
 ```
 
@@ -135,20 +172,20 @@ someClassObject.setSomeParam = 'someNewValue'; // wywołuje settera klasy
 
 ## Używanie
 
-- instalacja poprzez npm, instalujemy w trybie globalnym
+-   instalacja poprzez npm, instalujemy w trybie globalnym
 
 ```bash
 npm install -g typescript
 ```
 
-- Tworzymy plik TS np. nazwa_pliku_do_kompilacji.ts
+-   Tworzymy plik TS np. nazwa_pliku_do_kompilacji.ts
 
 ```js
 let somets: string = "test";
 ```
 
-- Następnie używamy typescript poprzez polecenie tsc
-  - W parametrze podajemy plik TS do kompilacji
+-   Następnie używamy typescript poprzez polecenie tsc
+    -   W parametrze podajemy plik TS do kompilacji
 
 ```js
 tsc nazwa_pliku_do_kompilacji.ts
@@ -249,82 +286,82 @@ oznacza że wszystkie opcje sprawdzania kodu są uruchomoione.
 
 Natomiast mamy konkretne opcje
 
-- NoImplicitAny - blokuje używania parametrów które nie sa jasno określone. Nie akceptuje typu "any"
-- strictNullChecks - blokuje zmiennej które potencjalnie mogą być nullem (brak inicjacji). Na przykłąd pochodzi ze funkcji która MOŻE zwrócić null'a
-- strictFunctionTypes - sprawdzanie syngnatury funkcji
-- strictBindCallAplly - sprawdzanie czy przekazujemy wszystkie potrzebne parametry
+-   NoImplicitAny - blokuje używania parametrów które nie sa jasno określone. Nie akceptuje typu "any"
+-   strictNullChecks - blokuje zmiennej które potencjalnie mogą być nullem (brak inicjacji). Na przykłąd pochodzi ze funkcji która MOŻE zwrócić null'a
+-   strictFunctionTypes - sprawdzanie syngnatury funkcji
+-   strictBindCallAplly - sprawdzanie czy przekazujemy wszystkie potrzebne parametry
 
 ## Typy TS
 
-- number
-  - 1, 5.3, -10
-- boolean
-  - true, false
-- string
-  - 'Hi', "Hi", `Hi`
-- object
+-   number
+    -   1, 5.3, -10
+-   boolean
+    -   true, false
+-   string
+    -   'Hi', "Hi", `Hi`
+-   object
 
-  - w przypadku braku typowania, TS ustawi domyślne typy po inicjujacej wartości kluczy
-  - domyślnie typujemy poprzez "object", natomiast to powoduje że TS nie ma informacji o typach pól, powoduje to potem problemy przy kompilacji
+    -   w przypadku braku typowania, TS ustawi domyślne typy po inicjujacej wartości kluczy
+    -   domyślnie typujemy poprzez "object", natomiast to powoduje że TS nie ma informacji o typach pól, powoduje to potem problemy przy kompilacji
+
+            ```js
+            const person: object = { name: "test" };
+            console.log(person.name); // bład kompilacji, to tylko pusty obiekt dla TS
+            ```
+
+    -   jeśli chcemy określić jak powinnien być zbudowany obiekt zapisujem to jak poniżej
+
+            ```js
+            const person: { name: string } = { name: "test" };
+            console.log(person.name); // brak błedu kompilacji! TS wie czego się spodziewać
+            ```
+
+    -   w przypadku zagnieżdzania obiektu zapisujemy to jak poniżej
+
+            ```js
+            const person: {
+                id: string,
+                price: number,
+                tags: string[],
+                details: {
+                    title: string,
+                    description: string,
+                },
+            } = {
+                id: "abc1",
+                price: 12.99,
+                tags: ["great-offer", "hot-and-new"],
+                details: {
+                    title: "Red Carpet",
+                    description: "A great carpet - almost brand-new!",
+                },
+            };
+            ```
+
+-   array
+    -   może przechowywać dowolną kolelcje typów np. number, string itp.
+    -   musimy określić typ danych w array np. string[] lub określić że typy moga być dowolne (mieszane) poprzez any[]
+-   tuple
+    -   Jest to array z określonymi typami elementów
+    -   np. [number, string]
+-   enum
+
+    -   Typ dodany przez TS
 
         ```js
-        const person: object = { name: "test" };
-        console.log(person.name); // bład kompilacji, to tylko pusty obiekt dla TS
+          enum Role { ADMIN, READ_ONLY, USER }
         ```
 
-  - jeśli chcemy określić jak powinnien być zbudowany obiekt zapisujem to jak poniżej
+    -   TS pod spodem zamienia to na integer, ale zystkujemy możliwość czystego kodu
+    -   ewentualnie możesz ustawić wartość enum
 
         ```js
-        const person: { name: string } = { name: "test" };
-        console.log(person.name); // brak błedu kompilacji! TS wie czego się spodziewać
+          enum Role { ADMIN = 'ADMIN', READ_ONLY = 'READ_ONLY', USER = 'USER' }
         ```
 
-  - w przypadku zagnieżdzania obiektu zapisujemy to jak poniżej
-
-        ```js
-        const person: {
-            id: string,
-            price: number,
-            tags: string[],
-            details: {
-                title: string,
-                description: string,
-            },
-        } = {
-            id: "abc1",
-            price: 12.99,
-            tags: ["great-offer", "hot-and-new"],
-            details: {
-                title: "Red Carpet",
-                description: "A great carpet - almost brand-new!",
-            },
-        };
-        ```
-
-- array
-  - może przechowywać dowolną kolelcje typów np. number, string itp.
-  - musimy określić typ danych w array np. string[] lub określić że typy moga być dowolne (mieszane) poprzez any[]
-- tuple
-  - Jest to array z określonymi typami elementów
-  - np. [number, string]
-- enum
-
-  - Typ dodany przez TS
-
-    ```js
-      enum Role { ADMIN, READ_ONLY, USER }
-    ```
-
-  - TS pod spodem zamienia to na integer, ale zystkujemy możliwość czystego kodu
-  - ewentualnie możesz ustawić wartość enum
-
-    ```js
-      enum Role { ADMIN = 'ADMIN', READ_ONLY = 'READ_ONLY', USER = 'USER' }
-    ```
-
-- any
-  - Dowolny typ, wylaczenie komplilatora TS
-  - nie jest zalecane używanie
+-   any
+    -   Dowolny typ, wylaczenie komplilatora TS
+    -   nie jest zalecane używanie
 
 ## Union Type
 
@@ -370,7 +407,7 @@ W TS możemy ustalić zwracany typ poprzez funkcje, jeśli tego nie zrobimy to T
 
 ```js
 function something(): number {
-  return 1;
+    return 1;
 }
 ```
 
@@ -400,7 +437,7 @@ Aby przekazać callback w sygnaturze funkcji, robimy tak jak poniżej
 
 ```js
 function someFunction(a: number, b: number, cb: (a: number) => void) {
-  cb(a);
+    cb(a);
 }
 ```
 
@@ -423,7 +460,7 @@ Jest to typ oznaczający że funkcja nigdy niczego nie zwraca, ale w sensie że 
 
 ```js
 function someFunction(): never {
-  throw Error("some error, function never execute properly");
+    throw Error("some error, function never execute properly");
 }
 ```
 
@@ -435,9 +472,9 @@ Jest to specjalny typ istniejący tylko w TS
 
 ```js
 interface SomeInterface {
-  name: string;
-  age: number;
-  greet(phrase: string): void;
+    name: string;
+    age: number;
+    greet(phrase: string): void;
 }
 
 let user: User;
@@ -445,21 +482,21 @@ let user: User;
 
 Używamy do do opisu obiekty, alternatywą jest customwy typ ale to są odrębne koncpecje
 
-- customowy typ - opisuje typ danych
-- interfejs - opisuje obiekt
+-   customowy typ - opisuje typ danych
+-   interfejs - opisuje obiekt
 
 ### Interfejs dla klasy
 
-- Interejsy nie są tłumaczone do vanilla js, to byt istniejący tylko w TS
+-   Interejsy nie są tłumaczone do vanilla js, to byt istniejący tylko w TS
 
 ```js
 interface SomeInterface {
-  // w TS interfejs może zawierać pola oraz metody
-  someMandatoryField: string;
+    // w TS interfejs może zawierać pola oraz metody
+    someMandatoryField: string;
 }
 
 class SomeClass implements SomeInterface {
-  someMandatoryField: string; // musimy przykryć interfejs
+    someMandatoryField: string; // musimy przykryć interfejs
 }
 
 let someObject: SomeClass; // mamy pewność że obiekt posiada metody interfejsu
@@ -490,11 +527,11 @@ Interfejs może dziedziczyć po innym interfejsie
 
 ```js
 interface SomeInteface1 {
-  name: string;
+    name: string;
 }
 
 interface SomeInterface2 extends SomeInteface1 {
-  surname: string;
+    surname: string;
 }
 ```
 
@@ -502,14 +539,14 @@ interface SomeInterface2 extends SomeInteface1 {
 
 ```js
 interface SomeFunctionInterface {
-  (a: number, b: number): number;
+    (a: number, b: number): number;
 }
 ```
 
 ### Interfejsy opcjonalne parametry oraz metody
 
-- znak ? dla parametrów
-- znak ! dla metod
+-   znak ? dla parametrów
+-   znak ! dla metod
 
 ```js
 interface SomeInterface {
@@ -526,12 +563,12 @@ Możemy połczczyć różne typy w TS
 
 ```js
 type Admin = {
-  name: string,
-  access: boolean,
+    name: string,
+    access: boolean,
 };
 
 type Employee = {
-  position: string,
+    position: string,
 };
 
 type ElevatedEmployee = Employee & Admin;
@@ -572,11 +609,11 @@ type Numeric = number | boolean;
 type Universal = Combinable & Numeric;
 
 function add(a: Universal, b: Universal) {
-  if (typeof a === "string" || typeof b === "string") {
-    // to jest strażnik typu, bez tego dostalibyśmy bład kompilacji. TS domyśla że przypadek stringowy rozwaliłby nam kodzik
-    return a.toString() + b.toString();
-  }
-  return a + b;
+    if (typeof a === "string" || typeof b === "string") {
+        // to jest strażnik typu, bez tego dostalibyśmy bład kompilacji. TS domyśla że przypadek stringowy rozwaliłby nam kodzik
+        return a.toString() + b.toString();
+    }
+    return a + b;
 }
 ```
 
@@ -584,21 +621,21 @@ Kolejny guard - składnia 'jakisAtrybut' in object
 
 ```js
 type Admin = {
-  name: string,
-  access: boolean,
+    name: string,
+    access: boolean,
 };
 
 type Employee = {
-  position: string,
+    position: string,
 };
 
 type UnknownEmplyee = Employee | Admin;
 
 function printEmplyee(a: UnknownEmplyee) {
-  if ("access" in a) {
-    // type guard, zapewniamy TS że to zadziała
-    console.log(a.access);
-  }
+    if ("access" in a) {
+        // type guard, zapewniamy TS że to zadziała
+        console.log(a.access);
+    }
 }
 ```
 
@@ -614,27 +651,27 @@ Możemy TS podpowiedzieć typ poprzez wspólne pole np. type. Jest to technika D
 
 ```js
 interface Bird {
-  type: "bird";
-  flyingSpeed: number;
+    type: "bird";
+    flyingSpeed: number;
 }
 
 interface Horse {
-  type: "horse";
-  runingSpeed: numer;
+    type: "horse";
+    runingSpeed: numer;
 }
 
 type Animal = Bird | Horse;
 
 function moveAnimal(animal: Animal) {
-  let s;
-  switch (
-    animal.type // istotne dla TS, rozpoznanie jakie to typ.
-  ) {
-    case "bird": // Uwaga! TS nawet rozpoznaje jeśli zrobimy literówke w typie! Super!
-      console.log(animal.flyingSpeed); // jest ok, TS wie że to odpowiedni obiekt
-    case "horse":
-      console.log(animal.runingSpeed);
-  }
+    let s;
+    switch (
+        animal.type // istotne dla TS, rozpoznanie jakie to typ.
+    ) {
+        case "bird": // Uwaga! TS nawet rozpoznaje jeśli zrobimy literówke w typie! Super!
+            console.log(animal.flyingSpeed); // jest ok, TS wie że to odpowiedni obiekt
+        case "horse":
+            console.log(animal.runingSpeed);
+    }
 }
 ```
 
@@ -694,16 +731,16 @@ W przypadkiu kiedy nie wiemy czy dany atrybut istnieje możemy poinstruować TS 
 
 ```js
 const fetchedUserData = {
-  id: "u1",
-  name: "Max",
-  // job: { title: 'CEO' } // w takim przypadki będzie ok, TS został poinformowany że pole może nie istnieć, natomaist może się pojawić poźniej
+    id: "u1",
+    name: "Max",
+    // job: { title: 'CEO' } // w takim przypadki będzie ok, TS został poinformowany że pole może nie istnieć, natomaist może się pojawić poźniej
 };
 
 fetchedUserData?.job?.title; // ?. oznacza że pole może nie istnieć. Jeśli pole nie istnieje to przerywa łańcuch
 
 // odpowiednik w vanilla JS, sprawdzenie czy dane istnieją
 if (fetchedUserData.job && fetchedUserData.job.title) {
-  // coś tam zrób
+    // coś tam zrób
 }
 ```
 
@@ -894,18 +931,18 @@ przykład dekoratora
 
 ```js
 function Logger(constructor: Function) {
-  // constructor to funkcja konstruktora z klasy, możemy jej użyć aby utworzyć instancje klasy do której jest podpięty dekorator
-  const someNewObj = new constructor();
-  console.log("Logging...");
+    // constructor to funkcja konstruktora z klasy, możemy jej użyć aby utworzyć instancje klasy do której jest podpięty dekorator
+    const someNewObj = new constructor();
+    console.log("Logging...");
 }
 
 @Logger
 class Person {
-  name = "Max";
+    name = "Max";
 
-  constructor() {
-    console.log("Someting...");
-  }
+    constructor() {
+        console.log("Someting...");
+    }
 }
 ```
 
@@ -913,19 +950,19 @@ możemy też inaczje zapisać dektoratora, w taki sposób aby móc go sparamet
 
 ```js
 function Logger(someStringParam: string) {
-  return function (onstructor: Function) {
-    // w tym przypadku zwracamy funkcje dektoratora
-    console.log("Logging...");
-  };
+    return function (onstructor: Function) {
+        // w tym przypadku zwracamy funkcje dektoratora
+        console.log("Logging...");
+    };
 }
 
 @Logger("Some passed value") // teraz możemy sparametryzować dekorator!
 class Person {
-  name = "Max";
+    name = "Max";
 
-  constructor() {
-    console.log("Someting...");
-  }
+    constructor() {
+        console.log("Someting...");
+    }
 }
 ```
 
@@ -957,10 +994,10 @@ Możemy dodawać wiele dektoratów do klasy
 
 Co istotne:
 
-- Dekoratory tworzą się w kolejności od góry do dołu
-  - np. inicjacja
-- Dektoratory wykonują się w kolejności od dołu do góry
-  - już body funkcji dektoratora
+-   Dekoratory tworzą się w kolejności od góry do dołu
+    -   np. inicjacja
+-   Dektoratory wykonują się w kolejności od dołu do góry
+    -   już body funkcji dektoratora
 
 ```js
 function Logger(someStringParam: string) {
@@ -998,9 +1035,9 @@ class Person {
 
 Dekoratory też możemy dodawać do
 
-- atrybutów klas
-- metod
-- parametrów metod
+-   atrybutów klas
+-   metod
+-   parametrów metod
 
 **Uwaga! Wszystkie poniższe dekoratory odpalają się w momencie jak DEFINIUJEMY KLASE**
 
@@ -1050,9 +1087,9 @@ Dekoratory też mogą zwracać wartość w postaci nowego obiektu. Pozwala to de
 
 Dekoratory które mogą zwracać wartość to podpięte do
 
-- klasy
-- metod
-  - tutaj możemy zwrócić inny obiekt property descriptor i zmienić w jaki sposób zachowuje się metoda.
+-   klasy
+-   metod
+    -   tutaj możemy zwrócić inny obiekt property descriptor i zmienić w jaki sposób zachowuje się metoda.
 
 Oczywiście inne mogą też zwracać, ale nie będzie to brane pod uwagę
 
@@ -1130,15 +1167,15 @@ function PositiveNumber() {}
 function validate(obj: object) {}
 
 class Course {
-  @Required
-  title: string;
-  @PositiveNumber
-  price: number;
+    @Required
+    title: string;
+    @PositiveNumber
+    price: number;
 
-  constructor(t: string, p: number) {
-    this.title = t;
-    this.price = p;
-  }
+    constructor(t: string, p: number) {
+        this.title = t;
+        this.price = p;
+    }
 }
 
 // poźniej w kodzie np.
@@ -1150,8 +1187,8 @@ validate(formData); // co odpali logikę walidacji, w zależności od konfigura
 
 ### Materiały
 
-- JavaScript Modules (Overview): https://medium.com/computed-comparisons/commonjs-vs-amd-vs-requirejs-vs-es6-modules-2e814b114a0b
-- More on ES Modules: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
+-   JavaScript Modules (Overview): https://medium.com/computed-comparisons/commonjs-vs-amd-vs-requirejs-vs-es6-modules-2e814b114a0b
+-   More on ES Modules: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
 
 ### Moduły
 
@@ -1159,18 +1196,18 @@ Moduły to sposób na podzielenie swojego kondu na wiele plików, tak aby potem 
 
 sposoby:
 
-- Namespaces and file bundling
-  - tylko w TS
-  - grupowanie po namespace
-  - importowanie po namespace
-  - per plik lub bundluje wszystkie pilki do jednego wspólnego (automatycznie)
-- ES6 imports/Exports - ES6 modules
-  - niezalezne od TS, vanilla JS
-  - dostępny w wielu przeglądarkach
-    - przeglądarki samodzielnie importują potrzebne pliki
-  - wspierane przez TS
-  - per plik ale wystarczy jeden import (script tag)
-  - potrzebny jest webpack aby uzyskać bundle (jeden plik) zamiast extra requestów po pliki
+-   Namespaces and file bundling
+    -   tylko w TS
+    -   grupowanie po namespace
+    -   importowanie po namespace
+    -   per plik lub bundluje wszystkie pilki do jednego wspólnego (automatycznie)
+-   ES6 imports/Exports - ES6 modules
+    -   niezalezne od TS, vanilla JS
+    -   dostępny w wielu przeglądarkach
+        -   przeglądarki samodzielnie importują potrzebne pliki
+    -   wspierane przez TS
+    -   per plik ale wystarczy jeden import (script tag)
+    -   potrzebny jest webpack aby uzyskać bundle (jeden plik) zamiast extra requestów po pliki
 
 ### Namespaces and file bundling w TS
 
@@ -1203,9 +1240,9 @@ namespace App { // Uwaga musimy mieć ten sam namespace!
 
 **Uwaga!** Aby nie mieć problemów z ładowaniem plików po stronie przeglądaki musimy złaczyć nas wynik do jednego pliku. Możemy to zrobić poprzez ustawienie w konfiguracji
 
-- outFile -> np. /dist/bundle.js
-  - Uwaga! ten plik będziemy następnie ładować po stronie HTML (script tag)
-- module -> amd
+-   outFile -> np. /dist/bundle.js
+    -   Uwaga! ten plik będziemy następnie ładować po stronie HTML (script tag)
+-   module -> amd
 
 Minusem namespace w TS jest to że plik includowany w innym miejscu może nam dać złudzenie że nie musimy tego importować w innym. Nie ma technicznego wymogu aby importować to co realnie jest używane w pliku. Natomiast może to potem prowadzić do skomplikowanych bugów gdzie usunięcie jednego reference popsuje inny plik który na tym polegał.
 
@@ -1241,7 +1278,7 @@ class SomeClassUsingInterestingClass {
 
 Następnie w opcjach TS musimy ustawić:
 
-- module -> ES2015
+-   module -> ES2015
 
 oraz przy tagu script który ładuje aplikacje dodać type="module"
 
@@ -1253,21 +1290,21 @@ Dużą zaletą takiego podejścia jest to że teraz każdy plik musi samodzielni
 
 Dodatkowo możemy:
 
-- zgrupować importy z pliku do jakiegoś agregatora np.
+-   zgrupować importy z pliku do jakiegoś agregatora np.
 
 ```js
 import * as MyPackage from "some-file.js";
 new MyPackage.SomeExportedClass(); // używamy po kropce
 ```
 
-- Wykonać rename importu tylko w konteście tego pliku
+-   Wykonać rename importu tylko w konteście tego pliku
 
 ```js
 import { SomeExportedClass as RenamedExportedClass } from "some-file.js";
 new RenamedExportedClass();
 ```
 
-- Wykonać default export aby dać znać który obiekt będzie domyślnie importowany
+-   Wykonać default export aby dać znać który obiekt będzie domyślnie importowany
 
 some-file.js
 
@@ -1293,12 +1330,12 @@ console.log('Jakiś log'); // zobaczymy tylko jednokrotnie, niezależnie ile ra
 
 dokumentacja webpack: https://webpack.js.org/
 
-- Webpack może nam pomóc wdrożyć importy ES6 dla starszych przeglądarek
-- Webpack pozwala nam spakować (bundle) pliki tak aby uniknąć ładowania wielu plików osobno
-- Okiestruje pliki zgodnie z konfiguracją
-- bundluje kod, mniej potrzebnych importów
-- optymalizuje kod, mniej kodu do pobrania
-- łatwo rozwijalna konfiguracja
+-   Webpack może nam pomóc wdrożyć importy ES6 dla starszych przeglądarek
+-   Webpack pozwala nam spakować (bundle) pliki tak aby uniknąć ładowania wielu plików osobno
+-   Okiestruje pliki zgodnie z konfiguracją
+-   bundluje kod, mniej potrzebnych importów
+-   optymalizuje kod, mniej kodu do pobrania
+-   łatwo rozwijalna konfiguracja
 
 ### Instalacja webpacka
 
@@ -1306,20 +1343,20 @@ dokumentacja webpack: https://webpack.js.org/
 npm install --save-dev webpack webpack-cli webpack-dev-server typescript ts-loader
 ```
 
-- webpack - pakiet ktory potrzebujemy
-- webpack-cli - CLI do webpacka
-- webpack-dev-server - hot reloading dla devowego środowiska
-- ts-loader - ładowanie TS przez webpacka, jak konwertować TS do JS
+-   webpack - pakiet ktory potrzebujemy
+-   webpack-cli - CLI do webpacka
+-   webpack-dev-server - hot reloading dla devowego środowiska
+-   ts-loader - ładowanie TS przez webpacka, jak konwertować TS do JS
 
 ### Konfiguracja TS w Webpack
 
-- target -> es6
-  - Tutaj Webpack będzie wiedział do jakiej wersji JS ma dążyć
-- module -> es2015
-- outDir -> ./dist or inny plik
-- rootDir - już nie potrzebny, webpack to przejmuje
-- sourceMap -> true
-  - to pomaga debugować kod TS
+-   target -> es6
+    -   Tutaj Webpack będzie wiedział do jakiej wersji JS ma dążyć
+-   module -> es2015
+-   outDir -> ./dist or inny plik
+-   rootDir - już nie potrzebny, webpack to przejmuje
+-   sourceMap -> true
+    -   to pomaga debugować kod TS
 
 ### Konfiguracja Webpack
 
@@ -1378,40 +1415,40 @@ Po zainstalowaniu webpack-dev-server musimy poprawić naszą konfiguracje do wer
 const path = require("path");
 
 module.exports = {
-  mode: "development",
-  entry: "./src/app.ts",
-  devServer: {
-    static: [
-      {
-        directory: path.join(__dirname),
-      },
-    ],
-  },
-  output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/dist/",
-  },
-  devtool: "inline-source-map",
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: "ts-loader",
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  resolve: {
-    extensions: [".ts", ".js"],
-  },
+    mode: "development",
+    entry: "./src/app.ts",
+    devServer: {
+        static: [
+            {
+                directory: path.join(__dirname),
+            },
+        ],
+    },
+    output: {
+        filename: "bundle.js",
+        path: path.resolve(__dirname, "dist"),
+        publicPath: "/dist/",
+    },
+    devtool: "inline-source-map",
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: "ts-loader",
+                exclude: /node_modules/,
+            },
+        ],
+    },
+    resolve: {
+        extensions: [".ts", ".js"],
+    },
 };
 ```
 
 zawiera nowe rzeczy potrzebne do działania webpack dev server:
 
-- mode -> development
-- publicPath -> /dist/
+-   mode -> development
+-   publicPath -> /dist/
 
 wystarczy że wystartujemy serwer poprzez polecenie
 
@@ -1440,37 +1477,37 @@ const path = require("path");
 const CleanPlugin = require("clean-webpack-plugin");
 
 module.exports = {
-  mode: "production", // wersja produkcyjna
-  entry: "./src/app.ts",
-  devServer: {
-    static: [
-      {
-        directory: path.join(__dirname),
-      },
+    mode: "production", // wersja produkcyjna
+    entry: "./src/app.ts",
+    devServer: {
+        static: [
+            {
+                directory: path.join(__dirname),
+            },
+        ],
+    },
+    output: {
+        filename: "bundle.js",
+        path: path.resolve(__dirname, "dist"),
+        // publicPath: "/dist/", -> już nie potrzebne, chcemy mieć pliki na dysku a nie w pamieci
+    },
+    // devtool: 'inline-source-map', // wyrzucamy z produkcji, ale jakbyśmy zostawili to moglibyśmy debugować na prodzie
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: "ts-loader",
+                exclude: /node_modules/,
+            },
+        ],
+    },
+    resolve: {
+        extensions: [".ts", ".js"],
+    },
+    plugins: [
+        // globalne pluginy
+        new CleanPlugin.CleanWebpackPlugin(), // automatyczne czyszcze w momecnie rebuildu
     ],
-  },
-  output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
-    // publicPath: "/dist/", -> już nie potrzebne, chcemy mieć pliki na dysku a nie w pamieci
-  },
-  // devtool: 'inline-source-map', // wyrzucamy z produkcji, ale jakbyśmy zostawili to moglibyśmy debugować na prodzie
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: "ts-loader",
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  resolve: {
-    extensions: [".ts", ".js"],
-  },
-  plugins: [
-    // globalne pluginy
-    new CleanPlugin.CleanWebpackPlugin(), // automatyczne czyszcze w momecnie rebuildu
-  ],
 };
 ```
 
@@ -1528,8 +1565,8 @@ import "reflect-metadata";
 import { plainToClass } from "class-transformer";
 
 const products = [
-  { title: "xx", price: 29 },
-  { title: "yy", price: 33 },
+    { title: "xx", price: 29 },
+    { title: "yy", price: 33 },
 ];
 
 const convertedToClasses = plainToClass(NazwaKlasy, products); // super skrócik, konwertuje do klas
@@ -1549,13 +1586,13 @@ proste użycie
 import { IsNotEmpty, IsNumber, IsPositive } from "class-validator";
 
 class Product {
-  @IsNotEmpty()
-  title: string;
-  @IsNumber()
-  @IsPositive()
-  price: number;
+    @IsNotEmpty()
+    title: string;
+    @IsNumber()
+    @IsPositive()
+    price: number;
 
-  // i tak dalej...
+    // i tak dalej...
 }
 ```
 
@@ -1566,9 +1603,9 @@ import { validate } from "class-validator";
 
 const p = new Prodct(); // cos tutaj inicujemy
 validate(p).then((errors) => {
-  if (errors.length > 0) {
-    console.log(errors);
-  }
+    if (errors.length > 0) {
+        console.log(errors);
+    }
 });
 ```
 
@@ -1580,7 +1617,7 @@ validate(p).then((errors) => {
 import React, { useState } from "react";
 
 const SomeComponent = () => {
-  const [someParam, setSomeParam] = useState < string > ""; // typ generyczny, możemy zdefininiować czym to będzie!
+    const [someParam, setSomeParam] = useState < string > ""; // typ generyczny, możemy zdefininiować czym to będzie!
 };
 ```
 
@@ -1600,10 +1637,10 @@ tsc --init
 
 #### Ustawienia typescript
 
-- target -> es2018
-- moduleResolution -> node (nowa pozycja)
-- outDir -> ./dist
-- rootDir -> ./src
+-   target -> es2018
+-   moduleResolution -> node (nowa pozycja)
+-   outDir -> ./dist
+-   rootDir -> ./src
 
 #### Piszemy kod!
 
