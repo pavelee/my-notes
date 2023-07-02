@@ -95,6 +95,16 @@
     -   przestrzeń typów
         -   to istnieje tylko w TS, ulotni się podczas kompilacji
     -   technicznie rzecz biorąc możemy mieć zmienną oraz typ danych o tych samych nazwach, to możliwe!
+-   Wnioskowanie Typów
+    -   Różnicą pomiędzy instrukcją a wyrażeniem
+        -   instrukcja to najmniejsza jednostka, jakiś rozkaz, bez typu
+        -   wyrażenie to rzeczownik, jakaś rzecz, mają typ
+        -   wyrażenie można przypisać do zmiennej, instrukcji nie
+    -   Różnica let czy const
+        -   let powoduje że zmienna na typ, może sie zmienić
+        -   const powoduje że to jest jakaś wartość, jeśli nie ustalimy typu to przyjmie to przypisaną wartość jako stałą
+            -   const x = 'napis' => typ -> "napis"
+            -   const y: string = 'napis' => typ -> string
 
 ## Triki
 
