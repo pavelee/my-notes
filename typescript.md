@@ -37,6 +37,65 @@
     -   Hegel
 -   Najlepszym wyborem jest TypeScript ponieważ jest najbardziej popularny
 
+### System typów Typescript
+
+-   typowanie statyczne vs dynaminczne
+    -   typowanie statyczne wymaga od nas określenai jaki to będzie typ danych
+        -   spowolni pisanie kodu bo musimy przmyśleć jakie typ danych to będzeie
+        -   jakość kodu wzrośnie, jest to inwestycja aby mieć mniej bugów w kodzie
+    -   typowanie dynamiczne nie wymaga myślenia o typie, jest to płynne
+        -   prostsze w użyciu, szybsze
+        -   ceną jest mniejsza jakość kodu, więcej potencjalnych runtime errorów
+        -   mimo szybszego developementu, poprawa błedów może skutować utratą czasu
+-   typowanie silne vs słabe
+    -   ocena nie jest 0/1, różne jezyki mają różny poziom silności/słabości, to często ocena subiektywna, zależna od programisty
+    -   dla nie poprawnych operacji
+        -   silne rzuci błedem
+            -   wolimy to w bardziej "poważnym" sofcie
+            -   operacja 5 / 0 nie pozwoli na kompilacje kodu
+            -   tzw. loud fail
+        -   słabe probram działa dalej "jakoś"
+            -   tzw. silent fail
+            -   np. dla operacji 5 / 0 -> dostaniemy infinity zamiast bład działania
+            -   jest to dobre dla poczatkujących
+            -   każdy słaby język ma inną graince akceptowalności błedów
+                -   w ES6 js nie akceptuje dwóch letów dla zmiennej
+-   przykłady znanych jezyków w kwestii bycie statycznym i silnie typowanym
+    -   java -> statyczna & silna
+    -   python -> dynamiczny & silny
+    -   js -> dynamiczny & słaby
+    -   TS -> stopniowo typowany - stopień silności zależy od ustawień
+-   poliformizm w TS
+    -   apparent type - jak kompilator to widzi, co wie
+    -   actual type - czym realnie jest obiekt (RunTime)
+-   Typowanie: strukturalne vs nominalne
+    -   Pytanie, co to znaczy że coś jest kompatibilne z intefejsem X?
+    -   Nominalne - implementuje Java, C#
+        -   istotna jest nazwa klasy/intefejsu, hierarchia dziedziczenia
+        -   dwie klasy o tej samej strukturze NIE SA TOZSAME
+        -   poliformizm oparty o klasę bazową interejs
+    -   Strukturalne - implementuje TS
+        -   istotnaj jest zawartość obiektu
+        -   dwie identyczne struktury są TOŻSAME
+        -   poliforizm strukturalny
+-   Anotacje vs asercje (Typów)
+    -   wnioskowanie typu
+        -   var e = value -> typ e przyjmie domyślnie typ value (kompilator domyśli się)
+    -   anotacja typu
+        -   var e: string = value -> typ e to string! Mamy Type Safe!
+    -   asercja typu
+        -   var e = value as string -> Wiemy lepiej co to jest, wymuszamy typ!
+        -   jest to niebezpieczne, możemy się pomylić
+        -   tracimy korzyści z Type Safe
+        -   asercja istnieje jako "furtka" w momencie jak kompilator źle wnioskuje typ danych
+        -   stosujemy to jako ostateczność!
+-   Technniczne TypeScript posiada dwie przestrzenie nazw (namespace)
+    -   przestrzeń nazw
+        -   to przenika do JS
+    -   przestrzeń typów
+        -   to istnieje tylko w TS, ulotni się podczas kompilacji
+    -   technicznie rzecz biorąc możemy mieć zmienną oraz typ danych o tych samych nazwach, to możliwe!
+
 ## Triki
 
 ### Oznaczenie że to nie będzie nullem znaj !
