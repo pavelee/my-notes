@@ -107,6 +107,52 @@
             -   const y: string = 'napis' => typ -> string
 -   Zbiory zmiennych
 
+    -   Typy to zbiory
+
+        -   Typy top & bottom
+
+            -   top - czyli wszystko
+
+                -   możemy do nich przypisać dowolny elemement
+                -   any - możemy stosować wszędzie
+                    -   niebezpieczny, type unsafe, sprawaia że kompilator zamyka oczy
+                    -   gubi błedy, bo wszystko jest zgodne w obie strony
+                    -   jeżeli nadużywamy any to po co stosować TS?
+                    -   ma to zastosowanie w fomie "poddania" się kiedy np. walczymy z zewnętrzną biblioteką
+                    -   typy zbliżone
+                        -   Function - any wśród funkcji
+                        -   Object - prototyp wszystkich funkcji w js
+                        -   object - non-primitive type
+                -   unknown - nie możemy z tym nic zrobić do póki nie sprawdzimy czym jest, nic nie jest gwarantowane
+
+                    -   czyli w funkcji musimy zweryfikować typ aby potwierdzić czym jest
+                    -   to nam daje bezpieczeństwo w kodzie, należy zweryfikować czym jest zmienna
+                    -   stostujemy wtedy kiedy nie wiemy czym coś jest
+
+                    ```js
+                    type Gruszka = { kolor: string };
+                    type GruszkaSoczysta = Gruszka & { kolor: string }
+
+                    // customowy type guard, aby sprawdzić czy obiekt jest kompatybilny!
+                    function customTypeGuardGruszka(a: any): a is Gruszka {
+                        return (a as Gruszka).kolor !== undefined;
+                    }
+
+                    function zjedzGruszke(gruszka: unknown): Gruszka {
+                        if (customTypeGuardGruszka(gruszka)) {
+                            return gruszka;
+                        }
+                        return { kolor: 'asds' }
+                    }
+                    ```
+
+            -   bottom - czyli nic, zbiór pusty
+                -   never
+                    -   stosuje się dosyć rzadko, aby rzucić wyjątkiem
+                    -   zwracają ja funkcje które są zapętlone
+                    -   TS zwraca taki typ gdy przecięcie zbiorów typów jest puste
+                    -   systemów typów potrzebuje mieć sufit oraz podłogę tak aby mieć od czego się odbić
+
     -   string, number, boolean to osobne zbiory
     -   Unie i przecięcia
 
@@ -140,8 +186,75 @@
             ```
 
     -   opcja --strictNullChecks=false pozwala na przypisanie nulla do string
+    -   Typy vs Intefejsy
+        -   obiekty można otypować typem oraz intefejsem
+        -   typy i interfejsy można rozszerzać, dziedziczyć oraz implementować
+        -   więkoszości przypadków możemy używać ich zamiennie, nie ma to takiej różnicy
+        -   jakie są różnice?
+            -   declaration merging - tylko intefejsy mogą być mergowane do jednego wspólnego jeśli występują w wielu miejsach w kodzie (redux i redux-thunk)
+            -   interejsy muszą znać wszystkie pola, odpadają unie i typy warunkowe
+        -   Twórcy TS zalecają stosownie Intefejsów, może to przyspieczać kompilowanie kodu
 
 ## Triki
+
+### Kompatibliność: Excessive Atrribute Check
+
+W Ts mamy specjalny wyjątek gdzie nie możemy przypisać rozszerzonego literału do typu obiektowego, ma to taki cel aby wyłapywać literówki w przekazywanych parametrach do funkcji
+
+Pozwala to wypłapać takie przypadki:
+
+```js
+type Konfiguracja = { version: "4" | "5" };
+
+function MojaBiblioteka(conf: Konfiguracja) {}
+
+MojaBiblioteka({ version1: "4" }); // błąd, literówka w literale
+```
+
+Jakby nie było takiego wyjątku to moglibyśmy mieć nie fajne bugi, tzw. silent fail
+
+zespół TS chciał aby takie przypadki to było zawsze loud fail
+
+#### Kompatiblilność: weak type
+
+Weak type w TS to obiekt który posiada wszystkie opcjonalne pola.
+
+Jest weak ponieważ można do niego przypisać dowolny inny obiekt.
+
+Tutaj mam wyjątek, TS wali błedem jeśli chcemy przypisać do weak type obiekt który nie posiada chociaż jednego wspólnego pola.
+
+Celem jest wyłapanie prawdopodonych czeskich błędów.
+
+przykład
+
+```js
+type myWeakObject = {
+    name?: string,
+    value?: string,
+};
+
+const instanceOfMyWeakObjecy = { someNotExisingField: "asds" };
+
+function weakFunction(o: myWeakObject): void {}
+
+weakFunction(instanceOfMyWeakObjecy); // bład! brak ani jednego wspólnego pola z myWeakObject
+```
+
+### Object vs object
+
+W TS nie powinniśmy stosować typu Object, to element samego JS i pozwala na takie cos jak
+
+```js
+let y1: Object = 4; // zadziała :o
+```
+
+to wynika z tego że w JS mamy autoboxing i konwertuje 4 do obiektu
+
+zmiast tego stosujemy typ zmałej litery (TS) czyli object
+
+```js
+let y2: object = 4; // nie zadziała, oczekuje realnego obiektu
+```
 
 ### PropertyKey
 
