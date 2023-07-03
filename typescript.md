@@ -105,8 +105,47 @@
         -   const powoduje że to jest jakaś wartość, jeśli nie ustalimy typu to przyjmie to przypisaną wartość jako stałą
             -   const x = 'napis' => typ -> "napis"
             -   const y: string = 'napis' => typ -> string
+-   Zbiory zmiennych
+
+    -   string, number, boolean to osobne zbiory
+    -   Unie i przecięcia
+
+        -   znakiem | ozbaczamy unie
+            -   w tym przypadku TS nie wie ktorym typem jest obiekt, to powoduje że będzie wyrzucał błąd przy próbie wywołania metody jednego z nich
+            -   będziemy mieć dostępne tylko to co występuje w obu obiektach jednocześnie np. pole name
+        -   znakiem & przecięcia
+            -   to tak jakby klasa implementowałą dwa interfejsy
+            -   będziemy mieć dostępne wszystkie wspólne pola (to musi być jednoczęsnie połączenie obiektów)
+        -   unie dyskriminacyjne
+
+            -   wykorzystujemy wspólne pole Type aby podpowiedzieć jaki to typ
+
+            ```js
+            type A = { type: "A", uniqueField: "x" };
+            type B = { type: "B" };
+            type C = { type: "C" };
+            type Union = A | B | C;
+            type PropType = Union["type"];
+
+            function someFunction(someParam: Union) {
+                switch (someParam.type) {
+                    case "A": // tzw. type guard
+                        someParam.uniqueField; // TS już wie że to będzie typ A!
+                        break;
+                    default:
+                        // tzw. exhaustiveness type
+                        let x: never = someParam; // feature w TS, zabezpieczenie przed tym aby nie zapomnieć o dodaniu nowego typu
+                }
+            }
+            ```
+
+    -   opcja --strictNullChecks=false pozwala na przypisanie nulla do string
 
 ## Triki
+
+### PropertyKey
+
+PropertyKey to specjalny typ w TS, pasuje idealnie do klucza obiektu (generycznego) = string | number | symbol
 
 ### Oznaczenie że to nie będzie nullem znaj !
 
