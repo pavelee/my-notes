@@ -187,6 +187,7 @@
 
     -   opcja --strictNullChecks=false pozwala na przypisanie nulla do string
     -   Typy vs Intefejsy
+
         -   obiekty można otypować typem oraz intefejsem
         -   typy i interfejsy można rozszerzać, dziedziczyć oraz implementować
         -   więkoszości przypadków możemy używać ich zamiennie, nie ma to takiej różnicy
@@ -194,6 +195,28 @@
             -   declaration merging - tylko intefejsy mogą być mergowane do jednego wspólnego jeśli występują w wielu miejsach w kodzie (redux i redux-thunk)
             -   interejsy muszą znać wszystkie pola, odpadają unie i typy warunkowe
         -   Twórcy TS zalecają stosownie Intefejsów, może to przyspieczać kompilowanie kodu
+
+        ```js
+        type FajnyType = { // to zadziała
+            name: string
+        } | { value: number }
+
+        interface FajnyInterfejs { // nie zadziała, ale za to jest szybsze w kompilacji
+            name: string
+        } | { value: number }
+        ```
+
+        ```js
+        // to zdzaiała! TS łaczy intefejsy w trakcie kompilacji!
+
+        interface Podstawowy {
+            name: string;
+        }
+
+        interface Podstawowy {
+            value: number;
+        }
+        ```
 
 ## Triki
 
