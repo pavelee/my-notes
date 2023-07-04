@@ -218,6 +218,97 @@
         }
         ```
 
+-   Kontrola przepływu w aplikacji (Control flow analysis)
+
+    -   Używamy type checkerów aby wyłapywać błedy w kompilacji zamiast w runtime
+    -   kompilator analizuje możliwy przepływ w kodzie
+        -   zawęża typy do gwarantowanego typu (np. if)
+
+    ```js
+      declare const a3: true | 0 | 'a' | undefined;
+      declare const b3: false | 1 | null;
+
+      const c3 = a3 || b3; // TS wyliczy możliwe wartości w przypadku takiej operacji
+      const c4 = a3 && b3;
+
+      if (a3) { // przechodzą tylko truthy
+          console.log(a3);
+      }
+
+    ```
+
+    -   Potrzebujemy Type Guard aby w runtime potwiedzić czym jest zmienna
+
+    ```js
+        // type guard
+
+        if (typeof a3 === 'number'){
+          console.log(a3)
+        }
+
+        // bardziej rozbudowane type guard
+        interface ŁosośNorweski {
+          smaczny: boolean
+          krajPochodzenia: string
+        }
+
+        // czyżbyŁosoś is ŁosośNorweski -> ważny zapis, to podpowiada TS do czego sluży funkcja, aby potwierdzić czym jest zmienna
+        function jestŁososiemNorweskim(ryba: any): ryba is ŁosośNorweski {
+          return (
+            typeof ryba.smaczny == 'boolean'
+            && ["Brazylia", "Wietnam", "Chile"].includes(ryba.krajPochodzenia)
+          )
+        }
+
+        declare const rybaZLeklerka: unknown
+        if (jestŁososiemNorweskim(rybaZLeklerka)){
+          console.log(rybaZLeklerka)
+        }
+    ```
+
+    -   Assert functions - specjalny typ funkcji który pozwala w kodzie wykonać asercje że dany obiekt jest tym co powinnien
+
+    ```js
+      function awanturaJeśliNieŁosoś(czyżbyŁosoś: unknown): asserts czyżbyŁosoś is ŁosośNorweski {
+        if (jestŁososiemNorweskim(czyżbyŁosoś)){
+          // jeśli pochodzi z Chile to jeszcze przejdzie
+          // ale Brazylia i Wietnam to już nie
+          if (czyżbyŁosoś.krajPochodzenia !== 'Chile') {
+            throw new Error('Żądam zwrotu pieniędzy')
+          }
+        } else {
+          throw new Error('Żądam zwrotu pieniędzy')
+        }
+      }
+
+      // wywołanie
+      function obiadWWykwintnejRestauracji(){
+        rybaZLeklerka // unknown
+        awanturaJeśliNieŁosoś(rybaZLeklerka)
+        rybaZLeklerka // w tym momencie to jest potwierdzenie że to łosoś! WOW!
+      }
+    ```
+
+    -   W przypadku przypisania do zmiennej any konkretnego typu, zmienna przejumuje ten konkretny typ!
+
+    ```js
+      declare const naPewnoŁosoś: ŁosośNorweski
+
+      let cokolwiek // TS daje typ any, nie wie co to ma być
+      cokolwiek = naPewnoŁosoś
+      cokolwiek // typ to już ŁosośNorweski
+    ```
+
+    -   Jeśli w kodzie mamy zmienną która może być undefined to najlepiej zaraz po jej wystąpieniu dodać warnek z exception. Dzięki temu TS już wie że musi być tym oczkiwanem typem. Ścieżka undefined jest bardzo krótka i kończy się na exception
+
+    ```js
+    let musiBycLosos: ŁosośNorweski | undefined;
+    if (!musiBycLosos) {
+        throw new Error("TO NIE LOSOS");
+    }
+    console.log(musiBycLosos);
+    ```
+
 ## Triki
 
 ### Kompatibliność: Excessive Atrribute Check
