@@ -309,6 +309,193 @@
     console.log(musiBycLosos);
     ```
 
+-   Generyki
+
+    -   Typ generyczny - to typ który parametryzuje inne typy
+        -   przyjmując typ tworzy nowy typ, podobnie jak funkcja zwraca dla prametru
+
+    ```js
+        const combine = (a, b) => ({a, b}) // bez generyka
+        const combine<A, B> = { a: A, b: B } // generyk
+    ```
+
+    -   przykład generyka
+
+    ```js
+      // typ generyczny T jest WYMAGANY
+      type Storage<T> = {
+        data: T[]
+        add(t: T): void
+      }
+      interface IStorage<T> {
+        data: T[]
+        add(t: T): void
+      }
+    ```
+
+    -   Generic contraint (obostrzenia) - sposób aby wymusić jakaś strukture/typ generycznego typu, np. aby miał pole id z numericiem
+
+    ```js
+      class AnotherStorage<T extends { id: string }> { // w tym przypadku extends oznacza że typ powinnien rozszerzać podany typ danych!
+        constructor(
+          public data: T[]
+        ){}
+
+        add(t: T){
+          this.data.push(t)
+        }
+
+        findById(id: string){
+          return this.data.find(item => item.id == id) // ❌
+          // nic nie gwarantuje, że `id` istnieje
+        }
+      }
+      const anotherStorage = new AnotherStorage([{id: 'ANF'}])
+      const element = anotherStorage.findById('95c5a122-6973-4139-98ea-7e23f3ea3546')
+    ```
+
+    -   Generyczne funkcje przykłady
+
+    ```js
+    function combineFn<T>(a: T, b: T) {
+        return { a, b };
+    } // return type: { a: T, b: T }
+
+    // generyk może być INNY dla każdego WYWOŁANIA
+    // (nie jest stały dla funkcji)
+    const combinedStrings = combineFn("a", "b"); // { a: string, b: string } - automatycznie TS dopasowuje typ generyczne po parametrach
+    const combinedNumbers = combineFn < numeric > (1, 2); // { a: number, b: number } - nadal możemy jawnie wskazać jaki to typ danych
+    ```
+
+    -   Generyczne funkcje vs funkcja ze sparametryzowanym typem
+
+        -   funkcja ze sparametryzowanym typem jest inna, poniważ już na starcie ustalamny dla jakiego typu będzie działać, nie można tego zmienić później
+
+        ```js
+          type GenericFn = <T>(a: T, b: T) => { a: T, b: T }
+          type ParametrizedFn<T> = (a: T, b: T) => { a: T, b: T }
+
+          declare let _parametrizedFn: ParametrizedFn // ❌ musi mieć z góry znane T
+          declare let parametrizedFn: ParametrizedFn<string>
+          declare let genericFn: GenericFn //  nie musi, bo każde wywołanie może mieć inne T
+
+          parametrizedFn('ANF', 'ANF') // ✅ miał być string
+          parametrizedFn(125, 125) // ❌ miał być string
+          genericFn('ANF', 'ANF') // ✅ cokolwiek
+          genericFn(125, 125) // ✅ cokolwiek
+        ```
+
+    -   Generyk na poziomie klasy
+
+        ```js
+          // jeden wspólny generyk na poziomie klasy
+          class GenerykKlasy<T> {
+            constructor(
+              public data: T
+            ){}
+
+            metoda1(another: T){
+              return this.data == another
+            }
+
+            metoda2(another: T){
+              return this.data === another
+            }
+          }
+          const obiektA = new GenerykKlasy('ANF')
+          obiektA.metoda1('ANF')
+          obiektA.metoda1(125) // ❌ zgodnie z oczekiwaniami
+          obiektA.metoda1(true) // ❌ zgodnie z oczekiwaniami
+        ```
+
+    -   Typy mapowane
+
+        -   typ wtórny - typ na postawie innego typu
+        -   iterowanie po kluczach interfejsu
+        -   mapowanie typów analogicznie do mapowania danych
+
+        ```js
+          export interface Transfer {
+            id: string;
+            amount: number;
+            title: string;
+            payerAccount: string;
+            beneficiaryAccount: string;
+            beneficiaryAddress?: string;
+            scheduledAt: string;
+          }
+
+          type T1 = Partial<Transfer> // Partial - sprawia że wszystkie pola będą opcjonalne
+          type T2 = Required<Transfer> // Required - sprawia że wszystkie pola będą wymagane
+          // type T2 = Required<Partial<Transfer>>
+          type T3 = Pick<Transfer, "id" | "amount"> // Pick - tylko zawiera wymienione pola
+          type T4 = Omit<Transfer, "id" | "amount"> // Omit - odwortnie, wszystko oprócz tych wymienionych pól
+
+
+
+
+
+          type Reveal<T> = { [P in keyof T]: T[P] }
+          type RequiredFields<T, K extends keyof T> = Reveal<
+            Required<Pick<T, K>> & Omit<T, K>
+          > // Reveal - upraszcza typ do tego czym realnie będzie :o
+          type X = RequiredFields<{ a?: number, b?: number }, 'a'>
+        ```
+
+    -   Typy warunkowe
+
+        -   Można porównać do konstrukcji if/else
+
+        ```js
+          type X = T1 extends T2 ? A : B
+        ```
+
+        -   Warunek odpowiada na pytanie czy T1 jest podzbiorem typu T2
+        -   distributive/naked - rodzielność IF-owania (tylko dla typów naked)
+
+            -   naked czyli typ nie jest opakowany w np. array
+                -   co istotne aby typ był rozłączony musi być naked
+
+            ```js
+              // naked: T extends string
+              type OnlyStrings<T> = T extends string ? T : never
+              type OnlyStringsSkills = OnlyStrings<Skills>
+
+              // not-naked: T[] extends string[]
+              type _OnlyStrings<T> = T[] extends string[] ? T : never
+              type _OnlyStringsSkills = _OnlyStrings<Skills>
+            ```
+
+        -   infer - tylko dostępne w warunkach - pozwala wydobyć typ z większego typu
+
+            ```js
+                // jak wydobyć typ parametru obiektu?
+                type Person = { name: string; age: number }
+                type PersonProperty = Person['name']
+
+                // a parametr z funkcji?
+                type PorytaFunkcja = (arg1: { value: number }, arg2: { date: Date }) => { value: number, date: Date }
+
+                type FirstArg<T> = T extends (arg: infer A, ...args: any[]) => any ? A : never // wyciągamy typ pierwszego parametru funkcji czyli arg1
+                type FirstArgOfPorytaFunkcja = FirstArg<PorytaFunkcja>
+
+                // albo typ wynikowy funkcji?
+                // analogicznie - ale odpuszczamy pisanie ręczne, bo są wbudowane:
+                type T1 = Parameters<PorytaFunkcja>
+                type T2 = ReturnType<PorytaFunkcja> // często wykorzystywane, warto zapamietać
+
+                // a dla funkcji (a nie typu funkcyjnego) trzeba dodatkowo typeof
+                const poryta = (arg1: { value: number }, arg2: { date: Date }) => ({ ...arg1, ...arg2 })
+                // type T3 = ReturnType<poryta> // ❌ namespace mismatch
+                type T3 = ReturnType<typeof poryta> // istotne musimy użyć typeof poryta aby uderzyć do namespace typów
+            ```
+
+        -   rozłaczność (distributive)
+            -   rozłączność polega na tym że warunek zostanie zaplikowany dla każdego elementu unii
+            ```js
+            type NonNullableSkills = NonNullable<Skills>; // tylko pola które nie są nullowe tzw. distributive (rozłączne)
+            ```
+
 ## Triki
 
 ### Kompatibliność: Excessive Atrribute Check
