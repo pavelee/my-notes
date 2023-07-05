@@ -563,6 +563,14 @@
                 -   można przekazać typ oraz nadtyp
                 -   Uwga działa to tylko na arrow function, dla zwykłych metod mamy nadal biwarancyjne podejście
                     -   Jeśli chcemy z tego korzytać to np. na interfejsie powinniśmy definiować metody za pomocą array function np. () => void
+        -   False positive i False negative
+            -   False positive - złodzieja nie ma, jest alarm (type | error)
+            -   False negative - jest złodziej, nie ma alarmu (type & error)
+            -   W praktyce nie chcielibyśmy aby występowało powyżej, ale to nie realne
+            -   Mamy trzy faktory sound, complete, roztrzygalny
+                -   Możemy spełnić tylko dwa, rozstrzygalne jest potrzebny
+                -   Mam do wyboru być sound lub complete
+                    -   TS wybrał complete, dlatego potrawi przepuśić kawałki kodu które się kompilują ale walną błedem runtime'owym
 
 ## Triki
 
