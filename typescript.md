@@ -496,6 +496,74 @@
             type NonNullableSkills = NonNullable<Skills>; // tylko pola które nie są nullowe tzw. distributive (rozłączne)
             ```
 
+-   Type-unsafe (dziury w kompilatorze)
+
+    -   Mimo wszystko TS posiada dziury i nie zweryfikuje wszystkiego
+    -   Jednym z powodów jest koszt obliczeniowy kompilacji, natomaiast jednym z głównych założeń TS jest szybkość kompilacji
+    -   array access np. arr[10]
+
+        ```js
+        // 1. elementA jest oczywiście numberem
+        const array = [1, 2, 3, 4, 5];
+        const elementA = array[0];
+
+        // 2. ale to nie powinno być
+        const elementB = array[5];
+        const elementC = array[10]; // to nie istnieje ale nadal mamy number..
+        ```
+
+    -   index signature
+
+    ```js
+      export {}
+
+      type Value = number
+
+      type ItemMap = {
+        [key: string]: Value
+      }
+      declare const map: ItemMap
+
+      type ItemRecord = Record<string, Value>
+      declare const record: ItemRecord
+
+      // 1. intro
+      // 2. dodanie mapItem i recordItem poniżej
+      // 3. najpierw było string -> number, a teraz zamieniamy number -> string, dalej unsafe
+
+      const mapItem = map[1]
+      const mapItem2 = map['elo'] // to nie istnieje, nadal mamy że zwróci number..
+      const recordItem = record[1]
+      const recordItem2 = record['elo']
+    ```
+
+    -   flag kompilacji "strict"
+        -   Domyślnie TS nie wszystko sprawdza, tak aby ułatwić migracje z czystego javascript
+        -   opcja "strict" uruchamia wszytskie możliwe opcje (hurtowo)
+            -   to dobry pomysł aby na samym początku opcja była uruchomiona
+            -   wyłączenie opcji strict pomaga wykonać migracje większego kodu js to TS
+                -   tutaj ma to najwięcej sensu, dla projektów legacy
+        -   NoImplicityAny
+            -   W przpypadku kiedy zmienna domyślnie jest any, to TS wyrzuci bład, tak abyśmy musieli świadomienie otypować to any (wiemy co robimy)
+        -   NoImplicityReturn
+            -   Każda ze ścieżek funkcji musi zwrócić wartość
+            -   Uderzy błedem jeśli jest możliwość że funkcje nie wykona return
+        -   strictPropertyInitalization
+            -   Jeśli tworzymy jakieś pole na klasie to musi zostać zainicowane
+        -   strictNullChecks
+            -   Wymusza abyśmy jasno mówili że zmienna będzie zawierać null / undefined
+        -   noUncheckedIndexAccess ("linter check")
+            -   zmienia logikę typu zwracanego w ramach odczytu indeksu array'a
+                -   od teraz zawsze zwraca "typ | undefined", co wymusza na nas sprawdzenie czy dany indeks realnie istnieje!
+            -   Uwaga! Nie jest w ramach "strict" należy dodać ręcznie do konfiguracji
+        -   strictFunctionTypes
+            -   Wyłaczona powoduje że parametry funkcji są sprawdzane przez biwariancje
+                -   można przekazać typ, podtyp oraz nadtyp
+            -   Wlączona powoduje że parametry funkcji są sprawdzane przez kontrawariancje
+                -   można przekazać typ oraz nadtyp
+                -   Uwga działa to tylko na arrow function, dla zwykłych metod mamy nadal biwarancyjne podejście
+                    -   Jeśli chcemy z tego korzytać to np. na interfejsie powinniśmy definiować metody za pomocą array function np. () => void
+
 ## Triki
 
 ### Kompatibliność: Excessive Atrribute Check
@@ -561,7 +629,7 @@ let y2: object = 4; // nie zadziała, oczekuje realnego obiektu
 
 PropertyKey to specjalny typ w TS, pasuje idealnie do klucza obiektu (generycznego) = string | number | symbol
 
-### Oznaczenie że to nie będzie nullem znaj !
+### Oznaczenie że to nie będzie nullem znaj ! -> Not Null assertion
 
 Znak ! przy zmiennej/wywołaniu funkcji oznacza że deklarujemy że dana wartość nie będzie nullem. TS w takim przypadku "ufa" nam.
 
