@@ -572,6 +572,141 @@
                 -   Mam do wyboru być sound lub complete
                     -   TS wybrał complete, dlatego potrawi przepuśić kawałki kodu które się kompilują ale walną błedem runtime'owym
 
+-   Wzorce i antywzorce
+
+    -   Single source of truth
+        -   problem
+            -   konieczność jednej logicznej zmiany w wielu miejscach wskutek kopiowania typów
+        -   cel
+            -   type flow - zmiana źródłej deklaracji typu aktualizuje miejsca użycia
+        -   rozwiązanie
+            -   centralna deklaracja typu -> type Money = number
+    -   Primitive Obsession
+
+        -   zamiast stworzyć osobny obiekt używamy prymitywów, co powoduje
+            -   możemy zrobić z nimi wszystko, nawet jeśli nie ma to sensu w logice biznesowej
+            -   dodanie dodatkowej informacji jest problematyczne, np waluty do kwoty. Musimy dodawać kolejne zmienne..
+        -   problem
+            -   nadużywanie typów prymitywnych
+        -   cel
+            -   uniemożliwinie operacji niedozowlonych
+            -   ogranicznie kompatibilności
+        -   rozwiązanie
+
+            -   Oparque/Brand types
+
+                ```js
+                    export {}
+
+                    type Money = number & { readonly type: unique symbol } // unique symbol wymsza niekompatibilność jeśli chodzi o pole type (cały typ Money). To taki trik!
+                    declare let m: Money
+                    declare let n: number
+
+                    m = n // ❌ Type 'number' is not assignable to type 'Money'.
+                    n = m // ✅
+                ```
+
+                -   tylko deklaracja typu
+                -   blokowanie kompatibilności pomiędzy typami
+                -   plusem, minimalny narzut
+                -   minusem, dyscyplina
+
+            -   Value Object
+
+                ```js
+                  export {}
+                  type Currency = "EUR" | "PLN"
+
+                  class Money {
+                    private constructor(
+                      private value: number,
+                      private currency: Currency,
+                    ){}
+
+                    // prywatny konstruktor & statyczna metoda fabrykująca
+                    static from(value: number, currency: Currency){
+                      return new Money(value, currency)
+                    }
+
+                    // możemy mnożyć tylko przez współczynnik (liczbę)
+                    multiply(factor: number){
+                      return new Money(this.value * factor, this.currency)
+                    }
+
+                    // chronimy reguł biznesowych:
+                    // można dodawać tylko pieniądze w tej samej walucie
+                    add(another: Money){
+                      if (this.currency != another.currency){
+                        throw new Error('Cannot add different currencies')
+                      }
+                      return new Money(this.value + another.value, this.currency)
+                    }
+
+                    nominalValue(){
+                      return this.value
+                    }
+                  }
+
+
+
+                  const m = Money.from(99.99, "PLN") // deklaracja
+
+                  m + 4 // ❌ Operator '+' cannot be applied to types 'Money' and 'number'.
+
+                  const n: number = m // ❌ is not assignable to type 'number'
+
+                  const sum1 = m.add( Money.from(1.23, 'PLN') ) // ✅ Money
+
+                  const sum2 = m.add( Money.from(1.23, 'EUR') ) // ✅ kompiluje się (bo typy są zgodne)
+                  // - ale wybuchnie w runtime
+
+                  const product = m.multiply( 2 ) // ✅ Money
+
+                ```
+
+                -   klasa -> typ oraz implementacja
+                -   blokowanie kompatibilności pomiędzy typami
+                -   wyszczególnienie poprawnych operacji (i nie poprawnych)
+                -   plus, łatwiejsze w zrozumieniu i utrzymaniu
+                -   minus, implementacja i wywołanie oraz gorsza wydajność w runtime
+
+            -   Boolean Obsession
+                -   problem
+                    -   nadużywanie booleanow tam, gdzie nie sa wystarczajace
+                    -   stan z wieloma polami false/undefined
+                    -   odpowiedzalność za manulaną obsługę komórek stanu
+                -   cel
+                    -   uniemożliwić tworzenie stanów niepoprawnych
+                    -   wysokopoziomowa obsługa stanu jest łatwiejsza w utrzymaniu
+                -   rozwiązanie
+                    -   użycie bardziej precyzyjnych typów np. unii
+
+        -   Axios jest lepszy od fetch bo można zdefiniować do dostaniemy w zwrotce
+            ```js
+              export const _getTransfers = () => {
+              return axios.get<Transfer[]>('/account/transfers')
+                .then(res => res.data)
+                .then(collection => collection.mkjhgbvnmjhgvbnmjhgv)
+              }
+            // uf 😅
+            ```
+
+    -   DTO
+        -   obiekty do transferu danych
+        -   zero logiki biznesowej
+
+-   TypeScript - zyski i straty
+    -   plusy
+        -   wychwytywanie błędów wcześniej (compile-time)
+            -   mniej unit-testów, kompilator pilnuje wiele ścieżek (flow)
+        -   łatwiejsze rozumienie kodu i intencji programistów
+        -   stabilniejsza praca zespołowa
+            -   zmieniając coś w typie kompilator pokaże gdzie będą problemy (brak kompatibilności)
+    -   minusy
+        -   dodatkowy krok: kompilacja
+        -   wnosi swoje complexity
+        -   złudne poczucie pełnego bezpieczeństwa typów
+
 ## Triki
 
 ### Kompatibliność: Excessive Atrribute Check
