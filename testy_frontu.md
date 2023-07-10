@@ -149,3 +149,66 @@ it.todo("Tutaj moja obietnica do spełnienia");
 -   White-box testing - testowanie znając implementacje, testujemy do tej implementacji
 -   Black-box testing - nie znamy implementacji, nie wiem co jest w skrzynce, korzystam z publicznego API
     -   To jest lepsze, publiczne API nie powinno się zmieniać często
+
+## Asercje
+
+Asercje to fundametalny elment testów. Każdy test powinnien posiadać jakieś asercje.
+
+### Filtrowanie w Jest
+
+Domyślnie jest odpali wszystkie test jakie znajdzie w projekcie. Natomiast możemy przefiltrować testy:
+
+-   po nazwie (pattern)
+-   po nazwie pliku (pattern)
+
+### Co to Asercja?
+
+Asercja to warunkowe rzucenie wyjątku
+
+### Asercje dokumentacja i dodatkowe źródło (3-th party)
+
+https://jestjs.io/docs/en/expect
+https://github.com/testing-library/jest-dom
+
+Dodatkowe
+
+https://www.chaijs.com/
+https://sinonjs.org/releases/latest/assertions - przydatne asercje z mockami. Natomiast wymaga runnera testów
+
+### Najgorsza asercja na świecie
+
+Tak jak poniżej rzutujemy do boolean, aby potem przyrównać do boola. Natomiast to powoduje że komunikat błedu jest mniej precyzyjny.
+
+"jest źle ale nie wiadomo o co chodzi"
+
+```js
+expect(condition).toBe(true);
+expect(condition).toBeTruthy();
+```
+
+Przykład na assercji długości array'a
+
+```js
+const items = [1, 2, 3, 4, 5];
+const result = items.map((x) => x * 2);
+
+// słabo, nie wiadomo o co chodzi
+expect(result.length === items.length + 1).toBe(true);
+// już lepiej, mam bardziej precyzyjnie
+expect(result.length).toBe(items.length + 1);
+// super, komunikat jest precyzyjny
+expect(result).toHaveLength(items.length + 1);
+```
+
+**Finalnie to co ułatwia pisanie czytelnych asercji to używanie odpowiednich asercji do problemu. To wymaga znajomości dokumentacji, tak aby wiedzieć że takowe istnieją**
+
+np. toBeChecked() itp.
+
+**KORZYSTAJMY Z PRECYZYJNYCH ASERCJI**
+
+## Referential equality
+
+W przypadku porównywania obiektów należy pamiętać że to nie jest prymitywna wartość.
+
+.toEqual -> wartość
+.toBe -> tożsamość, czyli referncja
