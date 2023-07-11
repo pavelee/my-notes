@@ -212,3 +212,420 @@ W przypadku porównywania obiektów należy pamiętać że to nie jest prymitywn
 
 .toEqual -> wartość
 .toBe -> tożsamość, czyli referncja
+
+## Mockowanie
+
+### Tipy
+
+#### Publiczne API do fakownia REST API
+
+Mamy dostępne publiczne API do testowania uderzeń do REST API: https://jsonplaceholder.typicode.com
+
+#### Co to hoistowanie?
+
+To trik który polega na tym że kod mocka jest przenoszony na samą góre bundle, co za tym idzie jako pierwszy wpisuje się w cache require i wypycha realny obiekt :o
+
+#### spy mock - logowanie jak to było wywoływanie
+
+Spy mock daje nam możliwość podglądu jak był wywołany śledzony kod np.
+
+```js
+console.log(spy.mock.calls); // wywołania
+console.log(spy.mock.results); // wyniki wywołań
+// itp.
+```
+
+### Po co?
+
+Mockowanie to sposób na wstrzyknięcie "fakowych" zależności do testowanego komponentu.
+
+Celem jest to aby odizolować testowany komponent, tak aby zależności nie miały wpływu na wynik testu.
+
+Dodatkowo to pozwala udawać produkcyjne zależności, których nie możemy przetestować w devowych warunkach.
+
+### Co możemy mockowac?
+
+-   metody
+-   moduły
+-   klasy
+-   hooki
+-   komponenty
+-   http
+-   itp.
+
+### Mockowanie metod obiektu - jest.spyOn
+
+#### Bez mockowania implementacji
+
+jest.spyOn - bez drugiego parametru nie mockuje implementecji tylko opakowuje w swojego "szpiega" który śledzi np. ilość wywołań.
+
+```js
+it("should make an actual call", async () => {
+    // arrange
+    const repo = new AlbumRepository();
+    const spy = jest.spyOn(repo, "sync");
+    // act
+    const album = { userId: 1, id: 1, title: "księga tajemnicza. prolog" };
+    repo.add(album);
+    // assert
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith();
+    spy.mockRestore();
+});
+```
+
+#### Z mockowaniem implementacji
+
+Po podaniu drugiego argumentu wywołuje go, zamiast oryginalnej implementacji
+
+```js
+it("should mock the call", async () => {
+    // arrange
+    const repo = new AlbumRepository();
+    const spy = jest.spyOn(repo, "sync").mockImplementation(async () => {});
+    // act
+    const album = { userId: 1, id: 1, title: "księga tajemnicza. prolog" };
+    repo.add(album);
+    // assert
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith();
+    spy.mockRestore();
+});
+```
+
+### Mockowanie modułów
+
+#### Mockowanie modułów - jest.mock
+
+W przypadku elementów które są "implicite" musimy wykorzytać mockowanie całego modułu (pliku)
+
+```js
+// dzięki babel-plugin-jest-hoist mockowanie zawsze jest pierwsze w kolejności. To istotne ponieważ  musimy w pierwszej kolejności uderzyć require.cache aby to nakarmić fakowymi modułami
+jest.mock("./AlbumDAO"); // mockowanie całego modułu (pliku)
+import * as AlbumDAO from "./AlbumDAO";
+
+test("module should have all functions mocked", () => {
+    expect(AlbumDAO.baseURL).toMatchInlineSnapshot(
+        `"https://jsonplaceholder.typicode.com"`
+    );
+    expect(AlbumDAO.fetchAlbums).toBeInstanceOf(Function); // to jest po prostu jest.fn() (pusta funkcja). Jest automatycznie to podstawia
+    expect(AlbumDAO.saveAlbums).toBeInstanceOf(Function); // jest.fn()
+});
+```
+
+#### Mockowanie modułów - factory function
+
+Jeżeli jako drugi parametr do jest.mock przekażamy funkcje zwacającą json'a to możemy zamockować co zwróci dany moduł.
+
+**Co istotne jeżeli coś pominiemy to tego nie będzie finalnie w mocku. Będzie efekt braku funkcji itp**
+
+```js
+jest.mock("./AlbumDAO", () => ({
+    // podmiana CAŁEJ zwartości modułu, to nie jest PATCH
+    saveAlbums: async () => {},
+}));
+import * as AlbumDAO from "./AlbumDAO";
+
+test("module should have only the specified elements mocked", () => {
+    expect(AlbumDAO.baseURL).toBeUndefined(); // ❗️ nie ma
+    expect(AlbumDAO.fetchAlbums).toBeUndefined(); // ❗️ nie ma
+    expect(AlbumDAO.saveAlbums).toBeInstanceOf(Function);
+});
+```
+
+#### Mockowanie modułów - require actual
+
+Mozemy w teście pobrać orygnialną metodę używająć jest.requireActual, mimo że moduł jest zamockowany
+
+```js
+jest.mock("./AlbumDAO", () => ({
+    saveAlbums: async () => {},
+}));
+import * as AlbumDAO from "./AlbumDAO";
+const { fetchAlbums } = jest.requireActual("./AlbumDAO"); // pobranie oryginalnej metody, ktora nie jest mockiem!
+
+test(`module should have only the specified elements mocked
+          and original items imported via requireActual are available`, () => {
+    expect(AlbumDAO.baseURL).toBeUndefined(); // ❗️ nie ma
+    expect(fetchAlbums).toBeInstanceOf(Function); // ❗️ jest, prawdziwe
+    expect(AlbumDAO.saveAlbums).toBeInstanceOf(Function);
+});
+```
+
+### Mockowanie klas
+
+#### Mockowanie całej klasy
+
+Proste, przy tworzeniu klasy dostaniemy mocka (z funkcji) zamiast realnej klasy
+
+```js
+import { Stuff } from "./stuff";
+
+jest.mock("./stuff", () => {
+  return {
+    Stuff: class {
+      constructor(
+        private mockData: number[]
+      ){}
+
+      calculate(){
+        return this.mockData.reduce((product, n) => product * n)
+      }
+    }
+  }
+});
+```
+
+#### Mockowanie konstruktora klasy
+
+Bardziej złożone możemy podmienić konstruktor klasy i zwórcić obiekt który będzie reprezentował klase
+
+Przydatne kiedy chcemy zmienić coś per konkretny test
+
+```js
+import { Stuff } from "./stuff";
+
+jest.mock("./stuff");
+test("module should a class/constructor mocked", () => {
+  (Stuff as jest.Mock).mockImplementation((mockData: number[]) => ({
+    calculate: () => mockData.reduce((product, n) => product * n),
+  }));
+
+  const mocked = new Stuff([1,2,3,4]);
+  expect(mocked.calculate()).toEqual(24);
+});
+```
+
+### Mockowanie hooków
+
+Nie ma sensu mockowania większości wbudowanych hooków, natomiast to co może się przydać to mockowanie useContext
+
+```js
+import React from "react";
+import { render } from "@testing-library/react";
+
+import { useStuff } from "./stuff-context";
+jest.mock("./stuff-context", () => ({
+    useStuff: () => ({ value: "honk honk" }),
+}));
+
+export const Stuff: React.FC = () => {
+    const { value } = useStuff();
+    return <>the value is: {value}</>;
+};
+
+test("component should access mocked context via hook", () => {
+    const { container } = render(<Stuff />);
+    expect(container).toMatchInlineSnapshot(`
+    <div>
+      the value is: 
+      honk honk
+    </div>
+  `);
+});
+```
+
+### Mockowanie komponentów
+
+#### Dlaczego możemy potrzebować mockować komponenty
+
+-   js DOM nie wspiera funkcjonalności (np. CRA v3 / jsdom 14)
+    -   Tutaj warto sprawdzić czy jest używa najnowszej wersji jsdom
+-   Koszt obsługi DOM za wysoki (szczególnie 3rd party pakiety)
+    -   np. WYSWIG
+
+#### Minsy mockowania komponentów
+
+-   zamiast testować faktyczny komponent, testujemy mocka
+    -   mock nie jest tym co będzie na prodzie
+-   łatwo o rozjazd pomiędzy realnym komponentem a jego mockiem (np. propsy)
+    -   jeżeli zmienimy propsy w oryginalnym komponenencie to musimy tego pilnować w mocku
+-   ostatnia deska ratunku
+
+#### Przykład
+
+```js
+import React from "react";
+
+jest.mock("./Editor", () => {
+    const _React: typeof React = require("react"); // musimy zaimportowac react w środku mocka!
+    const Editor = ({ initialValue, onChange }: any) => {
+        const [value, setValue] = _React.useState(initialValue);
+
+        return (
+            <textarea
+                data-testid={`texteditor`}
+                value={value}
+                onChange={(e) => {
+                    const newValue = e.target.value;
+                    setValue(newValue);
+                    onChange(newValue);
+                }}
+            />
+        );
+    };
+
+    return { Editor };
+});
+```
+
+```js
+import "./jest-mock-component-editor";
+import { fireEvent, render } from "@testing-library/react";
+import { Editor } from "./Editor";
+
+interface ArticleProps {
+    onChange: (value: string) => void;
+}
+
+const Article: React.FC<ArticleProps> = (props) => {
+    const { onChange } = props;
+    return (
+        <>
+            <h2>article</h2>
+            <Editor onChange={onChange} />
+        </>
+    );
+};
+
+test("component", () => {
+    const spy = jest.fn();
+    const { getByTestId } = render(<Article onChange={spy} />);
+
+    const editor = getByTestId("texteditor");
+    fireEvent.change(editor, { target: { value: "some text" } });
+
+    expect(spy).toHaveBeenCalled();
+});
+```
+
+### Mockowanie HTTP - jest.mock
+
+**Dobrą praktyką jest aby komponent nie wysyłał bezpośrednio żądań HTTP**
+
+#### Mockowanie stackowe, jak ma się zachować w kolejnych wywołaniach
+
+```js
+jest.mock("./AlbumDAO", () => ({
+  // fetchAlbums: () => [] // fake
+  fetchAlbums: jest.fn() // mock
+}));
+
+import { fetchAlbums } from './AlbumDAO'
+
+test("mocked function should return values as specified in sequence (return)", async () => {
+  const spy = (fetchAlbums as jest.Mock)
+    .mockReturnValue(Promise.resolve([])) // to wywołanie będzie 4 i każdym kolejnym jak skończa się poniższe :o
+    .mockReturnValueOnce(Promise.resolve([{ id: 1 }])) // pierwsze wywołanie
+    .mockReturnValueOnce(Promise.resolve([{ id: 2 }]))
+    .mockReturnValueOnce(Promise.resolve([{ id: 3 }]))
+  const result1 = await fetchAlbums()
+  expect(result1).toEqual([{ id: 1 }])
+  const result2 = await fetchAlbums()
+  expect(result2).toEqual([{ id: 2 }])
+  const result3 = await fetchAlbums()
+  expect(result3).toEqual([{ id: 3 }])
+  const result4 = await fetchAlbums()
+  expect(result4).toEqual([])
+});
+
+test("mocked function should return values as specified in sequence (resolved)", async () => {
+  (fetchAlbums as jest.Mock)
+    .mockResolvedValue([]) // tak jak powyżej ale nie musimy już explicite przekazywać że to będzie Promise
+    .mockResolvedValueOnce([{ id: 1 }])
+
+  const result1 = await fetchAlbums()
+  expect(result1).toEqual([{ id: 1 }])
+  const result2 = await fetchAlbums()
+  expect(result2).toEqual([])
+});
+
+```
+
+#### Mockowanie fetch
+
+zewnętrzne bilbioteki
+
+-   fetch
+    -   fetch-mock
+    -   isomorhic-fetch
+-   axjos
+    -   axios-mock-adapter
+
+Plusem tych bibliotek jest to że są bardzo rozbudowane. Zawierają też asercje.
+
+Minusem jest to że mocno przywiązujemy się do jakieś biblioteki. Dodatkowo wymaga to nauki specjalnie pod kątem tych bibliotek.
+
+```js
+// in setupTests.js
+require("isomorphic-fetch");
+jest.mock("node-fetch", () => require("fetch-mock").sandbox());
+const fetchMock = require("fetch-mock");
+
+import { fetchAlbums, baseURL } from "./AlbumDAO";
+
+describe("HTTP and fetch-mock", () => {
+    it("should make an actual call", async () => {
+        // act
+        const res = await fetchAlbums();
+        // assert
+        expect(fetchMock.calls(/albums/)).toHaveLength(0);
+    });
+
+    it("should mock the call", async () => {
+        // arrange
+        const item = { userId: 1, id: 1, title: "księga tajemnicza. prolog" };
+        fetchMock.mock(`${baseURL}/albums`, [item]);
+        // act
+        const res = await fetchAlbums();
+        // assert
+        expect(fetchMock.calls(/albums/)).toHaveLength(1);
+        fetchMock.restore();
+    });
+});
+```
+
+#### Mockowanie z MSW
+
+MSW - mock service worker. Pozwala mockować ruch na HTTP, nie zależnie jakiej biblioteki używamy.
+
+**Jest to zalecane! Mockujemy na poziomie sieciowym, co jest świetne! Pozwala ominąć problem mockowania jakiś tam metod**
+
+MWS celowo nie implementuje asercji, uznając je za detel implementacyjny
+
+```js
+import { rest } from "msw";
+import { setupServer } from "msw/node";
+import { baseURL, fetchAlbums, saveAlbums } from "./AlbumDAO";
+
+const handlers = [
+    rest.get(`${baseURL}/albums`, async (req, res, ctx) => {
+        return res(ctx.delay(1000), ctx.json([{ id: 1 }]));
+    }),
+    rest.post(`${baseURL}/albums`, async (req, res, ctx) => {
+        throw new SyntaxError("Unexpected token");
+    }),
+];
+const server = setupServer(...handlers);
+
+describe("AlbumDAO", () => {
+    beforeAll(() =>
+        server.listen({
+            onUnhandledRequest: "error", // określa co się stanie jeśli poleci request który nie jest określony w naszym handlers. error - walnie błedem, warn - ostrzeżenie w konsoli, bypass - silent mode, żadnych informacji
+            // zalecane jest warn - tak aby wiedzieć że poleciał request 
+        })
+    );
+    afterEach(() => server.resetHandlers());
+    afterAll(() => server.close());
+
+    test("should mock the call", async () => {
+        const response = await fetchAlbums();
+        expect(response).toEqual([{ id: 1 }]);
+    });
+
+    test("should mock a failure", async () => {
+        jest.spyOn(console, "error").mockImplementation(() => {});
+        await expect(saveAlbums([])).rejects.toThrow("Failed to fetch");
+    });
+});
+```
