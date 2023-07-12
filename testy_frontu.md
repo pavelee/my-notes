@@ -775,3 +775,475 @@ test('should count occurrences of full mock log levels', () => {
   expect(countBy(fullMockLogs, log => log.level)).toEqual({"DEBUG": 1, "ERROR": 2})
 })
 ```
+
+## Rodzaje testów
+
+### Testy asynchroniczne
+
+```js
+// test zwracajacy Promise
+test.skip("should fail because promise is rejected", () => {
+    return Promise.reject("kaboom! W-1");
+});
+
+// test rozpakowujacy Promise (await), wynikiem jest to co jest rozpakowane
+// Uwaga! reject oznacza rzucenie błedem w przypadku rozpakowywania
+test.skip("should fail because awaited promise is rejected", async () => {
+    await Promise.reject("kaboom! X-1");
+});
+
+// parametr done umożliwa wywołanie metody w momencie jak test będzie zakończony
+test.skip("should hang because done callback doesn't get invoked", (done) => {
+    Promise.reject("kaboom! Y-1");
+});
+
+// przypadek kiedy Promise nie wypływa na wynik testu! Na to trzeba uważać bo mamy FALSE PASS
+test.skip("a FALSE PASS (but throws in console) - promise is not awaited", () => {
+    Promise.reject("kaboom! Z-1");
+});
+```
+
+#### Przykład radzenia sobie z timerami
+
+Użycie jest aby zasymulować upływ czasu
+
+```js
+const sleep = (ms: number) => {
+    return new Promise((res, rej) => {
+        setTimeout(res, ms);
+    });
+};
+
+// sposób aby oszukać JS ale jednocześnie symulować upływanie czasu bez realnego czekania na wykonanie kodu
+test("promise should resolve after time passed", async () => {
+    jest.useFakeTimers();
+
+    const delay1 = sleep(1000);
+    jest.runAllTimers(); // istotne, to symuluje upływ czasu
+    await delay1; // istotne! wykonujemy dopiero po wywołaniu poprzedniej linijki, razem z await
+
+    // analogicznie, mimo 0, czas wykonania jest dokładnie taki sam
+    const delay2 = sleep(0); // nawet dla 0ms możliwy deadlock
+    jest.runAllTimers();
+    await delay2;
+});
+```
+
+Sposób na ukryte Promise pod spodem kodu, nie mamy do nich referencji
+
+```js
+// trik który powoduje że wszystkie promise które są gotowe, spływają
+// jest to potrzebne kiedy nie mamy referencji to Promise, to się dzieje gdzieś pod spodem
+const scheduler =
+    typeof setImmediate === "function" ? setImmediate : setTimeout;
+export function flushPromises() {
+    return new Promise((res) => scheduler(res, 0));
+}
+
+const getJohn = () => {
+    let john = {
+        age: 39,
+        name: "John Lennon",
+    };
+    Promise.resolve().then(() => john.age++);
+    return john;
+};
+
+test("promise should resolve after time passed", async () => {
+    // the problem: we've got nothing to await 😱
+    const john = getJohn();
+    await flushPromises(); // to powoduje że ukryte Promise zakończą się pod spodem
+    expect(john.age).toEqual(40); // dzięki temu mutacja wykona się prawidłowo i mamy 40
+});
+```
+
+### Data-driven tests: native JS
+
+W przypadku kiedy mamy testy które są do siebie podobne ale różnia się inputem, to jest dobre miejsce na data-driven tests
+
+W przpypadku kiedy chcemy wykonać kilka testów z różnym inputem możemy to zamknąć w petli:
+
+```js
+// jeśli chcemy coś dodać/wyrzucić robimy to poniżej
+const testcases: TestCase[] = [
+    { count: 2, salaryFrom: 100, salaryTo: 500 }
+    ...
+];
+for (const (count, salaryFrom, salaryTo) of testcases) {
+    // istotne aby parametryzować nazwe testu, to pomaga w późniejszym zrozumieniu który to zestaw danych
+    it(`some test with ${count}`, (count, salaryFrom, salaryTo) => {
+        ...
+    })
+}
+```
+
+Druga możliwa składania to it.each
+
+```js
+it.each([
+    [2, 100, 500] // duży minus, wymusza na nas array!
+    ...
+])('something %s %s %s', (count, salaryFrom, salaryTo) => {
+        ...
+    }) // mamy tutaj składnie %d dla kolejnych argumentów
+```
+
+### Snapshot testy - komponenty
+
+Snapshoty są potężne oraz upierdliwe.
+
+Wychwytuja każda zmiane w generowanym kodzie komponentu. To jest plus i minus. Jak coś się często zmienia to powoduje wiele problemów z utrzymaniem testów.
+
+problemy:
+
+-   potencjalne bardzo częste zmiany i częste false-fail
+-   ryzyko nawyku aktualizacji snapshotu bez analizy
+
+    -   iluzja pokrycia testami (jest ich dużo ale kontrolujemy ich jakości)
+
+-   toMatchInlineSnapshot -> porównuje z podanym stringiem
+-   toMatchSnapshot -> porównuje z zapisanym snapshotem (w pliku). Jeśli nie ma pliku to go stworzy.
+
+przykład snapshota
+
+```js
+import { render } from "@testing-library/react";
+import { Editor } from "./Editor";
+
+test("editor component snapshot", () => {
+    const { container } = render(<Editor onChange={jest.fn()} />);
+    expect(container).toMatchInlineSnapshot(`
+    <div>
+      <div>
+        <textarea
+          style="display: none;"
+        />
+        <div
+          class="editor-toolbar"
+        >
+          <a
+            class="fa fa-bold"
+            tabindex="-1"
+            title="Bold (Ctrl-B)"
+          />
+          <a
+            class="fa fa-italic"
+            tabindex="-1"
+            title="Italic (Ctrl-I)"
+          />
+          <a
+            class="fa fa-header"
+            tabindex="-1"
+            title="Heading (Ctrl-H)"
+          />
+          <i
+            class="separator"
+          >
+            |
+          </i>
+          <a
+            class="fa fa-quote-left"
+            tabindex="-1"
+            title="Quote (Ctrl-')"
+          />
+          <a
+            class="fa fa-list-ul"
+            tabindex="-1"
+            title="Generic List (Ctrl-L)"
+          />
+          <a
+            class="fa fa-list-ol"
+            tabindex="-1"
+            title="Numbered List (Ctrl-Alt-L)"
+          />
+          <i
+            class="separator"
+          >
+            |
+          </i>
+          <a
+            class="fa fa-link"
+            tabindex="-1"
+            title="Create Link (Ctrl-K)"
+          />
+          <a
+            class="fa fa-picture-o"
+            tabindex="-1"
+            title="Insert Image (Ctrl-Alt-I)"
+          />
+          <i
+            class="separator"
+          >
+            |
+          </i>
+          <a
+            class="fa fa-eye no-disable"
+            tabindex="-1"
+            title="Toggle Preview (Ctrl-P)"
+          />
+          <a
+            class="fa fa-columns no-disable no-mobile"
+            tabindex="-1"
+            title="Toggle Side by Side (F9)"
+          />
+          <a
+            class="fa fa-arrows-alt no-disable no-mobile"
+            tabindex="-1"
+            title="Toggle Fullscreen (F11)"
+          />
+          <i
+            class="separator"
+          >
+            |
+          </i>
+          <a
+            class="fa fa-question-circle"
+            href="https://simplemde.com/markdown-guide"
+            tabindex="-1"
+            target="_blank"
+            title="Markdown Guide"
+          />
+        </div>
+        <div
+          class="CodeMirror cm-s-paper CodeMirror-wrap"
+          translate="no"
+        >
+          <div
+            style="overflow: hidden; position: relative; width: 3px; height: 0px;"
+          >
+            <textarea
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; min-height: 1em; outline: none;"
+              tabindex="0"
+            />
+          </div>
+          <div
+            class="CodeMirror-vscrollbar"
+            cm-not-content="true"
+            tabindex="-1"
+          >
+            <div
+              style="min-width: 1px;"
+            />
+          </div>
+          <div
+            class="CodeMirror-hscrollbar"
+            cm-not-content="true"
+            tabindex="-1"
+          >
+            <div
+              style="height: 100%; min-height: 1px;"
+            />
+          </div>
+          <div
+            class="CodeMirror-scrollbar-filler"
+            cm-not-content="true"
+          />
+          <div
+            class="CodeMirror-gutter-filler"
+            cm-not-content="true"
+          />
+          <div
+            class="CodeMirror-scroll"
+            tabindex="-1"
+          >
+            <div
+              class="CodeMirror-sizer"
+              style="margin-left: 0px;"
+            >
+              <div
+                style="position: relative;"
+              >
+                <div
+                  class="CodeMirror-lines"
+                  role="presentation"
+                >
+                  <div
+                    role="presentation"
+                    style="position: relative; outline: none;"
+                  >
+                    <div
+                      class="CodeMirror-measure"
+                    >
+                      <pre
+                        class="CodeMirror-line-like"
+                      >
+                        <span>
+                          xxxxxxxxxx
+                        </span>
+                      </pre>
+                    </div>
+                    <div
+                      class="CodeMirror-measure"
+                    />
+                    <div
+                      style="position: relative; z-index: 1;"
+                    />
+                    <div
+                      class="CodeMirror-cursors"
+                    />
+                    <div
+                      class="CodeMirror-code"
+                      role="presentation"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              style="position: absolute; height: 50px; width: 1px;"
+            />
+            <div
+              class="CodeMirror-gutters"
+              style="display: none;"
+            />
+          </div>
+        </div>
+        <div
+          class="editor-preview-side"
+        />
+        <div
+          class="editor-statusbar"
+        >
+          <span
+            class="autosave"
+          />
+          <span
+            class="lines"
+          >
+            1
+          </span>
+          <span
+            class="words"
+          >
+            0
+          </span>
+          <span
+            class="cursor"
+          >
+            0:0
+          </span>
+        </div>
+      </div>
+    </div>
+  `);
+});
+```
+
+### Snapshot testy - stabilny refactor
+
+Przypadek kiedy możemy wykorzystać snapshoty to w momencie większego refactoringu komponentów.
+
+-   dodajemy nowe testy zawierające snapshoty komponentów w róznych stanach
+-   commit, branch
+-   rozpoczynamy refactor, nie zmieniamy snapshotów
+-   analizujemy różnicę na snapshotach tak długo, aż uznamy, że zmiana jest stabilna
+-   usuwamy snapshot testy, merge
+
+### Snapshot testy - JSON-y
+
+Snapshot testy mogą być bardzo przydatne do snapowania wyników komponentów logicznych w postaci JSON-ów (porównywanie wyniku)
+
+Ma to ogromną korzyść w zrozumieniu co faktycznie się zmieniło. Snapshot nam wskazuje linijki zmian i różnice contentu
+
+```js
+import { LogStorageAssertObject } from "./assert-object";
+import { logs } from "./data-logs";
+import { countBy } from "./data-utils";
+
+describe("countBy", () => {
+    it("should count occurrences of log levels", () => {
+        const result = countBy(logs, (log) => log.level);
+        // zapisujemy oczekiwany rezultat
+        expect(result).toMatchInlineSnapshot(`
+      Object {
+        "DEBUG": 263,
+        "ERROR": 229,
+        "INFO": 246,
+        "WARN": 267,
+      }
+    `);
+    });
+
+    it("should count occurrences of accounts", () => {
+        const result = countBy(logs, (log) => log.account);
+        expect(result).toMatchInlineSnapshot(`
+      Object {
+        "3b392d64-8ffd-41e0-9873-8a49df028140": 335,
+        "7deed88b-5a14-4836-8145-6cd273a66948": 335,
+        "f80e65b7-6250-40ae-8a16-7c738aa70fd3": 335,
+      }
+    `);
+    });
+});
+```
+
+### Snapshot testy - podsumowanie
+
+Zalecany gdy:
+
+-   unit testy
+    -   badanie regresji w przetwarzaniu danych (array, object...)
+    -   badanie regresji reducerów itp.
+-   integracyjne testy
+    -   badanie regresji na integracji komponentów z serwisami(np. logowanie, M9)
+
+Wątpliwości gdy:
+
+-   badanie regresji markupu komponentów
+
+### Wyciek szczegółów niskopoziomowych - czytelność testów
+
+Problemem jest przemieszanie intencji testów wraz ze szczegółami implementacyjnymi
+
+#### Assert Objecy Pattern - intencje
+
+Wzorzec który polega na ukryciu szczegółów implemetacyjnych, jednocześnie udostępnia API które
+
+Przykład:
+
+```js
+// przed
+test("application should store certain logs (native)", () => {
+    expect(logs).toHaveLength(1005);
+
+    const debugLogs = logs.filter((log) => log.level === "DEBUG");
+    expect(debugLogs).toHaveLength(263);
+
+    const debugOfSpecificAccount = logs
+        .filter((log) => log.level === "DEBUG")
+        .filter(
+            (log) => log.account === "f80e65b7-6250-40ae-8a16-7c738aa70fd3"
+        );
+    expect(debugOfSpecificAccount).toHaveLength(81);
+
+    const errorLogs = logs.filter((log) => log.level === "ERROR");
+    expect(errorLogs).toHaveLength(229);
+
+    const errorOfSpecificAccount = logs
+        .filter((log) => log.level === "ERROR")
+        .filter(
+            (log) => log.account === "f80e65b7-6250-40ae-8a16-7c738aa70fd3"
+        );
+    expect(errorOfSpecificAccount).toHaveLength(75);
+});
+
+// po
+test("application should store certain logs (assert object)", () => {
+    const logStorageShould = new LogStorageAssertObject(logs);
+    logStorageShould
+        .haveAllLogsCount(1005)
+        .and.haveDebugLogsCount(263)
+        .and.haveCountOnlyForAccountId(
+            "f80e65b7-6250-40ae-8a16-7c738aa70fd3",
+            81
+        )
+        .and.haveErrorLogsCount(229)
+        .and.haveCountOnlyForAccountId(
+            "f80e65b7-6250-40ae-8a16-7c738aa70fd3",
+            75
+        );
+});
+```
