@@ -612,7 +612,7 @@ describe("AlbumDAO", () => {
     beforeAll(() =>
         server.listen({
             onUnhandledRequest: "error", // określa co się stanie jeśli poleci request który nie jest określony w naszym handlers. error - walnie błedem, warn - ostrzeżenie w konsoli, bypass - silent mode, żadnych informacji
-            // zalecane jest warn - tak aby wiedzieć że poleciał request 
+            // zalecane jest warn - tak aby wiedzieć że poleciał request
         })
     );
     afterEach(() => server.resetHandlers());
@@ -628,4 +628,150 @@ describe("AlbumDAO", () => {
         await expect(saveAlbums([])).rejects.toThrow("Failed to fetch");
     });
 });
+```
+
+## Dane Testowe
+
+Dane testowe to jest to czym nakarmimy testowane funkcje czy inne elementy.
+
+### Mockowanie vs Type-Safety
+
+W przypadku mockownia często chcemy zdefinować różne dane względem testów, w przypadkach kiedy mamy duży obiekty potrzebujemy jakiegoś wycnika itp.
+
+Natomiast TS będzie domyślnie krzyczał że potrzebuje całego obiektu.
+
+Jakie mamy sposoby na to?
+
+-   Annotation - to nie wiele daje, TS będzie wymuszał nadal uzupełnienie wszystkich pól
+
+```js
+describe("getTotalSalary", () => {
+    it("should calculate sum of employees salaries (type annotation)", () => {
+        const mockEmployees: Employee[] = [
+            {
+                salary: 100,
+            },
+            {
+                salary: 200,
+            },
+        ];
+
+        const result = getTotalSalary(mockEmployees);
+        expect(result).toEqual(300);
+    });
+});
+```
+
+-   Type assertion - to już lepiej, ale mamy ryzyko że będą błedy w runtime. Ryzykujemy debugowanie po wiele godzin
+
+```js
+  it('should calculate sum of employees salaries (type assertion)', () => {
+    const mockEmployees = [{
+      salary: 100
+    }, {
+      salary: 200
+    }] as Employee[]
+
+    const result = getTotalSalary(mockEmployees);
+    // const result = getTotalSalary(mockEmployees.filter(e => e.nationality == 'PL'));
+    expect(result).toEqual(300);
+  });
+```
+
+-   ES6 proxy - sposób na to aby dostać bład jakich pól nam brakuje w wycinkowym obiekcie. Lepszy komunikat błędu!
+
+```js
+  const asProxy = <TAsserted extends TActual, TActual extends object = object>(t: TActual) => {
+    const proxy = new Proxy(t, {
+      get: function(obj, prop) {
+        if (!(prop in obj)) {
+          throw new Error(`Trying to access non-existent property "${String(prop)}" on object ${JSON.stringify(obj)}`)
+        }
+
+        // IF powyżej nie gwarantuje jako type guard, że `prop` istnieje w `obj`, stąd type assertion
+        return (obj as any)[prop];
+        // return obj[prop as keyof TActual];
+      }
+    })
+    return proxy as TAsserted
+  }
+
+  // 3. PROXY
+
+  // istnieją wymagane pola
+  it('should calculate sum of employees salaries (ES6 proxy)', () => {
+    const mockEmployees = [{
+      salary: 100
+    }, {
+      salary: 200
+    }].map(obj => asProxy<Employee>(obj))
+
+    const result = getTotalSalary(mockEmployees);
+    expect(result).toEqual(300);
+  });
+```
+
+-   Zewnętrzne biblioteki
+
+### Wszystko zależy jak chcemy do tego podejść
+
+-   W przypadku centralizownia typów podejście numer 1 - pełne typy
+-   W przypadku rozpraszania typów (per test) podejście numer 2
+
+### Zasada Don't cate - don't specify
+
+Zasada która mówi o tym aby nie specyfikować danych wejściowych których nie interesuje test.
+
+#### Użycie buildera i prototypu aby zbudować potrzebny obiekt na potrzeby testu
+
+```js
+import { Log } from "./data-logs"
+import { countBy } from "./data-utils"
+
+// wybrakowane obiekty które pełnią role fake'ów
+const partialMockLogs = [{
+  level: "ERROR"
+}, {
+  level: "DEBUG"
+}] as Log[]
+
+test('should count occurrences of partial mock log levels', () => {
+  expect(countBy(partialMockLogs, log => log.level)).toEqual({"DEBUG": 1, "ERROR": 1})
+})
+
+// prototyp - zawiera przykładową strukturę obiektu
+// opakowujemy w funkcje bo chcemy zawsze tworzyć jednorazowo obiekt
+const sampleLog = (): Log => ({
+  "id": "61898d11-cf3f-4b87-a042-b1a774d98d18",
+  "date": "2020-12-13T06:16:50.000Z",
+  "level": "DEBUG",
+  "account": "f80e65b7-6250-40ae-8a16-7c738aa70fd3",
+  "content": "Nihil id reiciendis officiis qui ut dolor incidunt consequatur."
+})
+
+// zawsze zwraca nowy obiekt -> parametr to wywołanie funkcji
+const logBuilder = (object = sampleLog()) => {
+  return {
+    valueOf(){
+      return object
+    },
+    withLevel(level: Log['level']){
+      return logBuilder({ ...object, level })
+    },
+    withAccount(account: Log['account']){
+      return logBuilder({ ...object, account })
+    },
+  }
+}
+
+const fullMockLogs = [
+  // budowanie potrzebnych obiektów
+  logBuilder().withLevel("ERROR"),
+  logBuilder().withLevel("DEBUG"),
+  logBuilder().withLevel("ERROR").withAccount('123'),
+].map(builder => builder.valueOf())
+
+test('should count occurrences of full mock log levels', () => {
+  expect(countBy(fullMockLogs, log => log.level)).toEqual({"DEBUG": 1, "ERROR": 2})
+})
 ```
