@@ -1247,3 +1247,202 @@ test("application should store certain logs (assert object)", () => {
         );
 });
 ```
+
+## Testowanie statyczne
+
+-   weryfikują pewne założenia, ale bez uruchamiania kodu
+-   lintery, sonarQube itp.
+
+### Cykliczne zależności
+
+-   ani js, ani TS nie automatycznie nie wychwytuje cykli
+-   nie potrzeba uruchamiać aplikacji
+-   opcje
+    -   npm: madge
+    -   eslint: no-cycle
+    -   webpack plugin: circular-dependency-plugin
+
+#### Madge
+
+```
+madge --warning --circular --extensions ts,tsx src
+```
+
+istotna jest flaga --circual, to oznacza że interesuje nas szukanie cykli
+
+Przykład znalezionych cykli:
+
+```js
+// cykl 1 -> ThingB zapętla common
+lessons / m2 / cycle / Common.tsx > lessons / m2 / cycle / ThingB.tsx;
+// cykl 2 -> ThingA zapętla common
+lessons / m2 / cycle / Common.tsx >
+    lessons / m2 / cycle / ThingB.tsx >
+    lessons / m2 / cycle / ThingA.tsx;
+```
+
+### Cykliczne zależności
+
+-   linter - uruchamiany w tle, ciągle (env == development)
+-   webpack - uruchamiany w tyle, ciągle (env == development)
+-   madge - uruchamiany jako git hook
+
+## ESLint
+
+### .eslintrc
+
+-   3 poziomy
+    -   error - blokuje komplilacje
+    -   warn - wyświetla ostrzeżenie ale kompiluje aplikacje
+    -   off - ignoruje złamanie reguły
+-   flagi
+    -   --quiet - całkowicie wycisza ostrzeżenia
+    -   --max-warning - określa maksymalną liczbę ostrzeżeń
+
+### Reguły do poczytania
+
+-   https://eslint.org/docs/rules/
+-   https://www.npmjs.com/package/@typescript-eslint/eslint-plugin
+-   https://github.com/cartant/eslint-plugin-etc
+
+### Istotne reguły Es-lint
+
+#### No-shadow
+
+Pilnuje czy zmienna z wyższego zasięgu nie została przysłonięta, to może prowadzić do wielu nie wygodnych bugów
+
+```js
+export const TaskView: React.FC<TaskViewProps> = (props) => {
+    const { task, taskIndex, initialAnswer, onAnswerChange } = props;
+    const [answer, setAnswer] = useState(initialAnswer || "");
+    const updateAnswer = useCallback(
+        (answer: string) => {
+            // answer już istnieje wyżej, to niebiezpieczne!
+            setAnswer(answer);
+            onAnswerChange(task.id, answer);
+        },
+        [task.id, onAnswerChange]
+    );
+
+    return (
+        <>
+            <h1>Question {taskIndex}</h1>
+            <p>{task.question}</p>
+            <input
+                value={answer}
+                onChange={(e) => updateAnswer(e.target.value)}
+            />
+        </>
+    );
+};
+```
+
+#### Prefer-const
+
+Jeśli zmienna let nie zmienia wartości to zmień ją na const. Wynika to z zasady że element powinnien mieć tylko tyle przywilieji aby wykonał swoją robotę.
+
+```js
+export const ChangeLimitsFormView: React.FC<ChangeLimitsFormViewProps> = (
+    props
+) => {
+    let {
+        quota: { dailyLimit },
+        onApply,
+        onCancel,
+    } = props; // czemu let? jeżeli się nie zmienie to zróbmy to const!
+    let [newQuota, setNewQuota] = useState(dailyLimit); // analogicznie
+
+    return (
+        <>
+            <div>
+                <label htmlFor="input-change-quota">
+                    Dzienny limit kwotowy
+                </label>
+                <input
+                    id="input-change-quota"
+                    defaultValue={newQuota + ""}
+                    onChange={(e) => setNewQuota(parseFloat(e.target.value))}
+                />
+                <button type="button" onClick={() => onApply(newQuota)}>
+                    zapisz
+                </button>
+                <button type="button" onClick={onCancel}>
+                    anuluj
+                </button>
+            </div>
+        </>
+    );
+};
+```
+
+#### @typescript-eslint/no-implicit-any-catch
+
+W blokach try,catch tam gdzie error jest any. Ponieważ any jest kompatybilne ze wszystkim a error będzie miał precyzyjny typ.
+
+```js
+export async function asyncCall(){
+  try {
+    const response = await axios.get<object[]>('api.com/data')
+    return response.data.length
+  } catch (e) {
+    handleAxiosError(e) // co jeśli tutaj nie będzie zgdzał się typ? Będziemy mieć error w obsłudzę błedów :o
+  }
+}
+
+```
+
+#### @typescript-eslint/no-unnecessry-type-assertion
+
+Zwaraca uwagę na nadmiarowe asercje typów
+
+```js
+export function process<T, U>(items: T[], mapFn: (t: T) => U) {
+  return items.map(item => {
+    return mapFn(item as T) // nic to nie zmienia, nie potrzebne
+  })
+}
+```
+
+#### @typescript-eslint/no-unsafe-return
+
+Zwraca uwagę na miejsca gdzie zwracamy any
+
+```js
+export function naiveClone<T>(arg: T): T {
+    return JSON.parse(JSON.stringify(arg)); // będzie any, uwaga!
+}
+```
+
+#### @typescript-eslint/no-unsafe-call
+
+Zwraca uwagę na wywołanie any tak jakby było funkcją
+
+```js
+export {};
+
+var IHadSomeCompileTroubleAndForgotToTypeThat: any = "some stuff";
+
+IHadSomeCompileTroubleAndForgotToTypeThat();
+```
+
+### EsLint - no-console, no-debugger, no-unsed-\*
+
+Blokuje wstawianie conosle.log oraz funkcji debugger
+
+### Konwencja vs Konfiguracja
+
+-   Konfiguracja
+    -   wiele możliwości, ale wszystkie je potem muszę utrzymywać
+    -   większa dowolność, większy koszt
+        -   Czy wiele sposób na jakaś rzecz, niesie ze sobą jakaś korzyść?
+-   Konwencja
+    -   standaryzacja - 1 sposób
+    -   mniejsza dowolność, mniejszy koszt
+
+Wniosek: tam gdzie to możliwe stostujemy konwencje
+
+### Prettier
+
+Zalecanym jest prettier, ponieważ nie pozwala na wiele konfiguracji. To istotne aby utrzymać konwencje.
+
+https://www.npmjs.com/package/prettier
