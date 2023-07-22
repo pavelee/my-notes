@@ -1446,3 +1446,55 @@ Wniosek: tam gdzie to możliwe stostujemy konwencje
 Zalecanym jest prettier, ponieważ nie pozwala na wiele konfiguracji. To istotne aby utrzymać konwencje.
 
 https://www.npmjs.com/package/prettier
+
+## Code coverage
+
+Jest to zestaw narzędzi do testowania jakości kodu
+
+### jest --coverage
+
+```js
+jest --coverage
+```
+
+Dostepne statystki
+
+-   lines - ile linijek uruchomionych podczas testów
+-   statements - ile instrukcji, może byc wiele jeśli w linijce są oddzielone średnikami
+-   functions - ile funkcji uruchomionych
+-   branches - ile gałęzi przejścia kodu np. ściezki które nie zostały uwzględnione
+
+### pokrycie kodu != pokrycie funkcjonalności
+
+pokrycie kodu nie niesie ze sobą jakości testów
+
+To co jest istotne to pokrycie FUNKCJONALNOŚCI
+
+```js
+import { branches } from "../src/branches";
+import { getPerson } from "../src/coverage";
+
+test("getPerson", () => {
+    expect(getPerson(true, true, false)).toEqual({ age: 18, company: "ACME" });
+});
+
+// toBe vs toEqual
+//     If it should pass with deep equality, replace "toBe" with "toStrictEqual"
+// Expected: {"age": 18, "company": "ACME"}
+// Received: serializes to the same string
+
+test("branches", () => {
+    branches(true, true);
+    branches(false, false);
+
+    // poniższe FUNKCJONALNOŚCI nie są pokryte, ale pokrycie kodu 100%.
+    // branches(true, false)
+    // branches(false, true)
+});
+ś;
+```
+
+### pokrycie kodu można łatwo oszukać
+
+-   nie stosując asercji (brak expectów)
+-   koncetrując się na metryce w samej sobie
