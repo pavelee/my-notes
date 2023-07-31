@@ -263,6 +263,155 @@ przykłady snippetów
 
 https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/hooks
 
+## CRA & App setup
+
+### Cele setupu
+
+-   redukować pracę manualną
+    -   jeżeli są rzeczyw które mogę zautomatyzować, warto to zautomatyzować
+-   maksymalna automatyzacja
+-   łatwe aktualizacje w przyszłości
+    -   warto poczekać aż nowa wersja np. react wygrzeje się i będzie stabilna
+
+### Co daje CRA
+
+-   scaffolding projektu oraz przyszłe aktualizacje
+-   oszczędność czasu
+-   projekt dojrzały, wspierany przez FB (meta)
+    -   nie chcemy opierać struktury komercyjnego projektu na jakimś projekcie z githuba
+-   optymalizacje produkcyjne
+-   optymalizacje developerskie (React Fast Refresh)
+-   minus: config webpacka jest ukryty
+    -   ale react-app-rewired/craco/customize-cra rozwiązują problem (CRACO = create-react-app-config-overrides)
+
+### Webpack-bundle-analyzer
+
+-   wizualizacja codebase
+    -   pliki, rozmiary, bundle
+-   cele
+    -   monitorowanie zawartosci paczek
+    -   monitorowanie granic pomiędzy bundlami
+    -   weryfikowanie, czy dany import jest według zamierzeń dynamiczny
+-   setup
+    -   środowisko
+    -   numer/nazwa bundle
+
+### Sprawdzenie skad mam zależność (pakiet)
+
+```bash
+npm ls NAZWA_PAKIETU
+```
+
+To pozwala zrozumieć skąd mam ten pakiet w node_modules (który pakiet go używa)
+
+### Przeanalizowanie zależności przy pomocy madge
+
+```bash
+npx madge --json src/index.tsx
+```
+
+aby dodać też zależności node_modules
+
+```bash
+npx madge --json --include-npm src/index.tsx
+```
+
+### Struktura folderów, plików
+
+-   czynniki
+    -   szybkość znalezienia danego elementu w całym codebase
+    -   kolokacja: pliki które ze sobą współpracują powinny być blisko siebie (zmieniąją się razem)
+        -   wszystkie elementy obsługujące model biznesowy mieszkają razem
+        -   edytując konkretną funkcjonalność obszar po którym się poruszamy jest jak najmniejszy
+        -   mamy podpowiedź co również może wymagać zmiany
+    -   ile komponentów w jednym pliku?
+        -   jeżeli dany komponent występuje tylko w jednym większym komponentcie to dobrym pomysłem jest trzymanie go razem w tym samym pliku
+    -   lazy loading
+        -   jeśli pliki są rozrzucone po całym codebase to ładowanie ich na starcie aplikacji może być kosztowne
+        -   zawartość folderu pokrywa się z tym co jest ładowane w danym momencie
+
+### Git hooks & husky
+
+-   cele
+
+    -   wyręczenie programisty w czynnościach powtarzalnych
+    -   fail-fast - szybkie wykrywanie błędów, kod z failującymi testami nie nadaje się na produkcję
+
+-   automatyczne uruchamianie dowolnych komend
+    -   testy auomatyczne
+    -   prettier
+    -   madge (cykliczne zależności)
+
+#### Husky - super łatwy sposób na wymuszenie odpalenia testów przed commitem
+
+Zainstaluj Husky jako zależność deweloperską:
+
+```bash
+npm install husky --save-dev
+```
+
+dev
+Dodaj skrypt do pliku package.json, który będzie uruchamiał testy przed zatwierdzeniem zmian w kodzie:
+
+````js
+{
+  "scripts": {
+    "precommit": "npm run test"
+  }
+}
+```
+
+Dodaj konfigurację Husky do pliku package.json:
+
+```js
+{
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
+  }
+}
+````
+
+Ta konfiguracja uruchomi skrypt precommit przed każdym zatwierdzeniem zmian w kodzie.
+
+Teraz, kiedy programista spróbuje zatwierdzić zmiany w kodzie, Husky uruchomi skrypt precommit, który z kolei uruchomi testy. Jeśli testy nie przejdą, Husky uniemożliwi zatwierdzenie zmian w kodzie.
+
+Można również skonfigurować Husky do uruchamiania innych skryptów, takich jak formatowanie kodu lub sprawdzanie zależności.
+
+## NVM - Node Version Manager
+
+-   pozwala na łatwe przełączanie się pomiędzy wersjami node
+-   przydatne kiedy obsługuje się wiele projektów z różnymi wersjami node
+
+Musimy zainstalować nvm na naszym komputerze
+
+Następnie poleceniem
+
+```bash
+nvm ls
+```
+
+możemy sprawdzić jakie wersje node mamy zainstalowane
+
+i przełączyć się na inną wersje node
+
+```bash
+nvm use 14.15.4 # tutaj podajemy wersje którą chcemy użyć
+```
+
+oraz zainstalować nową wersje node
+
+```bash
+nvm install 14.15.4 # tutaj podajemy wersje którą chcemy zainstalować
+```
+
+przestawienie defaultowej wersji node
+
+```bash
+nvm alias default 14.15.4 # tutaj podajemy wersje którą chcemy ustawić jako default
+```
+
 ## React Portals
 
 ### Ogólnie
