@@ -412,6 +412,119 @@ przestawienie defaultowej wersji node
 nvm alias default 14.15.4 # tutaj podajemy wersje którą chcemy ustawić jako default
 ```
 
+## Storybook
+
+-   demo & dokumentacja użycia komponentu i jego wariantów
+-   story - pojdeynczy przykład użycia komponentu
+-   addons: interaktywność, testy, itp.
+
+Nie jest to element aplikacji tylo katalog komponentów i dodatkowo narzędziem deweloperskim
+
+Odpala nam się aplikacja w której możemy przeglądać komponenty z naszej aplikacji, bardzo wygodne to prezentacji i testowania
+
+story book dla komponentu wygląda tak:
+
+```js
+import React, { ComponentProps } from 'react';
+
+import { StoryFn, Meta } from '@storybook/react';
+
+import { Button } from './Button';
+
+export default {
+  title: 'Atoms/Button',
+  component: Button,
+  argTypes: {
+    onClick: { action: 'click' },
+    disabled: { control: 'boolean' },
+    variant: {
+      table: {
+        disable: true
+      }
+    }
+  },
+} as Meta;
+
+const Template: StoryFn<ComponentProps<typeof Button>> = (args) => <Button {...args} />;
+
+export const Primary = Template.bind({});
+Primary.args = {
+  variant: "PRIMARY",
+  children: "Primary action",
+};
+
+export const Secondary = Template.bind({});
+Secondary.args = {
+  variant: "SECONDARY",
+  children: "Secondary action",
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  variant: "PRIMARY",
+  disabled: true,
+  children: "Primary action",
+};
+
+export const Outlined = Template.bind({});
+Outlined.args = {
+  variant: "OUTLINED",
+  children: "Outlined action",
+};
+```
+
+### Po co storybook
+
+-   implementacja komponentów w spearacji (Component-driven UI, bootom-up)
+-   wizualny, manualny osąd poprawności funkcjonalnej
+-   dokumentacja komponentów
+-   łatwiej wyelminować błedy w designie komponentów
+-   ułatwia ad-hoc testy na urządzeniach mobilnych
+-   ułatwia prace z UX oraz biznesem, bo możemy pokazać komponenty w izolacji i w czasie developmentu
+
+### Koszty i trudności storybook'a
+
+-   config, deploy, aktualizacje
+-   porządkowanie, utrzymanie
+-   mockowanie zależności
+-   CPU
+
+## Design system
+
+-   Atomic Design - taksonomia komponentów
+    -   atoms, molecules, organisms, templates, pages
+    -   atomy - najmniejsze elementy o jednej odpowiedzialności (np. button, label, ikona)
+    -   molekuły - grupy atomów (input + label)
+    -   oranizmy - grupy atomów i molekuł (formularz)
+
+### Feature-Based Development
+
+-   grupowanie komponentów w oparciu o funkcjonalność np. formularz logowania
+
+### Więcej na temat design systemów
+
+https://www.componentdriven.org/
+https://github.com/alexpate/awesome-design-systems
+https://bradfrost.com/blog/post/atomic-web-design/
+
+### Design komponentów - reużywalność
+
+-   reużywalny - używalny w wielu róznych miejscach
+-   reużywalność = mało odpowiedzialności
+-   reużywalność powinna wynikać z designu a nie być celem samym w sobie
+
+### Design komponentów - błedy
+
+-   wiele odpowiedzalności
+-   za duży rozmar (performance)
+    -   przez to że jest duży to ma wiele powódów do re-renderu i jednocześnie duzy koszt renderowania
+-   wyciek obsługi stanu
+    -   przekazywanie settera do stanu zamiast callbacka który enkapsuluje logikę
+-   chaos w zależnościach
+    -   mieszanie danych z propsów, contextu, stanu, itp.
+-   wyciek stylów z rodzica do dziecka
+    -   np. przez użycie globalnych styli
+
 ## React Portals
 
 ### Ogólnie
