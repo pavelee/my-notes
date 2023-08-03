@@ -525,6 +525,52 @@ https://bradfrost.com/blog/post/atomic-web-design/
 -   wyciek stylów z rodzica do dziecka
     -   np. przez użycie globalnych styli
 
+## React & CSS
+
+### Inline Styles
+
+-   plusy
+    -   prostota
+    -   brak zależności
+-   minusy
+    -   brak abstrakcji
+    -   duplikacja, wiele miejsc do zmiany
+    -   mieszany style, markup i logika
+
+### Inline classes
+
+-   plusy
+    -   prostota
+-   minusy
+    -   globalne style albo BEM
+    -   nadal duplikacja
+    -   mieszanie styli, markupu i logiki
+
+### CSS Modules
+
+-   plusy
+    -   lokalne style
+    -   łatwe do zaimplementowania
+    -   łatwe do zrozumienia
+-   minusy
+    -   ?
+
+### CSS in JS
+
+-   plusy
+    -   abstrakcja: ostylowany komponent
+    -   osobno: style, markup, logika
+-   minusy
+    -   zależność 3-rd party
+    -   podnosi próg wejścia (nieznacznie)
+
+## Dobieraine kolorów (wsparcie)
+
+https://colorhunt.co/
+https://coolors.co/
+https://color.adobe.com/pl/create/color-wheel
+https://www.npmjs.com/package/color
+
 ## React Portals
 
 ### Ogólnie
