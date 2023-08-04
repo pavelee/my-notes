@@ -564,6 +564,46 @@ https://bradfrost.com/blog/post/atomic-web-design/
     -   zależność 3-rd party
     -   podnosi próg wejścia (nieznacznie)
 
+## Optymalizacja Reacta
+
+### Pamiętaj!
+
+-   Make it work - najpierw zrób to działa
+-   Make it right - dopiero potem zrób to dobrze
+-   Make it fast - dopiero potem zrób to szybko
+
+### 3 powody renderowania komponentów
+
+-   zmiana stanu
+-   renderowanie rodzica
+-   zmiana kontekstu
+
+### Children - najważniejsza optymalizacja
+
+-   Poprzez przekazywanie children możemy uniknąć niepotrzebnych re-renderów
+    -   ponieważ children jest renderowany wewnątrze komponentu rodzica
+
+### Memo
+
+-   Memo powstrzymuje rendery przychodzące od rodzica jeśli NIE zmieniły się propsy
+-   memo w połaczeniu z "children" często nie działa (zmiana refencji obiektu)
+-   memo wobec zmian kontekstu i stanu lokalnego nie działa
+-   jeśli rodzic nie zapewnia "refential equality" to memo nie zadziała
+-   przekazywane do memo propsy zmieniają się w trakcie developmentu (trudne do śledzenia)
+
+-   Dobrzy kandydaci na memo
+    -   komponenty zawierające sporo markupu
+    -   statyczne komponenty typu Header, Fotter, itp.
+
+### useMemo - memoizacja wartości
+
+-   unikanie zbędnych obliczeń poprzez zapamiętywanie wyników
+-   unikanie zbędnych re-renderów poprzez stabilne referencje (refential equality)
+
+### useCallback - memoizacja funkcji
+
+Analogicznie do useMemo, ale dla funkcji
+
 ## Dobieraine kolorów (wsparcie)
 
 https://colorhunt.co/
