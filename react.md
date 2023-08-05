@@ -604,6 +604,49 @@ https://bradfrost.com/blog/post/atomic-web-design/
 
 Analogicznie do useMemo, ale dla funkcji
 
+### Używanie key jako tożsamości komponentu
+
+kiedy chcemy wymusić re-render komponentu, np. po zmianie stanu
+
+```js
+<TextTaskView
+    key={currentTask.id} // przekazanie key spowoduje zmiane tożsamości komponentu i zresetowanie stanu
+    task={currentTask}
+    onAnswerChange={action("answer changed")}
+/>
+```
+
+### Lazy loading
+
+-   dynamic import + ewentualne kombinacje na promisach
+
+```js
+if (condition) {
+    import("plik").then((module) => {
+        // ...
+    });
+}
+```
+
+-   React.lazy + Suspense
+
+```js
+const Component = React.lazy(() => import("./Component"));
+
+const App = () => (
+    <Suspense fallback={<div>Loading...</div>}>
+        <Component />
+    </Suspense>
+);
+```
+
+### Analiza i profilowanie
+
+-   react dectools components: hilghlight updates
+-   react dectools profiler
+-   CPU throttling
+-   newtwork throttling
+
 ## Dobieraine kolorów (wsparcie)
 
 https://colorhunt.co/
