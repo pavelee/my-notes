@@ -1,3 +1,18 @@
+/*
+Zastosowanie
+    -   gdy twój kod ma działać na produktach z różynch rodzin, ale jednocześnie nie chcesz, aby ścisle zależał od konkretnych klas produktów
+        -   mogą one być nie znane na wczesnym etapie projektowania albo chcesz umożliwiść przyszłą rozszerzalność systemu
+    -   przymyśl ewnetualną implementacja wzorca Fabryki abstrakcyjnej, gdy masz do czynienia z klasą posiadającą zestaw Metod wytwórzych które zbytnio przyćmiewają główną odpowiedzialność klasy
+Zalety
+    -   Zyskujesz pewność że produkty jakie otrzymujesz stosując fabrykę są ze sobą kompatybilne
+    -   Zapobiegasz ścisłemu sprzęgnięciu kodu klienckiego z klasami konkretnych produktów
+    -   Zasada pojedynczej odpowiedzalności. Kod tworzący produkty jest izolowany od kodu używającego produkty
+    -   Zasada otwarte/zamknięte. Możesz wprowadzać nowe rodzaje produktów do systemu bez psucia istniejącego kodu klienta
+Wady
+    -   Może spowodować zwiększenie liczby klas w systemie
+    -   Może być trudne do utrzymania w systemach złożonych
+*/
+
 abstract class UIElement {}
 
 // definiujemy abstrakcyjne produkty dla systemu
