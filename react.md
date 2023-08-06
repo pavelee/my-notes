@@ -647,6 +647,137 @@ const App = () => (
 -   CPU throttling
 -   newtwork throttling
 
+## Testowanie reacta
+
+### JS dom
+
+-   emulowane środowisko DOM w node.js
+-   DOM jest resetowany per plik a nie per test
+    -   wynika to z faktu że wygenerowanie DOMa jest kosztowne (nawet 100ms)
+-   JS dom nie obsługuje
+    -   multimedia: audio, video
+    -   nawigacja klawiaturą
+    -   nawigacja (location.href)
+    -   layout/CSS (np. getBoundingClientRect, offsetTop)
+
+### Filizofia RTL - React Testing Library
+
+-   Publicznym API komponentu:
+    -   nie są metody, propsy, stan, refy
+    -   jest to co widzi użytkownik
+-   Testowanie szczegółów implementacyjnych prowadzi do częstych zmian testów (strata czasu)
+-   Wrappery zbędne - posługujemy się natywnym API DOMa
+
+### Przykładowy test
+
+```js
+test.skip("ExamView", () => {
+    it("should display exam content", async () => {
+        // given
+        const {
+            findByText,
+            findByRole,
+            getByText,
+            getByLabelText,
+            debug,
+            container,
+        } = render(<ExamProcess />);
+
+        await findByText("Please click start to begin your exam.");
+        const startBtn = await findByRole("button", { name: "Start exam" });
+
+        // when
+        fireEvent.click(startBtn);
+
+        // pojechali!
+
+        getByText("Czy chrapiesz w nocy?");
+        // debug() // Uwaga! Tutaj możemy zdebugować co zwraca komponent! Sweet!
+
+        const nextBtn = await findByRole("button", { name: "Next task" });
+        fireEvent.click(nextBtn);
+
+        // następne pytanie - proszę!
+
+        const kacInput = getByLabelText("Kiedy ostatni raz miałeś kaca?");
+        fireEvent.change(kacInput, { target: { value: "ło panie!" } });
+
+        fireEvent.click(nextBtn);
+
+        getByText("Gdybyś miał być psem, to jakim?");
+
+        const finishBtn = await findByRole("button", { name: "Finish exam" });
+        fireEvent.click(finishBtn);
+
+        expect(container).toHaveTextContent("Exam completed!");
+    });
+});
+```
+
+### RTL API - konwencja nazewnictwa
+
+-   getByRole - szukanie po roli
+-   getByLabelText - szukanie po labelu
+-   getByText - szukanie po tekście
+-   getByPlaceholderText - szukanie po placeholderze
+-   getByAltText - szukanie po alt
+-   getByTitle - szukanie po title
+-   getByDisplayValue - szukanie po wartości pola formularza
+-   getByTestId - szukanie po atrybucie data-testid
+-   getBy - szukanie po selektorze CSS
+-   queryBy - to samo co getBy ale zwraca null jeśli nie znajdzie
+-   findBy - to samo co getBy ale zwraca promise
+-   getAllBy - to samo co getBy ale zwraca tablicę
+-   queryAllBy - to samo co getAllBy ale zwraca null jeśli nie znajdzie
+-   findAllBy - to samo co getAllBy ale zwraca promise
+
+https://testing-library.com/docs/dom-testing-library/cheatsheet/
+
+### Testowanie DOM - typowe błędy
+
+-   test usztywnający się na konkretną strukturę DOM
+-   test usztywnający się na jakiekolwiek niepubliczne detale implementacyjne
+-   nawanie tego samego test-id w wielu miejscach
+
+### Testowanie DOM - tips
+
+-   get*/query*/find\* - jako implicite asercje
+
+```js
+expect(getByText("siema")).toBeInTheDocument();
+getByText("siema"); // zwraca element lub rzuca wyjątek
+```
+
+-   "wyrywkowe" wyszukiwanie tekstu
+
+```js
+getByTest("siema", { exact: false }); // szuka tekstu który zawiera "siema"
+```
+
+-   role zamiast test-id
+
+```js
+getByRole("button", { name: "siema" });
+```
+
+-   @testing-library/user-event zamiast natywnych fireEvent
+
+```js
+fireEvent.change(input, { target: { value: "siema" } });
+userEvent.type(input, "siema");
+```
+
+### TDD a react
+
+TDD - Test Driven Development (red-green-refactor)
+
+-   red - napisz test który nie przechodzi
+-   green - napisz kod który sprawi że test przejdzie
+-   refactor - popraw kod
+-   repeat
+
+
+
 ## Dobieraine kolorów (wsparcie)
 
 https://colorhunt.co/
