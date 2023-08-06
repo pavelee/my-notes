@@ -776,7 +776,50 @@ TDD - Test Driven Development (red-green-refactor)
 -   refactor - popraw kod
 -   repeat
 
+## Zarządzanie stanem - hooki i context
 
+### Model aktywny vs reaktywny
+
+-   Aktywny - zmiana stanu jest inicjowana przez programistę
+-   Reaktywny - zmiana stanu jest inicjowana przez framework
+
+Użycie zależy od przypadku. Jeśli mamy mało zależności możemy użyć aktywnego modelu ale z rozrostem aplikacji lepiej użyć reaktywnego
+
+### Stan współdzielony vs prywatny
+
+-   Stan współdzielony - stan który jest współdzielony przez wiele komponentów
+-   Stan prywatny - stan który jest używany tylko wewnątrz komponentu
+
+Jeśli to możliwe lepiej używać stanu prywatnego, ponieważ jest to łatwiejsze do zrozumienia i testowania. Powoduje że komponent posiada mniej zależności.
+
+### Stan centralizowany vs rozproszony
+
+-   Stan centralizowany - stan który jest przechowywany w jednym miejscu
+    -   single source of truth
+    -   wiadomo kogo subskrybować
+    -   wiele miejsc od niego zależy
+-   Stan rozproszony - stan który jest przechowywany w wielu miejscach
+    -   jedna odpowiedzialność
+    -   konsument może potrzebować subksrybować wiele źródeł
+    -   mniej miejsc od niego zależy
+
+### Zmiana stanu direct (update) vs indirect (event)
+
+-   Direct
+    -   wiem co się stało i jak to obsłużyć
+        -   useState
+        -   callbacks
+-   Indirect - zmiana stanu jest inicjowana przez użytkownika
+    -   wiem co się stało ale nie wiem jak to obsłużyć (ktoś inny to robi)
+        -   useReducer
+        -   redux
+        -   xstate
+
+### Wzroce projektowe
+
+-   provider-consumer
+-   publisher-subscriber
+-   mediator
 
 ## Dobieraine kolorów (wsparcie)
 
