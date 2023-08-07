@@ -815,6 +815,94 @@ Jeśli to możliwe lepiej używać stanu prywatnego, ponieważ jest to łatwiejs
         -   redux
         -   xstate
 
+## Reacktowe hooki
+
+### Reguły hooków
+
+-   hooki tylko w komponentach funkcyjnych
+-   hooki muszą być wywoływane na samej górze funkcji komponentu
+-   komponent musi mieć stałą ilość i kolejność hooków
+
+### Hooki
+
+-   Hooki nie mogą blokować renderowania ale rerendry mogą wymuszać
+
+-   UseState
+    -   zmiana stanu direct
+    -   aktualizacja stanu do nowej wartości
+        -   ```js
+            const [state, setState] = useState(initialState);
+            setState(value);
+            ```
+    -   aktualizacja stanu w oparciu o poprzednią wartość
+        -   jest to zalecane kiedy wykonujemy wiele aktualizacji stanu w jednym renderze, to się kolejkuje i nie mamy buga z nieaktualnym stanem
+        -   kiedy budujemy stan na podstawie poprzedniego stanu
+        -   ```js
+            const [state, setState] = useState(initialState);
+            setState((prevState) => {
+                return prevState + 1;
+            });
+            ```
+    -   liczaba potencjalnych callbacków jest spora, więc jesli chcemy zrobić coś w stylu redux thunk to lepiej użyć useReducer
+    -   Dobry kiedy mamy przypięty do komponentu mały stan (prymityw)
+-   UseReducer
+    -   zmiana stanu indirect (obiekt akcji)
+        -   aktualizacja stanu do nowej wartości
+            -   ```js
+                const [state, dispatch] = useReducer(reducer, initialState);
+                dispatch({ type: "increment" });
+                ```
+    -   liczba callbacków jest zawsze stała (1), więc jeśli mamy dużo akcji to lepiej użyć useReducer -> dispatch
+    -   Dobry kiedy mamy przypięty do komponentu duży stan (obiekt)
+-   useMemo
+    -   unikanie drogich obliczeń
+    -   unikanie rerenderów w skutek zmiany referencji
+-   useCallback
+    -   unikanie rerenderów w skutek zmiany referencji
+-   useEffect
+    -   wykonywanie efektów ubocznych (side effects)
+    -   reakcje na zmiany wartości (np. data sync / reset innego lokalnego stanu)
+    -   unsubscribe / cleanup
+    -   ```js
+        useEffect(() => {
+            const subscription = props.source.subscribe();
+            return () => { // ISTOTNE! clean up np. zamknięcie subskrypcji
+                subscription.unsubscribe();
+            };
+        }); // przy KAŻDYM renderze
+        }[]); // tylko INICJALNIE
+        }[dependecy]); // po ZMIANIE zależności
+        ```
+-   useLayoutEffect
+    -   to samo co useEffect ale synchronicznie (blokuje render)
+    -   używamy kiedy chcemy coś zrobić synchronicznie przed renderem
+    -   wąskie zastosowanie np. mierzenie szerokości elementu, animacje
+-   useRef
+    -   referencja do elementu DOM
+    -   referencja na mutwalne wartości
+    -   ucieczka z reaktywności, react nie zareaguje na zmiany
+    -   pozwalają np. na focus na input
+    -   aby zintegrować się z bibliotekami 3rd party (pomost pomiedzy react a biblioteką)
+    -   ```js
+        const ref = useRef(initialValue);
+        ```
+-   forwardRef
+    -   przekazywanie refa do komponentu funkcyjnego
+    -   ```js
+        const component = React.FrowardRef((props, ref) => {
+            return <div ref={ref} />;
+        });
+        <Component ref={ref} />; // ten ref trafi do komponentu rodzica
+        ```
+
+### Uwagi do hooków!
+
+-   W przpyadku useEffect pierwszy odpali się u dzieci a potem u rodzica!
+
+### Co to stan?
+
+Stan jest zależnością dla komponentu. Jest powodem, dla którego komponent się renderuje.
+
 ### Wzroce projektowe
 
 -   provider-consumer
