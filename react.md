@@ -1024,6 +1024,18 @@ const useMyContext = () => {
   - profiler pokazuje że to problem rerenderu powiazanego z kontekstem
   - kontekst ma wielu subskrybentów
 
+### Testowanie Context API
+
+- testowanie kontekstu jest trudne
+
+#### W jaki sposób możemy testować kontekst?
+
+- testowanie komponentów subskrybujących kontekst
+  - starajmy się używać realnych komponentów z aplikacji, w kontekście jakieś funkcjonalności
+
+- testujemy konteksty, faktycznie tak jak są używane
+- testujemy konteksty integracyjnie
+
 ### Ogólnie
 
 Wykorzystujemy Context API
