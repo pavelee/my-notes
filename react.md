@@ -1031,10 +1031,39 @@ const useMyContext = () => {
 #### W jaki sposób możemy testować kontekst?
 
 - testowanie komponentów subskrybujących kontekst
+
   - starajmy się używać realnych komponentów z aplikacji, w kontekście jakieś funkcjonalności
 
 - testujemy konteksty, faktycznie tak jak są używane
 - testujemy konteksty integracyjnie
+
+### Context-Provider-State vs Redux
+
+- Redux
+  - scentralizowany
+  - single source of truth
+    - to ogranicza na przyszłość
+  - bardzo wydajny out-of-the-box
+  - narzuca ścisłą konwencje
+  - narzauca event storming
+  - debugowalność + redux-devtools
+  - narzut kodu na obsługę kodu, reducerów, selektorów
+    - Tutaj możemy użyć redux-toolkit aby było mniej bolierplaitu
+  - częste błędy
+    - wrzucanie zbyt dużo info do reduxa
+    - niewłaściwa granualność akcji/częstotliwość akcji
+    - "you might not need Redux" (w przyszłości chcesz zmiana architektury)
+- Context-Provider-State
+  - rozproszony
+  - pełna dowolność
+  - o wydajność trzeba zadbać samemu
+  - nie narzuca stylu ani rozwiązania
+  - brak narzędzi do debugowania
+  - narzut kodu na pisanie rozwiązać from scratch
+  - częste błędy
+    - kontekst o zbyt wielu odpowiedzalnościach
+    - chaos w organizacji i zarządzaniu zależnościami
+    - choos w testach
 
 ### Ogólnie
 
