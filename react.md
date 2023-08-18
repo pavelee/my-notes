@@ -1148,3 +1148,9 @@ const SomeComponent = () => {
 }
 
 ```
+
+## Immer - mutacje stanu
+
+Bibloteka która pozwala na mutacje stanu w sposób niemutowalny
+
+https://immerjs.github.io/immer
