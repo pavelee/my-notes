@@ -1,7 +1,7 @@
 ## Instalacja
 
 ```
-bun install prisma
+bun install --dev prisma
 ```
 
 ## Przygotowanie VS Code
