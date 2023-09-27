@@ -98,5 +98,23 @@ bunx prisma db push
 bun install @prisma/client
 ```
 
-### Tworzymy plik prismadb.ts
+### Obejście problemu hot reloding w Next.js (tworzenie wielu instancji prismy)
+
+Tworzymy plik prismadb.ts który jest proxy do PrismaClient
+
+```
+import { PrismaClient } from "@prisma/client";
+
+declare global {
+  var prisma: PrismaClient | undefined;
+}
+
+// workaround for hot reload in next.js, avoid creating new PrismaClient on each reload
+
+const client = globalThis.prisma || new PrismaClient();
+
+if (process.env.NODE_ENV !== "production") globalThis.prisma = client;
+
+export default client;
+```
 
