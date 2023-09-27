@@ -4,6 +4,12 @@
 bun install --dev prisma
 ```
 
+## Inicjacja prismy
+
+```
+bunx prisma init
+```
+
 ## Przygotowanie VS Code
 
 Instalacja rozszerzenia vs code "Prisma"
