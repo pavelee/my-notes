@@ -1,20 +1,22 @@
-## Instalacja
+## Przygotowanie do pracy z Prisma
+
+### Instalacja
 
 ```
 bun install --dev prisma
 ```
 
-## Inicjacja prismy
+### Inicjacja prismy
 
 ```
 bunx prisma init
 ```
 
-## Przygotowanie VS Code
+### Przygotowanie VS Code
 
 Instalacja rozszerzenia vs code "Prisma"
 
-## Przykładowa schema (schema.prisma)
+### Przykładowa schema (schema.prisma)
 
 ```
 // This is your Prisma schema file,
@@ -84,8 +86,17 @@ model Notification {
 }
 ```
 
-## Utworzenie schemy
+### Utworzenie schemy
 
 ```
 bunx prisma db push
 ```
+
+### Instalacja klienta prismy
+
+```
+bun install @prisma/client
+```
+
+### Tworzymy plik prismadb.ts
+
