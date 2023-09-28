@@ -1,5 +1,15 @@
 # Next.js
 
+## Next.js 13
+
+### Uwierzytelnianie
+
+#### Instalacja zależności
+
+```
+bun install bcrypt
+```
+
 ## _app.js
 
 Specjalny plik który jest czymś w rodzaju "index.php". Umożliwia nam nadpisywanie zachowania przy starcie aplikacji.
