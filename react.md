@@ -1,3 +1,8 @@
+## Przydatne biblioteki
+
+- https://github.com/47ng/next-usequerystate
+  -  trzymanie state w URL
+
 ## Typowanie Reacta
 
 - natywne i oficjalne wsparcie składni JSX przez TS
