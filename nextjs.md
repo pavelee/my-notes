@@ -7,7 +7,8 @@
 #### Instalacja zależności
 
 ```
-bun install bcrypt
+bun install bcrypt next-auth @next-auth/prisma-adapter
+bun install --dev @types/bcrypt
 ```
 
 ## _app.js
