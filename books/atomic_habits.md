@@ -37,3 +37,22 @@ _translation for devs_
 
 - Focus on improving your coding skills, not on getting a job.
 - Focus on building a habit of learning, not on learning a specific technology.
+
+## How habits shape your identity (and vice versa)
+
+- Focus on who you want to become
+  - If you decide to quit smoking but you don't believe in it internally, there is a low chance that you will succeed
+    - Decide to become a person who cares about health, smoke quitting will become a natural result for you
+  - What you do indicates the person you think you are
+  - Habit that is part of your identity will be strong
+    - The goal is not to read a book, the goal is to become a reader￼
+- Habits (repeating actions) help you to believe that you can become who you want to be
+  - The best way to change who you are is to change what you do every day
+  - Decide what person you want to be, prove it to yourself with small victories (daily work)
+- If you don't know who you want to become, think about what type of person would achieve what you want?
+  - What kind of person could write a book? Probably someone systematic and reliable
+- Remember! You can always change who you are!
+
+_translation for devs_
+
+- If you want to become a senior developer, start acting like one. Start writing articles, sharing your knowledge, and helping others.
