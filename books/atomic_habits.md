@@ -6,7 +6,7 @@
 - what important! Small mistakes lead to big failures 🫣
 - Great example, when a plain change in the angle of a plane ✈️ can lead to a huge difference in the destination. First it's not noticeable, but after a long time, it's a huge difference.
 
-_translation for devs_
+#### translation for devs
 
 - learn something new every day, read one article, watch one video, write one line of code.
 - seek for small improvements in your code, it will lead to a huge difference in the long run.
@@ -18,7 +18,7 @@ _translation for devs_
     - We call it the "valley of disappointment", you have to survive it to see the results 🙏
 - When you succeed, people around you will say you achieved it overnight. But in reality, it's a result of small habits and actions you've been doing for a long time.
 
-_translation for devs_
+#### translation for devs
 
 - you won't become a senior developer overnight, it's a result of small habits and actions you've been doing for a long time.
 - you will be disappointed about your progress, but you have to survive it to see the results. Keep going! 🙏
@@ -33,7 +33,7 @@ _translation for devs_
   - Goals is only a momentary satisfaction, but systems are a long-term satisfaction.
   - What if you achieved your goal? You will stop? No, you need a system to keep going.
 
-_translation for devs_
+#### translation for devs
 
 - Focus on improving your coding skills, not on getting a job.
 - Focus on building a habit of learning, not on learning a specific technology.
@@ -53,6 +53,6 @@ _translation for devs_
   - What kind of person could write a book? Probably someone systematic and reliable
 - Remember! You can always change who you are!
 
-_translation for devs_
+#### translation for devs
 
 - If you want to become a senior developer, start acting like one. Start writing articles, sharing your knowledge, and helping others.
