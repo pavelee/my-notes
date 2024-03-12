@@ -3,5 +3,6 @@
     "editor.insertSpaces": true,
     "cSpell.words": [
         "devs"
-    ]
+    ],
+    "prettier.tabWidth": 4
 }
