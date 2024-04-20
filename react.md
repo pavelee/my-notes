@@ -1,3 +1,9 @@
+## Co to jest react?
+
+Extremalnie popularny, deklaratywny, component-base, state-driven bilbioteka javascript do budowania UI, stworzony przez facebooka
+
+
+
 ## Typowanie Reacta
 
 - natywne i oficjalne wsparcie składni JSX przez TS
