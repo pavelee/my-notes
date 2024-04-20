@@ -1,5 +1,16 @@
 # Next.js
 
+## Next.js 13
+
+### Uwierzytelnianie
+
+#### Instalacja zależności
+
+```
+bun install bcrypt next-auth @next-auth/prisma-adapter
+bun install --dev @types/bcrypt
+```
+
 ## _app.js
 
 Specjalny plik który jest czymś w rodzaju "index.php". Umożliwia nam nadpisywanie zachowania przy starcie aplikacji.
