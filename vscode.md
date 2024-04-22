@@ -42,3 +42,31 @@ Version: 6.6.9
 Publisher: Weijan Chen
 VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-database-client2
 ```
+
+### Theme
+
+#### One Monokai Theme
+
+Kolorowanie składni
+
+```
+Name: One Monokai Theme
+Id: azemoh.one-monokai
+Description: A cross between Monokai and One Dark theme
+Version: 0.5.0
+Publisher: Joshua Azemoh
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=azemoh.one-monokai
+```
+
+#### Material Icon Theme
+
+Ładne ikony dla lepszego UX
+
+```
+Name: Material Icon Theme
+Id: PKief.material-icon-theme
+Description: Material Design Icons for Visual Studio Code
+Version: 4.30.1
+Publisher: Philipp Kief
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
+```
