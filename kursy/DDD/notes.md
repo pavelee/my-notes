@@ -173,3 +173,146 @@
             -   tutaj często pojawiają się problemy marnowania czasu na rozterki techniczne, które nie mają znaczenia dla biznesu
                 -   gdzie ten czas można poświęcić na decyzje strategiczne (modelowanie)
             -   dobry projekt techniczny to taki który pozwala łatwo zmienić decyzje co do wcześniejszych decyzji projektowych
+
+### L05. A czym jest Domain-Driven Design?
+
+-   rozmycie pierwotnej idei DDD
+    -   Rick Evans opublikował w 2003 roku książkę Domain-Driven Design która spopularyzowała DDD
+    -   sama wiedza została uguntowana 20 lat wcześniej
+    -   jest to naturalny efekt rozmycia ideii z czasem, np. Agile software development stał się samym Agile'm
+-   Pryncypia i heurystyki
+    -   Rodzaje DDD
+        -   DDD by Eric evans - pierwotna koncepcja, zainspirowanie kolejnych pokoleń
+        -   DDD - Technial onanism - wypaczenie ideii evansa, skupienie się na technicznych aspektach
+        -   Base design principles - ogólne zasady dobrego kodu, są programisći którzy nie znają DDD ale piszą dobry kod
+        -   DDDD a'la botegga - dodatkowe heurystyki wypracowane przez autorów szkolenia
+    -   celem jest przybliżenie naszej branży do standardów inżynierii
+-   Czym jest a czym nie jest DDD
+    -   Zbiór zasad, sposób myślenia, przewodnik do projektowania systemów
+    -   DDD nie jest złotym młotkiem i nie rozwiązuje wszystkich problemów
+    -   **DDD nie jest frameworkiem**
+    -   możesz stosowac tylko wybrane techniki z DDD, nie musisz stosować wszystkiego jako dogmatu
+    -   Krytyka DDD
+        -   pierwsza grupa to osoby który tłumaczą to brakiem podjęcia stosownych krorków
+            -   nie umiejętność mówienia językiem korzyści aby przekonać biznes oraz innych programistów
+            -   brak umiejętności miękkich
+            -   używanie DDD jako młotka do wszystkich problemów, nie dopasowanie narzędzia do problemu
+        -   brak wiedzy biznesowej, brak współpracy z biznesem
+            -   może to nie jest w interesie kogoś kto jest zainteresowany żeby projekt się udał
+            -   czasami może być to firma gdzie nie ma miejsca na analizę problemu, nie chce tego organizacja
+-   Jak sprzedać DDD?
+    -   retoryke przyjmujemy w zależności od klienta
+        -   przykład, sprzedaż wiertarki udarowej
+            -   w przypadku bizensu sprzedajemy większą wydajność, mniejsze koszty
+            -   w przypadku eksperta sprzedajemy jako narzędzie do wykonania konkretnego zadania
+    -   DDD sprzedawalibyśmy jako metdyki w których dział IT jest doradcą i partnerem biznesowym
+    -   **sprzedajemy "redukcje odpadów" (waste)**
+-   Pull vs Push (czym są odpady, jak to redukować)
+    -   Push to podejście waterfall, ci z wyższych sfer nie rozumieją potrzeb tych z niższych sfer (głuchy telefon)
+        -   np. analitycy którzy wytwarzają artefakty które nie są potrzebne, to powoduje że programiści (niżej) i tak muszą wykonywać analizę
+        -   Dodanie do założenia push np. cykli sprintowych nadal nie rozwiązuje problemu przepływu informacji
+        -   DDD zakłada odwrócenie tego procesu na Pull
+            -   W tym podejściu osoby realizujące swoje pracę dociągają potrzebne im informacje w zależnie od potrzeb
+            -   Korzystają tylko z potrzebnych im informacji więc nie powstaje odpad
+-   Role w DDD
+    -   ![role_ddd](./role_ddd.png)
+    -   Aby rozmawiaż z biznesem potrzebujesz minimum dwóch ról
+        -   osoba która ma wiedzę
+            -   weryfikuje model, sprawdza czy nie doszło do nieporozumień
+            -   uczy się z modelu jak może optymalizować biznes
+            -   model musi być czytelny dla niego
+            -   źródło wiedzy dopieramy w zależności od potrzeby
+                -   np. ekspert domenowy aby zebrać informacje o regułach biznesowych
+                -   ekspert nie musi być użytkownikem systemu
+                -   jeśli potrzebujesz zrozumieć strategiczne cele to musisz zaprosić osoby z zarządu
+        -   osoba która modeluje w trakcie spotkania (modelarz)
+            -   modeluje w trakcie spotkania lub po spotkaniu
+            -   zadaje pytania, szukając odpowiedzi i modeli
+            -   modelarz powinnien mieć wiedzę techniczną na wysokim poziomie tak aby modele były implementowalne w praktyce
+            -   nie każda techniczna osoba powinna brać udział w spotkaniach z biznesem (może nie powinna)
+        -   Facilitator - osoba która przygląda się z boku spotkaniu i go moderuje
+            -   przydatna na początku, kiedy zespół nie wie jak prowadzić spotkania
+            -   nie musi być to zewnętrzny ekspert
+            -   partner, nie przeciwnik. Pomaga pokazując gdzie można wykonać poprawki
+            -   osoba zainteresowana modelowaniem
+-   Mapowanie ról - analityk i PO
+    -   Czym zajmuje się analityk i Product Owner w DDD?
+    -   Analityk
+        -   Proxy expert - proxy do rynku
+        -   expert domenowy - prawo itp. (wyspecializowany)
+        -   Facylitator (wzmacnia komunikacje, standaruzją dokumentacje)
+        -   Modelarz (jeżlie mają doświadczenie techniczne)
+-   Model
+    -   ![model](./model_ddd.png)
+    -   Czym jest model?
+        -   wspólna płaszczyzna porozumienia
+        -   baza wiedzy
+        -   narzędzie do stawiania hipotez oraz pytań
+    -   Model jest wspólnym arefaktem aplikacyjnym, ustruktryzowanym wyobrażeniem o rozwiązywanym problemie
+    -   Model definiuje słownictwo używane w systemie, dokumentacji oraz konwersacjach
+    -   Język jest bardzo istotny, to co mówimy ma znaczeni
+    -   Model mówi namy jak działa biznes razem z technologią
+    -   Ważne aby model był zrozumiały dla biznesu (ogólnie dla wszystkich)
+        -   pokazanie poprzez strzałki przepływu informacji
+    -   Model nie odzworowuje rzeczywistości tylko jest jej uproszczoną wersją na tyle ile to nam potrzebne
+    -   Mogę wygenerować kilka modeli tego samego problemu (wszystkie są nieprawdziwe ale niktóre są użyteczne)
+-   Co modelujemy?
+    -   Poziom startegiczny (strategiczny dla biznesu)
+        -   podział problemu na mniejsze niezależne obszary biznesowe
+        -   każdy z tych obszarów potencjalnie potrzebuje stworzenia osobnego modelu
+        -   model dopasowany do klasy problemu jaki rozwiązujemy
+        -   miejsce gdzie zastnawiamy się nad integracją modułów
+        -   jest to poziom dla osób które chcą wiedzieć więcej o systemie, szerzej patrząc na system
+    -   Poziom taktyczny (bardziej techniczny)
+        -   np. wystawianie faktur. To nie jest core działalności firmy
+        -   używamy building blocków
+            -   modelowanie behawioryzmu, czyli jak działa biznes a nie tylko statycznych danych
+        -   jest to elementarz dla programistów, analitków
+    -   priorytety dziedzin
+        -   Core
+            -   powód powstania rozwiązania
+            -   przewaga konkurencyjna
+            -   tutaj inwestujemy czas najlepszych ludzi, tworzymy unikalną wartość
+            -   to zwykle tylko kilka procent kodu
+        -   Generic Core
+            -   reużywalne rozwiąznaia systemowe
+        -   Generic
+            -   możliwe kupienie gotowego rozwiązania
+        -   Supporting
+            -   niekrytyczne funkcje systemu
+            -   rozwiązanie gdzie możemy poświęcić mniej czasu (kosztem jakości)
+-   Ubiquitos language
+    -   Wspólny język dla wszystkich (biznes, programiści, analitycy)
+    -   jezyk wspólny tylko dla kontekstów ograniczonych (w ramach jednego modelu)
+    -   np. serwer to co innego dla IT a co innego dla branży samochoodowej (blacha)
+    -   natomiast to też działa w drugą stronę. Np. dostępność będzie tym samym dla ludzi, maszyn, serwerów itp. (będą zasobem)
+    -   ten wspólny język może pojawić się później podczas destylacji modelu
+    -   to ograniczone conteksty nie są samymy w sobie celem
+        -   to tylko heurystka, a celem jest stworzenie niezależnych modeli
+-   knowladge crunching
+    -   w DDD zakładamy inteacyjne pogłębianie wiedzy
+    -   building blocki pozwalają ukrywać wiedzę, zgodnie z zasadą "ukrywaj to czego nie wiesz"
+        -   agregaty
+        -   object value
+        -   eventy
+    -   w iteracji na iteracje "kruszymy wiedzę"
+        -   to powoduje tylko lokalne zmiany w bulding blockach które ukradają wiedzę
+-   to co Cie zabije to prawo Conwaya
+    -   "architetura systemu jest pochodną szlaków komunikacyjnch w organizacji"
+    -   prawo to opisuje antywzorzec (często tego nie rozumie biznes)
+    -   źle zoorganizowana firma prowadzi do źle zoorganizowanego systemu
+    -   taktyczne DDD pozwala odkryć te szlaki komunikacyjne i zminimalizować zależności
+-   Dokumentowanie modelu
+    -   Event storming jest noracją nieformalną, a nie dokumentacją. Służy do prowadzenia warsztatów z osobami nie technicznymi.
+    -   **Dokumentować powinniśmy w formie rozszerzonej mapy kontekstów, mapy modeli**
+    -   jeżei dokumentacja jest zbytnio szczegółowa to utracona jest esencja modelu
+-   What drives your design?
+    -   DDD
+        -   Design - będziemy uczyć się projektować oprogramowanie
+        -   Driven - będziemy uczyć się jakie są drivery biznesowe i architektoniczne
+        -   Domain - podział problemu na niezależne obszary, domeny biznesowe, dogłebne zrozumienie krytycznych obszarów
+    -   Są systemy gdzie zrozumienie domenyn nie jest krytyczne bo ona jest trywialna
+    -   Czasmi są firmy gdzie są inne drivery np. szybkie powstanie kodu, działanie baterii itp.
+-   Czy DDD jest dla mnie?
+    -   Tak, natomiast skorzystasz z tych narzędzi które będą dla Ciebie teraz przydatne
+    -   Finalnie to Ci się przyda na kolejnych poziomach kariery
