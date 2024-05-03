@@ -316,3 +316,10 @@
 -   Czy DDD jest dla mnie?
     -   Tak, natomiast skorzystasz z tych narzędzi które będą dla Ciebie teraz przydatne
     -   Finalnie to Ci się przyda na kolejnych poziomach kariery
+
+### L06. Zadanie
+
+-   Naczęstsze techniki podziału problemu
+    -   szukanie rzeczowników
+    -   intuicja
+    -   naśladowanie działów struktur biznessowych
