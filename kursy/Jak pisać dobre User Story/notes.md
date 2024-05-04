@@ -214,10 +214,92 @@ Powinnismy dodać makiery UI do impementacji
 
 W przpadku kiedy widzimy że User Story znaczyna "puchnąć" to powinniśmy zastanowić się czy nie powinniśmy podzielić tego na mniejsze User Story.
 
-## INVEST - przydatny skrót w User Story
+## Sekcja 3: INVEST - przydatny skrót w User Story
 
 ### Wprowadzenie
 
 Różnie jest to interpretowane, ale najczęściej jest to skrót który pomaga ocenić czy User Story jest dobra.
 
 #### I jak Independent
+
+Czyli niezależne.
+
+Często mamy założenie że chcemy aby User story było kompletnie niezależne od innych User Story. Czyli nie powinno być tak że jedno User Story zależy od drugiego.
+
+Natomiast więksośc aplikacji jest tak skonstruowana że jest zależność między User Story. Ale powinniśmy starać się aby była jak najmniejsza.
+To wynika z tego że zwykle projektujemy jakiś proces, gdzie wyjęcie jednego elementu powoduje że cały proces nie działa.
+
+Jednocześnie jeżeli chcemy aby były kompletnie niezależne to wyjdą nam duże User Story.
+
+Powinniśmy to rozumieć jako dzielenie User Strory na mniejsze cześci tak długo aż przynuszą korzyści dla całego procesu.
+
+Na przykład zbytnie podzielenie Usert Story może spowodować że podgubimy porces który chcemy zaimplementować.
+
+Powinno dostarczać wartośc to najważniejsze, to powinna być mała wartość ale wartość.
+
+Może zależeć od innych User Story ale powinno być jak najmniej.
+
+#### N jak Negotiable
+
+Czyli negocjowalne.
+
+Nie powinno być od razu konkretnym rozwiązaniem. Powinno być możliwe do zmiany.
+Opisujemy problem.
+Podsumowanie rozmów (nogocjacji) powinno zamrozić zakres User Story.
+Jeżeli co kolwiek chcemy zmienić po negocjacjach to MUSIMY rozmawiać ze sobą, nie robić samowolki.
+
+#### V jak Valuable
+
+Czyli wartościowe. Czyli cel i dlaczego.
+
+Wartośc musi być po prostu zrozmuała, nie trzeba czegoś wymyślać specjalnie. Np. musimy wykonać zmianę bo zmienia się prawo i to nam umożliwi dalsze funkcjonowanie.
+
+#### E jak Estimable
+
+Czyli możliwe do oszacowania pod kątem czasochłonności.
+
+W praktyce doświadczeni członkowie zespołu powinni być w stanie oszacować czasochłonność.
+
+Na początku zrubna / relatywna, przed sprintem precyzyjna.
+
+**Aby było estymowalne to musi być precyzyjne, nie może być zbyt ogólne.**
+
+#### S jak Small
+
+Czyli małe. Powinno być możliwe do zrealizowania w jednym sprintcie.
+
+Po sprincie chcemy mieć coś do pokazania i przetestowania.
+
+Powinniśmy też uwzględnić askepkty Definition of Done, czyli co musi być zrobione aby User Story była uznana za zakończoną.
+Np. dokumentacja, testy, code review itp. to też powinniśmy liczyć do wielkości User Story.
+
+To też ułatwia pracę techniczną ponieważ wykonujemy częsciej małe zmiany a nie rzadziej duże zmiany.
+
+To jest forma sztuki aby zrobić coś małego ale wartościowego. Musimy to praktykować.
+
+#### T jak Testable
+
+Czyli możliwe do przetestowania.
+
+Precyzyjne testy, pisanie takich testów pomaga zwerifikować czy User Story nie posiada jakiś błędów.
+
+anty-przykład: Chciałbym aby system szybko odpowiadał na zapytania. To jest zbyt ogólne, nie wiemy co to znaczy "szybko". To nie jest testowalne.
+
+#### INVEST - podsumowanie
+
+-   I - Independent
+-   N - Negotiable
+-   V - Valuable
+-   E - Estimable
+-   S - Small
+-   T - Testable
+
+To jest skrót który pomaga ocenić czy User Story jest dobra.
+
+### Sekcja 4: Dobre praktyki w pisaniu User Story
+
+#### Wprowadzenie
+
+Dobre praktyki w pisaniu User Story od Autora kursu.
+
+#### Co załączać do User Story?
