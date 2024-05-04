@@ -198,8 +198,6 @@ User story może składać się z różnych elementów, nie musi być zawsze tak
 
 [user_story_przyklad](./user_story.pdf)
 
-![User story przykład](./user_story.png)
-
 Unikajmy ściany tekstu, starajmy się zapisywać to rzeczowo w punktach.
 
 User story pozostaje takie jak stworzyliśmy, nie powinnismy usuwać powstałych sekcji w czasie Conversation, tak aby zespół implementacyjny miał jak najwięcej kontekstu do pracy.
@@ -219,3 +217,7 @@ W przpadku kiedy widzimy że User Story znaczyna "puchnąć" to powinniśmy zast
 ## INVEST - przydatny skrót w User Story
 
 ### Wprowadzenie
+
+Różnie jest to interpretowane, ale najczęściej jest to skrót który pomaga ocenić czy User Story jest dobra.
+
+#### I jak Independent
