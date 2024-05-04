@@ -194,7 +194,7 @@ Finalnie powinniśmy eksperymentować z tym co u nas działa, powinniśmy zbudow
 
 User story może składać się z różnych elementów, nie musi być zawsze takie samo. Ważne aby były zrozumiałe dla wszystkich.
 
-### CCC - User story przygotowanie do implementacji (przykład)
+#### CCC - User story przygotowanie do implementacji (przykład)
 
 [user_story_przyklad](./user_story.pdf)
 
