@@ -1,5 +1,7 @@
 https://www.udemy.com/course/jak-pisac-dobre-user-story
 
+[material](./material.pdf)
+
 ## Sekcja 1: Wprowadzenie
 
 -   Kurs jest dla wszystkich, którzy chcą nauczyć się pisać dobre user story
@@ -315,3 +317,128 @@ Notatki są istotne typu czego nam brakuje w User Story, co jest niejasne, co je
 **Dobrą praktyką jest myślenie o User Story że będzie delegowane do kogoś innego. Czyli tak aby osoba która dostanie User Story miała wszystko co potrzebne do pracy.**
 
 #### Jak łączyć User Story?
+
+Istotne jest aby łaczenie User story było automatyczne, tak aby nie trzeba było tego robić ręcznie.
+
+User Story pokazuje tylko przyrost a nie całą historię systemu.
+
+Idalnie też linkować zlecenia z błędami do User Story.
+
+#### Jak pracować z epicami?
+
+Epiki to są duże User Story, które są zbyt duże aby je zrealizować w jednym sprintcie.
+
+Epik powinnien spełniać zasady INVEST tak jak każde inne User Story.
+
+Ceche SMALL w kontekście epika powinniśmy rozumieć jako okres kliku sprintów niż lat.
+
+#### Czy warto łączyć User Story z procesem?
+
+Tak, dlatego że procesy zwykle występują w systemach informatycznych.
+
+Idealnie aby zmapować kroki procesu na User Story.
+
+To pozwala zrozumieć czy przykryliśmy cały prces poprzez User Story (widać na diagramie).
+
+#### W czym pomaga User Story mapa?
+
+![User Story Map](./mapa.png)
+
+Podział na kroki i detale.
+
+User Story mapping to zaawansowana technika, najlepiej wykonać osobny kurs dotyczący tej techniki.
+
+#### Czy w User Stories też powinny być wymagania niefunkcjonalne?
+
+Zwykle użytkownicy mają problemy z definiowaniem wymagań niefunkcjonalnych.
+
+Użytkownicy wyrażają to w sposób prostszy nie zwracając uwagi na to czy to jest wymaganie funkcjonalne czy niefunkcjonalne.
+
+np. Chciałbym aby strona ... działała szybko, tak abym mógł komfortowo korzystać z niej.
+
+Programista/Analityk powinnien dopytywać aby pomóc sprecyzować niefunkcjonalne wymagania.
+
+Powinno to się znaleść jako element User Story.
+
+#### Trick językowy, który pomaga pisać User Story
+
+**Używanie formy czynnej w opisie User Story.**
+
+Zamiast: Dokument jest generowany w formacie PDF
+powinno być: Użytkownik inicuje generowanie dokumentu w formacie PDF
+
+Pozwala to lepiej zrozumieć perspektywę użytkownika i tej czynności.
+
+#### Kto powinnien pisać User Story?
+
+Powinna to być osoba która ma minimalne doświadczenie w zbieraniu wymagań.
+
+Popełnienie błędów w spisywaniu wymagań (User Story) może prowadzić do dużych strat finansowych, dostarczenia niepotrzebnych funkcjonalności itp. i potrzeby poprawiania tego w przyszłości.
+
+Przydatne jest doświadczenie w developmentcie, wykonanie paru projektów, zrozumienie jak działa proces developmentu.
+
+Idealnie jak osoba ma własne doświadczenia tego co działało a co nie działało.
+
+Zrób test filtra - które wyrażenia są zbędne? W spisywaniu wymagań w naturalnym języku zawiera wiele ozdobników które nie są potrzebne.
+
+To jest przykład testu jaki powinniśmy wykonywać aby szukać uspraowdzeń w naszym procesie, takie osoby są najlepsze do pisania User Story.
+
+#### Kiedy rozbijać User Story na mniejsze historyjki?
+
+Ważne jest aby nie rozbijać zbytnio wstecznie User Story.
+
+Najlepiej trzymać User Story w jednej historyjce tak długo aż to możliwe, mimo wszystko jest znacznie łatwiej zarządzać jedną historyjką niż kilkoma.
+
+Chodzi o to aby uniknąć sytuacji gdzie wcześnie rozbijemy User Story i zarządzanie tym będzie bardziej skomplikowane niż zarządzanie jedną historyjką.
+
+Tutaj musimy mieć rozsądek, nie ma jednej reguły.
+
+Zasada: Rozbijamy tylko wtedy kiedy jest to konieczne.
+
+#### Kiedy nie stosować User Story?
+
+Nie używaj User Story na siłę tak gdzie już na start nie pasują.
+
+Np.
+
+-   Zadania techniczne
+-   W momencie kiedy jest jasne to trzeba zrobić (dokładnie znany zakres, nie potrzebne dyskusje), mamy rozpisany projekt i nie ma sensu tego rozbijać na User Story
+    -   Rozpiszmy zadania techniczne, nie ma sensu tego robić na User Story
+
+Czasami lepiej jest po prostu spisać wymagania w formie listy, nie musi to być User Story.
+
+User Story mocno się przyjeło przez to że np. Jjira ma taką funkcjonalność, ale nie zawsze jest to najlepsze rozwiązanie.
+
+#### Czy User Stories zastępują standardową analizę wymagań?
+
+Używanie User Stories nie powinno być wwymówką do tego aby nie wykonywać solidnej analizy wymagań.
+
+czyli opisanie np. Jako użytkownik systemu A chciałbym pobierać informacje z systemu B aby mieć dostęp do danych.
+
+to nie jest analiza wymagań, to jest tylko początek. Przed przekazaniem User Story do zestawienia powinniśmy przeprowadzić solidną analizę wymagań.
+
+#### Czym jest wartość z perspektywy User Story?
+
+**User Story musi dostarczać wartość!**
+
+Istotne aby nie skupiać się na funkcjonalności ale na wartości jaką dostarczamy. Nie zrozumienie dlaczego użytkownik chce danej funkcjonalności może prowadzić do błędów i gorszych rozwiązań.
+
+**Pamiętaj że dostarczamy wartość a nie funkcjonalność.** Funkcjonalność to tylko środek do dostarczenia wartości.
+
+### Sekcja 5: Podsumowanie i dlasza nauka
+
+#### Gratulacje!
+
+Pamiętaj aby szukać swojego sposobu na pisanie User Story, nie ma jednego dobrego sposobu.
+
+Ważne żeby to dawało Ci wartość!
+
+#### Co przed i po pisaniu User Story?
+
+Zbieranie wymagań możemy wykonać poprzez User Story mapping. Autor posiada inne szkolenie w którym to jest opisane.
+
+Dodatkowo jest szkolenie na temat estymacji, czyli jak oszacować czasochłonność User Story.
+
+#### Z jakich źródeł uczyć się o User Stories?
+
+Mike Cohn - User Stories Applied
