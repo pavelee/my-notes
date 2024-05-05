@@ -303,3 +303,15 @@ To jest skrót który pomaga ocenić czy User Story jest dobra.
 Dobre praktyki w pisaniu User Story od Autora kursu.
 
 #### Co załączać do User Story?
+
+Załączaj do User Story wszystko co może być pomocne. Nigdy nie wiesz co Ci się możep przydać z jakiś czas.
+
+Raczje nie będziesz pamiętał o tym kiedy zaczniecie pracę nad User Story, to jest tylko złudzenie że pamiętasz.
+
+Linki, obrazki, diagramy, Notatki.
+
+Notatki są istotne typu czego nam brakuje w User Story, co jest niejasne, co jest do ustalenia.
+
+**Dobrą praktyką jest myślenie o User Story że będzie delegowane do kogoś innego. Czyli tak aby osoba która dostanie User Story miała wszystko co potrzebne do pracy.**
+
+#### Jak łączyć User Story?
