@@ -1,6 +1,6 @@
 ![mapa](./ddd_mapa.png)
 
-## Moduł 000
+## Moduł 01 - Wstęp do szkolenia
 
 -   Jeśli będziesz wtanie argumentować przed biznesem to będziesz miał większe szanse na to, żeby zaimplementować DDD w projekcie.
 -   Stajesz się pro-aktywnym doradcą a nie tylko wykonawcą.
@@ -323,3 +323,71 @@
     -   szukanie rzeczowników
     -   intuicja
     -   naśladowanie działów struktur biznessowych
+
+### Moduł 02 - Analiza Bottom-Up - kiedy musisz szybko zweryfikować założenia
+
+#### L01. Po co dzielić? Kiedy tego nie robić?
+
+![złożoność](./zlozonosc.png)
+
+-   Na początku analizy nie powinniśmy myśleć o dzieleniu problemu na moduły czy konteksty, skupmy się na podzieleniu problemu na mniejsze problemy
+-   Nadmierne dzielenie dla dzielenia to częsty efekt zachwytu nad DDD (nie zawsze jest to konieczne)
+-   Dzieląc bez potrzeby powodujemy że kod jest trudniejszy do zrozumienia i wkoynujemy overdesign
+-   Złożoność oprogramowania to nie koniecznie konieczność w dużych systemach
+    -   jeżeli dobrze zaprojektujemy system to złożoność nie będzie problemem
+-   Złożoność jest inkrementalna, nie jest to problem który pojawia się nagle
+-   mamy możliwe podejścia
+    -   złą modularyzację - duży początkowy koszt i szybko rosnący dalszy koszt
+    -   bez modularyzacji - mały początkowy koszt i rosnący koszt (ale wolniej niż błędna modularyzacja)
+    -   dobra modularyzacja - mały początkowy koszt i wolno rosnący koszt
+    -   ![złożoność1](./zlozonosc1.png)
+-   Modularyzacja nie jest celem samym w sobie, to walka ze złożonością w dugło trwającym projekcie
+
+##### Kiedy tego nie robić?
+
+-   Modularyzacja nie ma sensu jeżeli system nie będzie rozwijany lub to tylko prototyp (Proof of Concept)
+    -   Nie zdążysz zobaczyć zysków z tej inwestycji
+-   źle podzielony system będzie jeszcze gorszy niż nie podzielony system
+    -   Lepiej czegoś nie wiedzieć niż wiedzieć źle
+-   Podzielenie na zbyt dużo małych modułów niesie ze sobą koszt integracji tych modułów
+-   Podzielenie mimo wszystko może mieć sens
+    -   kiedy dany mechanizm powinnien być oddzielny np. dla testów
+    -   chcemy aby dany mechanizm był częściej wdrażany niż reszta systemu
+    -   izlowoanie porażek danego modułu (jeżeli reszta systemu nie powinna cierpieć z powodu porażki danego modułu)
+    -   chcemy wydzielić osobny zespół projektowy aby zrównoleglić prace
+-   Drivery architektoniczne
+    -   wymagania funkcjonalne (problem biznesowy)
+    -   atrybuty jakościowe (skalowalność, dostępność, wydajność itp.)
+    -   ograniczenia zespołowe (zespoły, wiedza, czas, pieniądze)
+    -   przyjęte konwencje (np. technologie, wzorce projektowe)
+
+##### Po co modularyzacja?
+
+-   Pomaga to programiście skupić się na wycinku złożoności
+    -   zmniejszenie przeładowanie kognitywne
+    -   narzędzie do zmiany pomysłu, łatwiej się wycofać (zmiana lokalna)
+    -   jasny podział odpowiedzialności, wie do kogo się zgłosić w razie problemu
+    -   sprawcze zespoły (łatwiej zrozumieć co się dzieje)
+    -   narzędzie walidacji pomysłów (np. dla analityka)
+    -   inwestycja finansowa (zwraca się w przypadku długotrwałych projektów)
+-   **Moduł symbolizuje wektor zmiany w systemie**
+    -   przygotowuje system na zmiany
+-   W podziale warstwowym w momencie zmiany logiki biznesowej trzeba zmieniać wszystkie warstwy
+    -   w DDD zmiana logiki biznesowej powinna być zlokalizowana w jednym miejscuń
+-   zmiany z powodu wymagań funkcjonalnych są częstsze niż zmiany z powodu wymagań nie funkcjonalnych
+-   **podział powinnien minimalizować miejsca do zmiany**
+-   pułapki modularyzacji
+    -   brak świadomości celu wprowadzania modularyzacji
+    -   inwestycja bez oczekiwanych efektów
+    -   zapętlenie w procesie modularyzacji
+
+**Idealnie jeżeli możemy wykonać protoyp modularyzacji, tak aby sprawdzić czy to ma sens**
+
+**Celem nie są bounded contexty ale autonomiczne modele**
+
+Bounded contexty są heurystyką szukania odseparowanych modeli, heurystyką nastawioną na analizę lingiwstyczną
+tak to nazwał Evans bo był nastawiony na analizę lingwistyczną, ale można to też robić na inne sposoby
+
+#### L02. Show me the money.
+
+
