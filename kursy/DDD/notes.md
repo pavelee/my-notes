@@ -324,9 +324,9 @@
     -   intuicja
     -   naśladowanie działów struktur biznessowych
 
-### Moduł 02 - Analiza Bottom-Up - kiedy musisz szybko zweryfikować założenia
+## Moduł 02 - Analiza Bottom-Up - kiedy musisz szybko zweryfikować założenia
 
-#### L01. Po co dzielić? Kiedy tego nie robić?
+### L01. Po co dzielić? Kiedy tego nie robić?
 
 ![złożoność](./zlozonosc.png)
 
@@ -343,7 +343,7 @@
     -   ![złożoność1](./zlozonosc1.png)
 -   Modularyzacja nie jest celem samym w sobie, to walka ze złożonością w dugło trwającym projekcie
 
-##### Kiedy tego nie robić?
+#### Kiedy tego nie robić?
 
 -   Modularyzacja nie ma sensu jeżeli system nie będzie rozwijany lub to tylko prototyp (Proof of Concept)
     -   Nie zdążysz zobaczyć zysków z tej inwestycji
@@ -361,7 +361,7 @@
     -   ograniczenia zespołowe (zespoły, wiedza, czas, pieniądze)
     -   przyjęte konwencje (np. technologie, wzorce projektowe)
 
-##### Po co modularyzacja?
+#### Po co modularyzacja?
 
 -   Pomaga to programiście skupić się na wycinku złożoności
     -   zmniejszenie przeładowanie kognitywne
@@ -388,7 +388,7 @@
 Bounded contexty są heurystyką szukania odseparowanych modeli, heurystyką nastawioną na analizę lingiwstyczną
 tak to nazwał Evans bo był nastawiony na analizę lingwistyczną, ale można to też robić na inne sposoby
 
-#### L02. Show me the money.
+### L02. Show me the money.
 
 -   perspektywa procesowa w zależności do aktorów
 -   event sotrming może być świetnym sposobem na zrozuzmienie bizensu i powiązań między aktorami
@@ -400,7 +400,7 @@ tak to nazwał Evans bo był nastawiony na analizę lingwistyczną, ale można t
 Po to, aby KORZYSC_DLA_KLINETA
 potrzebujemy zrobić AKTYWNOŚĆ
 
-##### Na czym zarabiacie?
+#### Na czym zarabiacie?
 
 -   Warsztat startegiczny
     -   Na czym zarabiacie
@@ -409,7 +409,7 @@ potrzebujemy zrobić AKTYWNOŚĆ
     -   poznanie otoczenie systemu, z czym się integruje system
     -   ograniczenia regulacyjne
 
-##### Event storming - big picture
+#### Event storming - big picture
 
 -   ryzyka i szanse
 -   zyski i straty
@@ -418,7 +418,7 @@ potrzebujemy zrobić AKTYWNOŚĆ
     -   top-down
     -   bottom-up
 
-##### Model kynefin
+#### Model kynefin
 
 ![kynefin](./assets/kynefin.png)
 
@@ -440,7 +440,7 @@ potrzebujemy zrobić AKTYWNOŚĆ
     -   nie znamy przyczyny
     -   przyczyna i skutek nie są zrozumiane
 
-##### Podejście do analizy
+#### Podejście do analizy
 
 ![analiza](./assets/mapa_analiza.png)
 
