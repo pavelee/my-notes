@@ -390,4 +390,72 @@ tak to nazwał Evans bo był nastawiony na analizę lingwistyczną, ale można t
 
 #### L02. Show me the money.
 
+-   perspektywa procesowa w zależności do aktorów
+-   event sotrming może być świetnym sposobem na zrozuzmienie bizensu i powiązań między aktorami
+-   zrozumienie obszarów biznesowych oraz zrozumienie po co każdy z nich będdzie miał pokrycie w systemie
+-   wyznaczenie obszarów dla których trzeba się bliżej przyjżeć (np. obszary które są bardzo skomplikowane) oraz dobrania dla nich odpowiedniej techniki analizy (w zależności od klasy problemu)
+    -   top-down
+    -   bottom-up
+
+Po to, aby KORZYSC_DLA_KLINETA
+potrzebujemy zrobić AKTYWNOŚĆ
+
+##### Na czym zarabiacie?
+
+-   Warsztat startegiczny
+    -   Na czym zarabiacie
+    -   gdzie są ryzyka
+    -   gdzie są szanse na zysk
+    -   poznanie otoczenie systemu, z czym się integruje system
+    -   ograniczenia regulacyjne
+
+##### Event storming - big picture
+
+-   ryzyka i szanse
+-   zyski i straty
+-   otoczenie
+-   obszary do pogłebionej analizy
+    -   top-down
+    -   bottom-up
+
+##### Model kynefin
+
+![kynefin](./assets/kynefin.png)
+
+-   Problemy proste
+    -   znamy odpowiedź
+    -   znamy przyczynę
+    -   znamy rozwiązanie
+    -   przyczyna i skutek są proste i potwarzalne
+-   Problemu skomplikowane
+    -   wymaga analizy
+    -   prawdoobnie znamy odpowiedź
+    -   przyczyna i skutek są od siebie oddzielone czasowo
+-   Problemy złożone (bottom-up)
+    -   nie znamy odpowiedzi
+    -   nie znamy przyczyny
+    -   przycznyna i skutek nie są powtarzalne
+-   problemy chaoetyczne
+    -   nie znamy odpowiedzi
+    -   nie znamy przyczyny
+    -   przyczyna i skutek nie są zrozumiane
+
+##### Podejście do analizy
+
+![analiza](./assets/mapa_analiza.png)
+
+-   Problemy złożone
+    -   bottom-up
+        -   Szukanie reguł domenowych
+-   Problemy klasyczne
+    -   top-down
+        -   mapowanie procesów
+        -   orientuemy się na zachowania
+        -   w przypadku trafienia na głęboką domenę piszemy PoC (Proof of Concept) aby zrozumieć problem
+
+#### Kiedy potrzebne jest taktyczne DDD?
+
+To zwykle tylko dla 5-7% kodu
+
+### L03. Event Storming Big Picture - facylitacja.
 
