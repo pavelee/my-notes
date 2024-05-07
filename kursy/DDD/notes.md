@@ -1,4 +1,4 @@
-![mapa](./ddd_mapa.png)
+![mapa](./assets/ddd_mapa.png)
 
 ## Moduł 01 - Wstęp do szkolenia
 
@@ -215,7 +215,7 @@
             -   W tym podejściu osoby realizujące swoje pracę dociągają potrzebne im informacje w zależnie od potrzeb
             -   Korzystają tylko z potrzebnych im informacji więc nie powstaje odpad
 -   Role w DDD
-    -   ![role_ddd](./role_ddd.png)
+    -   ![role_ddd](./assets/role_ddd.png)
     -   Aby rozmawiaż z biznesem potrzebujesz minimum dwóch ról
         -   osoba która ma wiedzę
             -   weryfikuje model, sprawdza czy nie doszło do nieporozumień
@@ -243,7 +243,7 @@
         -   Facylitator (wzmacnia komunikacje, standaruzją dokumentacje)
         -   Modelarz (jeżlie mają doświadczenie techniczne)
 -   Model
-    -   ![model](./model_ddd.png)
+    -   ![model](./assets/model_ddd.png)
     -   Czym jest model?
         -   wspólna płaszczyzna porozumienia
         -   baza wiedzy
@@ -328,7 +328,7 @@
 
 ### L01. Po co dzielić? Kiedy tego nie robić?
 
-![złożoność](./zlozonosc.png)
+![złożoność](./assets/zlozonosc.png)
 
 -   Na początku analizy nie powinniśmy myśleć o dzieleniu problemu na moduły czy konteksty, skupmy się na podzieleniu problemu na mniejsze problemy
 -   Nadmierne dzielenie dla dzielenia to częsty efekt zachwytu nad DDD (nie zawsze jest to konieczne)
@@ -340,7 +340,7 @@
     -   złą modularyzację - duży początkowy koszt i szybko rosnący dalszy koszt
     -   bez modularyzacji - mały początkowy koszt i rosnący koszt (ale wolniej niż błędna modularyzacja)
     -   dobra modularyzacja - mały początkowy koszt i wolno rosnący koszt
-    -   ![złożoność1](./zlozonosc1.png)
+    -   ![złożoność1](./assets/zlozonosc1.png)
 -   Modularyzacja nie jest celem samym w sobie, to walka ze złożonością w dugło trwającym projekcie
 
 #### Kiedy tego nie robić?
