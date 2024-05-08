@@ -459,3 +459,78 @@ To zwykle tylko dla 5-7% kodu
 
 ### L03. Event Storming Big Picture - facylitacja.
 
+#### Cel - założenia Event Stormingu Big Picture
+
+![event_storming](./assets/event_storming.png)
+
+-   skupienie na ogólnej wizji, nie szczegółach modularyzacji
+-   rozpoznanie otoaczenia biznesowego
+    -   rozpoznanie ryzyk i szans
+    -   rozpoznanie regulacji prawnych
+-   świadomość tego, czemu ma służyć dane rozwiązanie
+    -   rozwiązaniem nie zawsze musi być pisanie kodu
+
+Najważniejsze pytanie: **"Po co to robimy?"**
+
+jak będzie wygladać fima po wdrożeniu systemu, gdzie będzie różnica na lepsze
+
+Pytamy o to co jest ważne dla biznesu.
+
+Nie chcemy marnować czasu na modelowanie nie istotnego problemu dla biznesu
+
+#### Kogo zapraszamy?
+
+Szukamy osób które mogę odpowiedzieć na pytanie "Po co to robimy?"
+
+-   poziomy odpowiedzialności (event storming - big picture)
+    -   przedsiebiorcy
+        -   maja wizje
+        -   wyznaczają cele
+    -   managment (event storming - process level)
+        -   wiedzą jakie są cele
+        -   ewentualnie jakie etapy dojścia do tego celu
+        -   wiedzą jak rozliczać cele
+    -   eksperci (event storming - design level)
+        -   wiedzą jak to zrobić
+        -   np. piszą kod itp.
+
+#### Metodyka
+
+-   BIg picture nie jest precyzyjny, może się ograniczać tylko do samych zdarzeń. Zdarzenia nie muszą być opisane w żadnej specyficzny sposób.
+-   Nie muszą to być konkretne punkty w czasie, każdy z nich może wyglądać jak osobny proces
+-   **chodzi o zrozumienie powodu powstania systemu, a nie jak konkretnie ma on działać.**
+-   Nie powinnieneś pouczać osoób z zarządu czym jest dobre zdarzenie, to nie o to tutaj chodzi
+-   Chcemy wyjśc ze spotkania ze zrozumieniem które porcesy są dobrze poznanie a które nie
+    -   Dobranie rozwiąznaia analizy top-down, bottom-up
+
+zdajemy pytania
+
+-   Na czym zarabiamy?
+-   Na czym oszczędzamy?
+-   Czym różnicujemy się od konkurencji?
+-   po co powstaje ten system?
+
+#### Nawyki koginitywne
+
+-   Szukanie motywacji, nastawienie na cele podczas rozmowy a nie na problemy
+    -   dążenie do celu
+    -   motywowanie nagrodami
+    -   jest dobrze, może być lepiej
+-   Skupienie się na problemach może spowodować że będziemy szukać problemów w organizacji sugerująć że coś jest nie tak
+-   wymiana słowa problem na wyzwanie
+-   pytając o cele masz szansę odkryć brakujące zdarzenia i dojść do sedna problemu
+
+#### Zakończenie warsztatu
+
+-   Kończymy w momencie jak mamy rozpoznane wszystkie krytyczne obszary biznesowe
+-   zapytaj się czy jest coś jeszcze co wpływa na krytyczne decyzje biznesowe
+-   dopytaj z kim możesz porozmawiać o szczegółach (process level)
+-   po czym rozpoznać że Twój rozmówca nie potrafi odpowiedzieć na Twoje pytania
+    -   cieżko wzdycha
+    -   przewraca oczami
+    -   pamiętaj że czasami osoba nie może poweidzieć że czegoś nie wie, bo jest osobą zarządzającą
+-   u dorosyłch osób kierunek ich bioder i stóp pokaże im ich kierunek zainteresowań
+-   nie zadręczaj pytaniami, zakończ spotkanie
+
+### L04. Fail fast: Top down vs Bottom up
+
