@@ -534,3 +534,27 @@ zdajemy pytania
 
 ### L04. Fail fast: Top down vs Bottom up
 
+#### Co by było gdyby?
+
+W celu lepszego zrozumienia i odkrycia ryzykownego obszaru biznesowego.
+
+Wchodząc w szczegóły przydatne moze być techniki design level event storming
+
+Nie zwołują spotkania aby zrobić event storming, chcą zrozumieć jak działa ten ryzykowny obszar
+
+-   Design level oraz process level są dobrymi praktykami ale nie dzaiałają zawsze
+    -   ich dogmatyczne stosowanie może prowadzić do problemów i braku zaufania
+
+W momecnie kiedy nie wiesz co zrobić to najlepiej zaproponować jakiś model (PoC) aby zobaczyć czy to ma sens
+
+#### Jak modelujemy?
+
+-   top down - jeśli wiemy co chcemy zrobić ale nie wiemy jak
+    -   rozpoczynamy od startegicznego modelowania odspearowanych modeli
+    -   aby dalej skończyć na modelowaniu taktycznym
+-   bottom up - nie znane obszary, gdzie potrzeba odkrycia, protopowania
+    -   zaczynamy od taktycznego modelowania, modelowania tego co naprawdę wiemy oraz tego czego na pewno nie możemy zrobić
+
+W momencie kiedy wszystko zależy od wszystikiego sprawdza się szukanie deep modeli
+
+
