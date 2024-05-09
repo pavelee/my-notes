@@ -1,3 +1,5 @@
+https://edu.devstyle.pl/products/domain-drivers
+
 ![mapa](./assets/ddd_mapa.png)
 
 ## Moduł 01 - Wstęp do szkolenia
@@ -557,4 +559,92 @@ W momecnie kiedy nie wiesz co zrobić to najlepiej zaproponować jakiś model (P
 
 W momencie kiedy wszystko zależy od wszystikiego sprawdza się szukanie deep modeli
 
+### L05. Szukanie Deep Model jako technika fail fast.
 
+#### Kiedy model nie jest oczwisty?
+
+Najcześciej są problemy modelami które wymagają bardziej niestarndardowego podejścia
+
+Problemy jakie z nimi zwykle są:
+
+-   uzależnienie od Autora rozwiązania
+-   techniki klejenia niż modelowania
+
+Najczęstsze tego typu problemu:
+
+-   zmiana reguł biznesowych
+-   zmiana obiektów biznesowych w systemie
+
+Zwykle tutaj potrzeba "sprytnego" modelu do rozwiązania problemu
+
+Do tego potrzebne są różne techniki modelarskie
+
+Musimy wytworzyć nawyk myślenia lateralnego czyli nie liniowego
+
+#### Modele zbyt specyficzne
+
+![model_ogolny](./assets/model_ogolny.png)
+
+Najczęstszym problemem złożoności w kodzie są nadmiernie wyspecyfikowane modele "overspecialized models"
+
+Zwykle to objawia się tym że muszę cały czas sprawdzać jakieś specjalne przypadki i to w wielu miejscach.
+
+Zawsze zakładaj że podane przez biznes reguły to przypadek specyficzy, a nie reguła ogólna,
+spróbuj zamodelować system tak aby obsługiwać każdy przypadek specyficzny
+
+**Uogólnianie poprzez usuwanie przypadków specjalnych**
+
+z takich techniki powstaje model ogólnego przeznaczenia albo też nazymwany model głęboki (deep model)
+
+Aby znaleść taki ogólny model zadaj sobie pytanie:
+**Jakiej ogólnej regule odpowiadają te specyficzne przypadki?**
+
+To powoduje że upraszczamy model, a nie komplikujemy, upraszczamy interfejsy, a nie komplikujemy
+
+#### Ogólne, czyli mniejsze lub prostsze
+
+Modele ogólne zwykle są "oczywiste" oraz mają zelete prosty i zrozumiały interfejs
+
+Łatwiej taki model rozwijać, łatwiej go testować, łatwiej go zrozumieć
+
+Warto zawsze inwestować w
+
+#### Model głęboki
+
+![deep_model](./assets/deep_model.png)
+
+Modele głębokie to takie który są prostsze ale głębsze bo mogą "więcej" obsługiwać
+
+Ogólny model nie oznacza modelu na wszystko, musimy dobierać deep model lub specialized model w zależności od potrzeb i problemu jaki chcemy rozwiązać
+
+Zwykle usunięcie modeli specyficznych nie jest możliwe bo to jest tego czego potrzebuje użytkownik ale one mogą być nad modelem ogólnym i z niego korzystać jako z bazowego modelu
+
+Powinniśmy unikać sytuacji gdzie z panicznie unikamy żadnego if'a w kodzie,
+**powinniśmy zrozumieć że ogólny system służy głównie do tego aby uprościć system**
+
+#### Cholerne User Story
+
+User Story autorem jest Kent Beck
+
+User Story jest zaproszeniem do rozmowy
+
+Analizując problem tylko z poziomu User Story prawdopobnie nie odkryjesz głębokiego modelu
+
+#### Szkic rozwiązania
+
+![books](./assets/books.png)
+
+**Implementuj taki model który ma tylko te funkcje którę są dzisiaj potrzebne,
+ALE którego interfejs jest gotowy na wiele nowych.**
+
+Jeżeli nie wiesz jaki model głęboki mozesz zastosować, możesz po prostu spróbować po koleij dopasować gotowe rozwiąznia z książek do swojego problemu. Prawdopobnie znajdziesz tam rozwiązanie które będzie pasowało do Twojego problemu. Po prostu metodą brute force próbuj dopasować gotowe rozwiązania do swojego problemu.
+
+**Jest dużo łatwiej oceniać sensowność rozwiązania, mając już przykładowe gotowe rozwiązania!**
+
+**Redukuj problem który chcesz rozwiązać, do problemu który wiesz jak rozwiązać**
+
+Pomocne pytania do szukania deep modelu:
+
+-   Jaki jest obecnie najprostszy interfejs dla obecnych wymagań?
+-   Czy intefejs jest łatwy w użyciu?
+-   Jak wiele różnych wymagań kończy się wywołaniem tylko jednej, danej metody?
