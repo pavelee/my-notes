@@ -648,3 +648,20 @@ Pomocne pytania do szukania deep modelu:
 -   Jaki jest obecnie najprostszy interfejs dla obecnych wymagań?
 -   Czy intefejs jest łatwy w użyciu?
 -   Jak wiele różnych wymagań kończy się wywołaniem tylko jednej, danej metody?
+
+### L06. Co jest stabilne, a co zmienne?
+
+-   Procedura pozwalająca rozwiązać palące problemy biznesowe
+    -   Najpierw sprawdź czy jest tutaj potrzeba użycia deep modelu
+        -   Sprawdzenie tego możesz dooknać poprzez zauważenie że specjalistyczne przypadku na siebie wpływają (powiązany graf)
+        -   zwykle cechuje się to tym że przy próbie dodania nowego modułu będzie on wpływał na resztę modułów a one na niego
+    -   Określenie API ogólnego modelu (deep model), stabilne wymaganie w gąszczu zmieniających się wymagań
+        -   Szukamy tego co ma robić dany model, jeszcze nie wiadomo jak to będzie działać
+        -   Stabilność trzeba rozumieć za coś co zawsze się dzieje w procesie, np. mamy inne alarmy ale każdy alaram szuka jakiegoś wzorca aby się odpalić
+    -   Zaimplementuj najprostszy przypadek Twojego ogólnego modelu
+
+Sposoby szukania abstrakcji
+
+-   Poszukanie gotowych rozwiązań (z książek)
+-   Generalizacja - szukanie bardziej ogólnego obiektu który będzie mógł obsłużyć wiele przypadków
+-   Zmiana reprezentacji - zmiana reprezentacji obiektu na bardziej ogólną np. na drzewo
