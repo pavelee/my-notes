@@ -20,6 +20,7 @@ mozna to potem udatownic tez poprzez context dla kliencikich komponnetow
 warto dodac skrypt do CI/CD ktory bedzie walidowal zmienne przed momentem buildu, tak aby wylapac brakiem zmiennej przed deploy
 
 dobrze jest dodac eslint rule ktora plinije reguly
+
 '''
 {
   "rules": {
