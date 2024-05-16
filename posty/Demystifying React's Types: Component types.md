@@ -11,3 +11,10 @@ przydatny do renderowania dynamicznych komponentów
 przydatny do typowania komponentu jako props 
 może przyjmować typy HTML np div
 
+## React.ReactElement
+
+przyjmuje tylko elementy które mogą być renderowane przez React
+
+## React.ReactNode
+
+
