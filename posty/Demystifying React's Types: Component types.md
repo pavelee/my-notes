@@ -7,3 +7,7 @@ od react 18 nie jest juz uzywany bo typescript automatycznie wylapuje typy danyc
 
 ## React.ElementType
 
+przydatny do renderowania dynamicznych komponentów 
+przydatny do typowania komponentu jako props 
+może przyjmować typy HTML np div
+
