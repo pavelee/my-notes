@@ -4,14 +4,14 @@ https://edu.devstyle.pl/products/domain-drivers
 
 ## Moduł 01 - Wstęp do szkolenia
 
--   Jeśli będziesz wtanie argumentować przed biznesem to będziesz miał większe szanse na to, żeby zaimplementować DDD w projekcie.
+-   Jeśli będziesz wstanie argumentować przed biznesem to będziesz miał większe szanse na to, żeby zaimplementować DDD w projekcie.
 -   Stajesz się pro-aktywnym doradcą a nie tylko wykonawcą.
 -   Pomagasz dowozić projekty, a nie tylko je wykonywać.
--   Rozumiesz principla z których wynikają wzorce, dlaczego ich używamy. To pozwala na to, żeby zastosować je w odpowiednich miejscach.
+-   Rozumiesz principal z których wynikają wzorce, dlaczego ich używamy. To pozwala na to, żeby zastosować je w odpowiednich miejscach.
 -   Będziesz wstanie wskazać alternatywne rozwiązania, które są bardziej odpowiednie dla danego problemu.
 -   Umiejętność zadawania pytań, które pomagają zrozumieć problem. Znalezienie optymalnego rozwiązania.
 -   Usuwanie blokady zależności pomiędzy zespołami, poprzez rozwiązanie problemu zależności modułów.
--   Eleminowanie mody i przypadku z projektu technicznego. Zbytecznej złożności która nie wnosi wartości.
+-   Eliminowanie mody i przypadku z projektu technicznego. Zbytecznej złożoności która nie wnosi wartości.
 -   Celem nie jest nauka DDD tylko zrozumienie problemów biznesowych i technicznych, które pozwolą na zastosowanie DDD w projekcie.
 
 ## Moduł 001
@@ -307,7 +307,7 @@ https://edu.devstyle.pl/products/domain-drivers
 -   Dokumentowanie modelu
     -   Event storming jest noracją nieformalną, a nie dokumentacją. Służy do prowadzenia warsztatów z osobami nie technicznymi.
     -   **Dokumentować powinniśmy w formie rozszerzonej mapy kontekstów, mapy modeli**
-    -   jeżei dokumentacja jest zbytnio szczegółowa to utracona jest esencja modelu
+    -   jeżeli dokumentacja jest zbytnio szczegółowa to utracona jest esencja modelu
 -   What drives your design?
     -   DDD
         -   Design - będziemy uczyć się projektować oprogramowanie
@@ -665,3 +665,55 @@ Sposoby szukania abstrakcji
 -   Poszukanie gotowych rozwiązań (z książek)
 -   Generalizacja - szukanie bardziej ogólnego obiektu który będzie mógł obsłużyć wiele przypadków
 -   Zmiana reprezentacji - zmiana reprezentacji obiektu na bardziej ogólną np. na drzewo
+
+## Moduł 03 - Deep Models - głębsze zrozumienie w celu uproszczenia problemu
+
+### L01. Rozwiązanie: Przykład deep modelu - harmonogramu. Jak na nie wpadać?
+
+-   Rozpoczęcie prac od obszaru complex tak aby sprawdzić czy PoC ma sens
+    -   Rozpoczęcie od bottom-up, przygotowanie PoC dla krytycznych obszarów
+-   Zawsze szukanie alternatywnego modelu
+    -   Zawsze szukaj alternatywnego modelu, nie bój się zapytać czy jest inny model
+    -   Zawsze szukaj modelu który jest bardziej ogólny
+-   Implementacja ma zawsze drugorzędne znacznie, istotne jest rozwiązanie problemu
+    -   Po prostu w momencie zmiany decyzji był przepisywany moduł
+
+#### Redukcja problemu
+
+![redukcja](./assets/redukcja.png)
+
+-   Przeszukanie gotowych rozwiązań z książek itp.
+    -   "Nie wiesz co robić to rób co wiesz"
+-   Rozwiązanie najprostszego przypadku
+-   Stosowanie techniki uogulniania poprzez usuwanie przypadków szczególnych
+-   Jeżeli żaden z przypadków szczegółnych nie pasuje do modelu to znaczy że musimy go dostroić
+    -   Dostrajanie nadal jest w obrębie ogólnego modelu, np. waga grafu w algorytmie
+
+#### Słowa mosty
+
+![mosty](./assets/most.png)
+
+Słowa mosty pomagają w znalezieniu modelu ogólnego
+
+Na przykład "zależność, cykl pomiędzy etapami" to słowa mosty które pomagają w znalezieniu modelu ogólnego
+Sugerują użycie grafu gdzie takie słowa też występują
+
+Oczywiście to wymaga znajomości algorytmów, struktur danych itp.
+
+#### Wizualizacja
+
+Wizualizacja problemu może pomóc w znalezieniu modelu ogólnego, np. podczas wizualizacji problemu znajdziemy podpowiedzi które pomogą w znalezieniu modelu ogólnego, rysnek będzie wyglądał jak jakiś znany algorytm np. graf
+
+#### Intiucja
+
+Intuicja to nieuświadomiona wiedza pochodząca z doświadczenia
+
+Intuicja sprzyja tym którzy mieli szansę wystawić się na różne przypadki i problemy
+
+Dobrym treningiem jest modelowanie tego czego używamy na co dzień, dla terningu w głowie. Wiele otacza nas techniologii które możemy modelować
+
+#### Separacja konceptów
+
+Podejmowanie wczesnej decyzji wdrożeniowej jest ryzykowne, lepiej jest oddzielić koncepty od implementacji.
+
+Istotne jest aby nie poświęcić tygodni aby udowodnić że coś działa, lepiej jest zrobić PoC
