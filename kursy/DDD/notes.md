@@ -717,3 +717,86 @@ Dobrym treningiem jest modelowanie tego czego używamy na co dzień, dla terning
 Podejmowanie wczesnej decyzji wdrożeniowej jest ryzykowne, lepiej jest oddzielić koncepty od implementacji.
 
 Istotne jest aby nie poświęcić tygodni aby udowodnić że coś działa, lepiej jest zrobić PoC
+
+### L02. Protip konsultanta: jak szybko generować wartość?
+
+-   Można sprawdzić czy zmiana reprezentacji świata realna na algorytm np. graf jest sesowna, można to sprawdzić poprzez
+    sprawdzenie czy kolejen obiekty ze świata algorytmów są w stanie reprezentować obiekty ze świata realnego
+-   W ten sposób można wygenerować nowe pomysły biznesowe które można łatwo zaimplementować, w ten sposób można generować wartość
+    oraz zyskiwać zaufanie klienta. Budowanie partnera biznesowego a nie tylko podwykonawcy
+-   To też jest trick który pozwala zyskać budżet na analizę bo biznes widzi że to ma sens, możemy wygenerować nową wartość
+-   "Dobrze wybrany model pozwala na zadanie ciekwych pytań"
+
+### L03. Metryki dobrego modelu - brakujące narzędzie rozwiązujące "moje jest mojsze niż Twojsze"
+
+#### Onanizm techniczny
+
+-   W naszej branży brakuje podejścia inżynierskiego do modelowania
+    -   czyli porównanie kilku rozwiązań pod kątem metryk
+-   **Model to płaszczyzna komunikacji**
+-   Zwykle problem jest patrzenie na system poprzez metryki techniczne pomijając metryki biznesowe
+-   Zwykle metryki technicznie nie sa najważniejsze na początku
+-   DDD staje się przykrywką do tego "kto dalej sika", to przechodzi do okradania klienta
+-   Skupianie się na metrykach które w tym momencie nie są krtyczne
+-   Zwykle dobre dobranie modelu i struktury jest znacznie bardziej istotne od implementacji
+
+**Separacja koncepcji od konkretnej reprezentacji**
+
+![reprezentacja](./assets/reprezentacja.png)
+
+Na prrzykład graf to koncept, ale można go różnice zaprezentować, np. macierz sąsiedztwa, lista sąsiedztwa itp.
+
+Nie powinno się mówić o reprezentacji osobie nie technicznej, tylko o konceptach
+
+#### Drivery architektoniczne
+
+Zwykle gorzej nam idzie z oceną metryk nie technicznych
+
+Drivery architektoniczne to wymagania które nie są funkcjonalne, np. dostępność, skalowalność, wydajność
+
+Szukanie rozwiązania poprzez zaproponowanie kilku rozwiązań i przefiltrowanie ich pod kątem drivery architektonicznych
+
+-   Poprawność
+    -   Czy spełnia kryteria akceptacji?
+    -   Przejście przez wszystkie znane przypadki i sprawdzenie czy model je obsługuje
+-   Prostoty użycia
+    -   Ile jest warstw translacji?
+    -   Jak łatwe jest API?
+    -   Czy gotowe narzędzie zadziała, czy będzie potrzebna trasnlacja naszego modelu na model narzędzia?
+    -   Czy znamy to narzędzie, czy musimy się go uczyć?
+-   Rozwijalność i produktyzacja
+    -   ile przyszłych rozwiązań mogę od razu rozwiązać?
+    -   Walidujemy różne use case na tym modelu, różne przyszłe możliwe zmiany
+-   Koszta
+    -   Po prostu ile to będzie kosztować, praca czy gotowe rozwiązanie
+
+Jeżeli nie potrafisz łatwo opowiedzieć o Twoim modelu biznesowi to prawdobonie tego modelu nie ma.
+
+Twój model powinnien być wstanie odpowiedziec na use case'y biznesowe np. dodanie kolejnej reguły biznesowej
+
+Biznes chce modeli którę rozwiązują ich problemy ale nie muszę wiedzieć jak konkretnie działają
+
+#### Model jako narzędzie do prowadzenia symulacji zmian wymagań
+
+Dobry model pozwala biznesowi zadać dobre pytania.
+
+Model powinnien być rozwijalny, powinnieneś generować różne use case i sprawdzać czy model je obsługuje
+
+#### Metryki będą się różnić w zależności od kontekstu
+
+-   Może liczy się czas
+-   Może liczy się rozwojość rozwiązania
+
+#### Jak dokumentować modele?
+
+![model_dokumentacja](./assets/model_dokumentacja.png)
+
+-   Testy automatyczne
+-   ADR'y
+-   Format rozumiany przez cały zespół (nie tylko techniczny)
+-   Najczęściej wystarczy rysunek
+
+UML'e wiele nie wnoszą, zwykle biznes ich nie rozumie. Jest zbyt złożona
+
+### L04. Deep Model: Optymalizator
+
