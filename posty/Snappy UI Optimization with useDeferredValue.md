@@ -12,5 +12,10 @@ czeste odświeżanie kosztownego UI w tym przypadku snipettu który posada kolor
 
 możemy tutaj szukać rozwiązań opóźniających odświeżania np tylko raz na 200ms ale to powoduje że lepsze urządzenia też tracą a chociaż mozga odświeżać szybciej 
 
+zwykle można zauważyć które elementy UI mają większy/mniejszy priorytet 
+
+![]https://www.joshwcomeau.com/images/use-deferred-value/high-vs-low-priority.png
+
 ## Rozwiązanie 
+
 
