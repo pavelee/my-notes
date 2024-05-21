@@ -14,7 +14,7 @@ możemy tutaj szukać rozwiązań opóźniających odświeżania np tylko raz na
 
 zwykle można zauważyć które elementy UI mają większy/mniejszy priorytet 
 
-![]https://www.joshwcomeau.com/images/use-deferred-value/high-vs-low-priority.png
+![img](https://www.joshwcomeau.com/images/use-deferred-value/high-vs-low-priority.png)
 
 ## Rozwiązanie 
 
