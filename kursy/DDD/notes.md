@@ -859,3 +859,5 @@ Najlepiej działa jak juz wiemy co chcemy zrobić, zapadła decyzja projektowa,
 W tym momecnie musimy jeszcze poczekać zanim AI będzie wstanie samodzielnie modelować systemy
 
 ### L08. Bottom up: Podsumowanie i Zadanie
+
+
