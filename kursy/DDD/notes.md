@@ -815,8 +815,47 @@ Szukamy stabilnego modelu w niestabilnych wymaganiach
 
 Dobry model pozwala automatycznie zadawać dobre pytania, usuwać specjalne przypadki
 
-### L05. Zadanie [05:54]
+### L05. Zadanie
 
 Brain popełnił błąd przez rozsmarowanie modelu po całej aplikacji
 
 **Dużo łatwiej jest rozwiązać problem który chcesz rozwiązać, jeśli sprowadzisz go do problemu który wiesz jak rozwiązać**
+
+### L06. Modelowanie Niepewności i Rozwiązania Zadania
+
+Rozwiązaniem zadania jest zastosowanie ogólnego modelu dopasowania
+
+Najważniejszy wniosek z zadnia: **wiele problemów można sprowadzić do znanych problemów**
+
+#### Testowanie modelu
+
+Testujemy model poprzez próbę dodania nowego przypadku, jeżeli model nie obsługuje tego przypadku to znaczy że trzeba go dostroić
+
+**Pamiętaj prawdobponie Twój problem nie jest unikalny! Znajdź gotowe rozwiązanie i dostroj je do swojego problemu**
+
+Uważaj na sytuacje jak biznes używa słów nigdy lub zawsze, tłumacz to na:
+
+nigdy - nie znamy takiego przypadku
+zawsze - zawsze to robimy, ale nie zawsze to robimy tak samo lub wcale nie robimy
+
+Przygotywowanie się na przyszłe zmiany to nie jest łamanie zasady YAGNI
+
+YAGNI - You Ain't Gonna Need It
+
+Ironicznie pachanie się w model specjalistczny w dłuższej perspektywie będzie bardziej kosztowne niż zrobienie modelu ogólnego
+
+### L07. Czy AI zastąpi białkowego modelarza? O szukaniu deep modelu przez deep learning
+
+Powinniśmy nauczyć się poprawnie używanie LLM (Large Language Model)
+
+Źle: generuje model
+
+Dobrze: generują pomysły, generują konkretną implementacje znanego modelu
+
+W tym momencie AI nie zastąpi modelarza, ale może pomóc w generowaniu pomysłów.
+
+Najlepiej działa jak juz wiemy co chcemy zrobić, zapadła decyzja projektowa, a AI generuje implementacje
+
+W tym momecnie musimy jeszcze poczekać zanim AI będzie wstanie samodzielnie modelować systemy
+
+### L08. Bottom up: Podsumowanie i Zadanie
