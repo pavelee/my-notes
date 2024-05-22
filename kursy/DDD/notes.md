@@ -800,3 +800,23 @@ UML'e wiele nie wnoszą, zwykle biznes ich nie rozumie. Jest zbyt złożona
 
 ### L04. Deep Model: Optymalizator
 
+#### Metodyka zbierania wymagań
+
+![metodyka](./assets/metodyka.png)
+
+-   Zbadaj potrzębę na deep model -> znajdź stabilne rozwiązanie w gąszczu naiwnych przypadków -> szukaj ogólnego modelu i zaimplementuj najprostszy przypadek
+    -   Pozwala to na lepsze zrozumienie wymagań i szukanie deep modelu. Może jest jakieś gotowe rozwiązanie które można dostosować
+
+![metodyka1](./assets/metodyka1.png)
+
+#### Stabilność vs niestabilność
+
+Szukamy stabilnego modelu w niestabilnych wymaganiach
+
+Dobry model pozwala automatycznie zadawać dobre pytania, usuwać specjalne przypadki
+
+### L05. Zadanie [05:54]
+
+Brain popełnił błąd przez rozsmarowanie modelu po całej aplikacji
+
+**Dużo łatwiej jest rozwiązać problem który chcesz rozwiązać, jeśli sprowadzisz go do problemu który wiesz jak rozwiązać**
