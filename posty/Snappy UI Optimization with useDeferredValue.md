@@ -38,7 +38,7 @@ function App() {
 }
 '''
 
-co istotne komponent który ma korzystać z hooka musi być wrappowany useMemo, to pozwala aby React zatrzymał rerender jeśli nie było zmian zależności 
+**co istotne komponent który ma korzystać z hooka musi być wrappowany useMemo**, to pozwala aby React zatrzymał rerender jeśli nie było zmian zależności 
 
 
 
