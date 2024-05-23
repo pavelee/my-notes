@@ -2,57 +2,52 @@ https://www.joshwcomeau.com/react/use-deferred-value
 
 ## UseDeferredValue
 
-hook jest często nie doceniony 
+hook jest często nie doceniony
 
 ma potencjał wpłynąć pozytywnie na UX
 
-## Problem 
+## Problem
 
 czeste odświeżanie kosztownego UI w tym przypadku snipettu który posada kolorowanie a to jest sporo makrupu
 
-możemy tutaj szukać rozwiązań opóźniających odświeżania np tylko raz na 200ms ale to powoduje że lepsze urządzenia też tracą a chociaż mozga odświeżać szybciej 
+możemy tutaj szukać rozwiązań opóźniających odświeżania np tylko raz na 200ms ale to powoduje że lepsze urządzenia też tracą a chociaż mozga odświeżać szybciej
 
-zwykle można zauważyć które elementy UI mają większy/mniejszy priorytet 
+zwykle można zauważyć które elementy UI mają większy/mniejszy priorytet
 
 ![img](https://www.joshwcomeau.com/images/use-deferred-value/high-vs-low-priority.png)
 
-## Rozwiązanie 
+## Rozwiązanie
 
-useDeferredValue to hook który pozwala dzielić UI na ten o wysokim i niskim priorytecie update 
+useDeferredValue to hook który pozwala dzielić UI na ten o wysokim i niskim priorytecie update
 
 przykład użycia
 
-'''
+```js
 function App() {
-  const [count, setCount] = React.useState(0);
-  const deferredCount = React.useDeferredValue(count);
-  return (
-    <>
-      <ImportantStuff count={count} />
-      <SlowStuff count={deferredCount} />
-      <button onClick={() => setCount(count + 1)}>
-        Increment
-      </button>
-    </>
-  );
+    const [count, setCount] = React.useState(0);
+    const deferredCount = React.useDeferredValue(count);
+    return (
+        <>
+            <ImportantStuff count={count} />
+            <SlowStuff count={deferredCount} />
+            <button onClick={() => setCount(count + 1)}>Increment</button>
+        </>
+    );
 }
-'''
+```
 
-**co istotne komponent który ma korzystać z hooka musi być wrappowany useMemo**, to pozwala aby React zatrzymał rerender jeśli nie było zmian zależności 
+**co istotne komponent który ma korzystać z hooka musi być wrappowany useMemo**, to pozwala aby React zatrzymał rerender jeśli nie było zmian zależności
 
 w przypadku kiedy mamy bardziej skomplikowany state to możemy przekazać to jako jeden string
 
 ## obsługa loadera
 
-możemy złapać moment kiedy jeszcze wolniejsze UI nie odświeżyło się poprzez trick 
+możemy złapać moment kiedy jeszcze wolniejsze UI nie odświeżyło się poprzez trick
 
-'''
+```js
 function App() {
   const [count, setCount] = React.useState(0);
   const deferredCount = React.useDeferredValue(count);
-  const isBusyRecalculating = count !== deferredCount; 
-'''
-
-
-
-
+  const isBusyRecalculating = count !== deferredCount;
+  // ...
+```
