@@ -18,4 +18,6 @@ zwykle można zauważyć które elementy UI mają większy/mniejszy priorytet
 
 ## Rozwiązanie 
 
+useDeferredValue to hook który pozwala dzielić UI na ten o wysokim i niskim priorytecie update 
+
 
