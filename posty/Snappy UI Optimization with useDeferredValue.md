@@ -42,4 +42,17 @@ function App() {
 
 w przypadku kiedy mamy bardziej skomplikowany state to możemy przekazać to jako jeden string
 
+## obsługa loadera
+
+możemy złapać moment kiedy jeszcze wolniejsze UI nie odświeżyło się poprzez trick 
+
+'''
+function App() {
+  const [count, setCount] = React.useState(0);
+  const deferredCount = React.useDeferredValue(count);
+  const isBusyRecalculating = count !== deferredCount; 
+'''
+
+
+
 
