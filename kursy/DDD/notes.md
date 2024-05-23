@@ -860,4 +860,20 @@ W tym momecnie musimy jeszcze poczekać zanim AI będzie wstanie samodzielnie mo
 
 ### L08. Bottom up: Podsumowanie i Zadanie
 
+#### A kiedy takich głębokich modeli nie robić?
+
+Nie zawsze to musi być problem modelarski
+
+Może to być problem techniczny:
+
+-   integracja z zewnętrznym systemem
+-   pobieranie danych
+
+#### Myślenie redukcyjne
+
+-   Szukanie analogii
+-   redukowanie problemu
+-   zawsze zakładamy że ktoś już podobny problem rozwiązał
+
+**Potrzebujesz czasu aby zdobyć doświadczenie, musisz zobaczyć wiele problemów aby zacząć widzieć analogie. Wtworzenie intuicji to proces długotrwały.**
 
