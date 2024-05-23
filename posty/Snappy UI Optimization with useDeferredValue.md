@@ -20,6 +20,8 @@ zwykle można zauważyć które elementy UI mają większy/mniejszy priorytet
 
 useDeferredValue to hook który pozwala dzielić UI na ten o wysokim i niskim priorytecie update 
 
+przykład użycia
+
 '''
 function App() {
   const [count, setCount] = React.useState(0);
@@ -35,4 +37,10 @@ function App() {
   );
 }
 '''
+
+co istotne komponent który ma korzystać z hooka musi być wrappowany useMemo, to pozwala aby React zatrzymał rerender jeśli nie było zmian zależności 
+
+
+
+
 
