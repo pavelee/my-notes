@@ -20,4 +20,19 @@ zwykle można zauważyć które elementy UI mają większy/mniejszy priorytet
 
 useDeferredValue to hook który pozwala dzielić UI na ten o wysokim i niskim priorytecie update 
 
+'''
+function App() {
+  const [count, setCount] = React.useState(0);
+  const deferredCount = React.useDeferredValue(count);
+  return (
+    <>
+      <ImportantStuff count={count} />
+      <SlowStuff count={deferredCount} />
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </>
+  );
+}
+'''
 
