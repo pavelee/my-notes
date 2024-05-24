@@ -877,3 +877,23 @@ Może to być problem techniczny:
 
 **Potrzebujesz czasu aby zdobyć doświadczenie, musisz zobaczyć wiele problemów aby zacząć widzieć analogie. Wtworzenie intuicji to proces długotrwały.**
 
+### L09. Model jest wszystkim czego potrzebujesz
+
+#### Jest coś jest dobre do wszystkiego to jest dobre do niczego
+
+![model_ab](./assets/model_ab.png)
+
+Opracowanie właściwego modelu to klucz do zwycięstwa
+
+#### Model a rzeczywistość
+
+Model nie musi odwzierciedlać rzeczywistości, musi być użyteczny
+
+#### Model jako baza o regułach
+
+Model to baza reguł, które pozwalają na generowanie nowych pomysłów, tłumaczą co się dzieje w firmie
+
+## Moduł 04 - Analiza Top-Down - jak radzić sobie z obszernym, wielodomenowym problemem
+
+### L01. Rozwiązanie zadania
+
