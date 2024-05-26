@@ -58,3 +58,8 @@ Od react 19 możemy przekazać wartości inicjująca dla UseDeferredValue co poz
 
 np możemy ustawić to jako null i dzięki temu nie renderować początkowego stanu komponentu a mimo to realna wartość będzie już intem
 
+## Więcej w react docs 
+
+https://react.dev/reference/react/useDeferredValue
+
+więcej use case w tym oblusga suspense 
