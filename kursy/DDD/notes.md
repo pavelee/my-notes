@@ -897,3 +897,160 @@ Model to baza reguł, które pozwalają na generowanie nowych pomysłów, tłuma
 
 ### L01. Rozwiązanie zadania
 
+**Dobry model pozwala samemu zadwać dobre pytania**
+
+Dzielenie kodu na siłę może powodować że zaciemnimy sposób rozwiązania np. jakiś algorytm
+
+Rozwiązaniem jest tutaj zbyt specyficzne podejście do potrzebnych zasobów do projektu, nie tylko pieniądze ale też wizerunek lub kombinacja tych dwóch
+
+### L02. Event Storming Process Level - wprowadzenie
+
+#### Nie kradnij
+
+Okradaniem klienta jest próba modelowania procesów tam gdzie ich nie ma
+
+#### Cel sesji Event Storming - Process Level
+
+![event_storming_cele](./assets/event_storming_cele.png)
+
+Użycie narzęddzia dla użycia jest bezsensu, korzystaj tylko z tego co jest potrzebne
+
+Nie zwołuj spotkania aby wykonać Event Storming,
+to tak jakby chirurg chciałby Cie operować dla operowania a nie aby Ci pomócF
+
+Tricki
+
+-   **Zakomunikuj cel spotkania i powołuj się na nieo w razie problemów**
+-   Wprowadzaj notacje stopniowo
+    -   zacznij od zdaczeń
+    -   dodaj komendy i widoki
+    -   dodaj reguły procesowe
+-   Dodaj poziomy swimline
+    -   poziom poza systemem
+    -   poziom UI
+    -   poziom domenowy
+    -   poziom infrastruktury
+    -   poziom innych systemów
+-   Rozpocznij o istotnych zdarzeń
+    -   pivotal events - sesja kreatywana TOBE
+    -   zdarzenia początkowe i końcowe - sesja AS IS
+
+#### Uczestnicy
+
+Szukamy zależności przyczynowo-skutkowych, bez niej nie mówimy o procesach
+
+Zapraszamy osoby z managmentu, czyli osoby którę wiedzą co ma być zrobione ale nie wiedzą jak to się robi dokładnie
+
+Zapraszasz do kilka-kilkanaście osób, tak aby nie było chaosu
+
+#### Czas
+
+Średni czas trawnia sesji to 1-3 dni (w zależności od liczby procesów)
+
+Zebrana wiedza powinna wystaczyć do zaplanowania pracy na kilka kolejnych miesięcy, wynikiem powinna być podział na konteksty i przydzielenie ogólnych zadań do zespółów
+
+Zespoły następnie samodzielnie ustalają szczegóły z espertami dziedzinowymi w sesjach takttycznych
+
+Może się okazać że będzie potrzebny jeden dzień wiecej aby ropzoczac prace, mogę być tarcia pomiędzy uczestnikami
+
+#### Dla osób Facilitujących
+
+Potrzebne korki który powinny się pojaić na spotkaniu:
+
+-   zrozumienie - definiowanie problemu/wyzwania
+    -   zrozum jakie są przyczyny wyzwania oraz jasno określ swoje cele i wyniki
+    -   nie szukaj szybkicj rozwiązań, staraj sie jak najlepiej zrozumieć problem
+-   ideacja - generowanie pomysłów
+    -   badanie możliwośc i znajdowanie włąsciwości wujaśniających
+    -   Na tym etapie żadeń pomysł nie jest zły
+-   Analiza - ocena pomysłów (przeglądanie i sortowanie)
+    -   badanie wykonalności i praktyczności wybranych pomysłów
+-   kierunek - tworzenie planu, wdrażanie rozwiązań, wzmacnianie
+
+#### Antypatycowanie chaosu
+
+W momencie jak na starcie spotkania będzie chaos to narysuj ten rysunek:
+
+![proces_ev](./assets/proces_ev.png)
+
+i skomentuj to:
+
+Pierwsza faza może wyglądać na chaotyczną, ale jej struktura jest częscią więszkej metodyki aby zrozumieć procesy
+
+#### Wstęp
+
+Musisz zadbać o gładkie wprowadzenie
+
+Zakomunikuj cel spotkania i wprowadzaj notacje ale stopioniowo
+
+Zdarzenia - wpływaja na proces, coś co się dzieje, coś może się zdarzyć następnie. Muszą przypisane od konkretnego punktu w czasie
+
+Zdarzenia opisuje się w czasownikiem w casie przeszłym w trybie dokonanym.
+
+Proces płatności to nie zdarzenie ale proces, natomisat składa się np. z
+
+-   zlecono pobranie
+-   potwierdzono pobranie
+-   odrzucono pobranie
+-   potwierdzono płatność
+
+Po wytłumaczeniu poproś uczestników aby podali własne przykłady z ich procesów biznesowych
+
+Zwerfikuj czy to są konkretne punkty w czasie, czy to są zdarzenia
+
+#### Zanim zaczniesz
+
+Uczestnicy mogą korzystać z poleceń UI np. kliknięto przycisk, w taki sposób wyborażają sobie system osoby bez wiedzy technicznej
+
+![swimline](./assets/swimline.png)
+
+Dodaj poziomy swimline, zapis od lewej do prawej. Wygląda na prcesy które są wykonywane w systemie ale podzielone na konteksty.
+
+Swimline pozawalja nam oddzielić zdarzenia domenowe od tych które są związane z UI albo poza systemem
+
+Możesz dodać własne poziomy w ramach potrzeb.
+
+#### Początek
+
+Dla sesji AI IS zaczynamy od zdarzeń początkowych i końcowych. To pozwala na to aby się skupić na tym procesie i nie wychodzić poza niego
+
+Dla sesji TO BE zaczynamy od pivotal events, czyli zdarzeń które są kluczowe dla procesu
+Pivotal event to taki która ma poważne kosekwencje aby go odwrócić, np. zamówiono towar, aby go odwrócić trzeba wykonać cały proces złożenia rezygnacji
+
+Nie przejmuje się kolejnością, eksplotuj zdarzenia wokół pivotal events. Ułożenie tego w czasie przyjdzie kolejnych etapach analizy.
+
+#### Start
+
+Najpierw osoby z różnych działów zajmują się swoimi procesami, pracują równolegle
+
+#### Kolejne elementy
+
+![karteczki](./assets/karteczki.png)
+
+Komendy - każde zdarzenie musi mieć swoją przyczynę, np. inne zdarzenie lub komenda. Zapisana jako czasownik w trybie rozkazującym. Komendy mogą być wysyłane z innych systemów lub od innych użytkowników. Komendy można odrzucić.
+
+Widoki - Widok to ekran jaki prezentujemy użytkownikom lub dane API jakie zwracamy innym systemom. Posługiwanie się widokami pomaga osobm nie technicznym. Zapytaj jakie zdarznenia muszą zadziać aby zebrać wymagane dane do wyświetlenia na widoku. Zapytaj do czego będą te dane służyć dalej.
+
+Procesy mogą być liniowe lub rozgałęciaż się na kilka możliwości. Rozdzielają je reguły procesowe.
+
+Reguły - Wpływają na rozwidlenia procesu. INTERESUJA CIE TYLKO REGUŁY PROCESOWE. Pomijamy reguły walidacyjne, bo wiadomo że kończą proces i przerywają wyświetelenem błędu. Pomijamy reguły zmiany stanu.
+
+![regula](./assets/regula.png)
+
+Reguły:
+
+-   **procesowe - sterujące wyborem ścieżki w procesie**
+-   walidacyjne
+-   synktatyczne - wejście np. formularza
+-   biznesowe - porówanie wejścia z bazą danych
+-   obliczeniowe - algorytmy, np. obliczanie ceny
+-   spójność zmiany stanu
+-   spójność danych w bazie danych
+
+**Pamiętaj aby przyklejać karteczki, nawet jeśli nie jesteś pewień czy to jest dobra karteczka, to zawsze można odkleić**
+
+Kartęczkę łatwiej zmienić niż rysunek
+
+Spotkania na żywo mają lepsze rezultaty niż zdalne, lepiej jest zrobić to w biurze
+
+### L03. Model procesów
