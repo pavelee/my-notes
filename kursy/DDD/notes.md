@@ -934,6 +934,9 @@ Tricki
 -   Rozpocznij o istotnych zdarzeń
     -   pivotal events - sesja kreatywana TOBE
     -   zdarzenia początkowe i końcowe - sesja AS IS
+-   abstract vs konkret - dopasuj się do grupy
+    -   pierwsza grupa ludzi będzie się skupiać na konkretach, np "weźmy taki przykład"
+    -   druga grupa na ogólnych principach, np. "jakie są zależności pomiędzy tymi zdarzeniami"
 
 #### Uczestnicy
 
@@ -1054,3 +1057,24 @@ Kartęczkę łatwiej zmienić niż rysunek
 Spotkania na żywo mają lepsze rezultaty niż zdalne, lepiej jest zrobić to w biurze
 
 ### L03. Model procesów
+
+[Modelowanie procesów](./assets/DD_M04L03_PROCESS_LEVEL.pdf)
+
+#### Podejście pierwsze - próba uogólnienia
+
+W momencie kiedy nie możesz ułożyć zdarzeń w czasie to znaczy że nie masz tutaj do czynienia z procesem.
+
+#### Wszystko, wszędzie, naraz
+
+#### Podejście drugie - konkretne use case
+
+Rozpisanie konkretnych use case które są procesami, odkrywanie wspólnych elementów procesów
+
+Jeżeli nie wiesz jaką reprezentacje wybrać dla klienta to spytaj go aby Ci to narysował
+
+#### Po zmianach Brajana
+
+Można rozpoznać że Event Storming nic nie wniósł jeżeli zdarzenie wyglądada tak samo jak komenda
+
+### L04. Porady dla facylitatorów
+
