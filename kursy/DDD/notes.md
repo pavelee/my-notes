@@ -937,6 +937,8 @@ Tricki
 -   abstract vs konkret - dopasuj się do grupy
     -   pierwsza grupa ludzi będzie się skupiać na konkretach, np "weźmy taki przykład"
     -   druga grupa na ogólnych principach, np. "jakie są zależności pomiędzy tymi zdarzeniami"
+-   zwertfikuj go od końca
+    -   przechodząc przez każde zdarzenie zadaj sobie pytanie, co musiało się zadziac wcześneij aby to zdarzenie miało miejsce. Możliwe że w ten sposób uda Ci się odkryć brakujące zdarzenia
 
 #### Uczestnicy
 
@@ -1078,3 +1080,91 @@ Można rozpoznać że Event Storming nic nie wniósł jeżeli zdarzenie wygląda
 
 ### L04. Porady dla facylitatorów
 
+Umiejętności miekkie są niezbędne aby zbierać wymagania
+
+#### Ale Ty masz silną psychikę
+
+**Więkoszość ludzi lubi mieć wrażenie że prowadzący wie do czego zmieża oraz to co robimy ma sens**
+
+-   Wykonuje gesty które wracają do pozycji od której zostały wyprowadzone
+-   nie macha rękami
+-   nie zakrywa szyji
+-   mówi konkretnymi frazami patrząć w konkretne punkty
+
+#### Weryfikuj od końca
+
+Aby zweryfikuje event storming sprawdź go od końca, zaczynając od ostatniego zdarzenia. Zadaj pytanie co musiało się zdarzyć aby to zdarzenie miało miejsce.
+
+Ludzie myślą skrótami myślowymi, myślą od A do D, pomijając B i C
+
+przejście tego od końca nie uruchamia tych skrótów myślowych
+
+#### Generyczne pytania są dobre na wszystko
+
+ważne aby mieć zdarzenia na poziomie ziarnistości, nie za duże ani za małe
+
+Jeżeli zdarznenia nic nie wnoszą to znaczy:
+
+-   masz płytką dziedzinę, czyli CRUD
+-   musisz poświęcic więcej czasu aby dojść do sedna problemu
+
+Dojście do sedna opierają się o generyczne pytania
+
+-   Being - Czym to jest?
+    -   co ma projekt? Etapy, Co mają etapy? inne etapy. Co ma jeszcze projekt? Nazwę, a ile minmalnie znaków ma nazwa?
+    -   w praktyce jest to najmniej praktyczne pytanie do odkrywania problemu
+-   Behaving - jak to się zachowuje?
+    -   zachowania mogą lepiej zrozumieć biznes
+    -   kto zmienia?
+    -   dlaczego zmienia?
+    -   powód zmiany?
+    -   jakie jest skutek zmiany?
+    -   jak często się zmienia?
+    -   czy zmianę można zmienić, wycofać?
+    -   5 why
+        -   UP - dlaczego to jest ważne?
+        -   DOWN - jakie jest sktek?
+-   Becoming - W co to się zmienia?
+    -   w co się zmienia?
+    -   czy łatwo jest odwracalne?
+
+![pytania](./assets/pytania.png)
+
+#### Rozróżnianie zdarzeń i komend
+
+Podczas stormingu zauważysz komendy którę brzmią tak samo, czy to są te same komendy?
+Sprawdź czy powodują te same zdarzenia, jakie są skutki w dalszych etapach procesu
+
+Uwaga! mogą to być zdarzenia z innych kontekstowych modeli
+
+#### Zbieraj złe pomysły
+
+Zbieraj karteczki które są ze złymi pomysłami do obszaru "zaoszczędzone pieniądze" i pokaż na koniec sponsorowi spotkania
+
+#### Nie używaj brudnych słów
+
+Zdarzenia techniczne
+
+-   zmieniono rekord
+-   zapisano rekord do bazy
+-   usunięto
+-   zmodifikowano
+
+Może być tak że analityk z technicznym tłem będzie rzucał takimi zdarzeniami. W takiej sytuacji poproś aby pomyślieli że nie ma komputerów tylko są same analogowe narzędzie i karteczki
+
+**Stwórzmy model tego co się dzieje w biznesie**
+
+#### Do refaktoringu potrzebujesz dwóch modeli
+
+Zawsze stwórz dwa modele AS-IS i TO-BE
+
+Posiadanie dwóch modleli jest ważne bo zwykle biznes myśli o celach, że może być lepiej
+
+Jeżeli nie stworzych dwóch modeli to skończysz z miksem dwóch światów
+
+Biznes zapytaj o to co warto refaktoryzować,
+ekspertów dziedzinowych o to co łatwo rekaktoryzować
+
+To są tak zwane łatwo wiszące owoce, aby pokazać przed sponsorem massive win
+
+#### Zmiana reprezentacji
