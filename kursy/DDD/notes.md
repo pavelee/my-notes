@@ -1168,3 +1168,85 @@ ekspertów dziedzinowych o to co łatwo rekaktoryzować
 To są tak zwane łatwo wiszące owoce, aby pokazać przed sponsorem massive win
 
 #### Zmiana reprezentacji
+
+Jeżeli poprosisz zespół aby zaprojektować system na nowo to pojawią się małe lokalne zmiany, generalnie kształt modelu będzie podobny
+
+Zwykle problem polega na tym że opowiadamy o tym systemie używając tych samych rzeczowników.
+
+Używając zdarzeń opowiadamy historie czasownikami a nie rzeczownikami, przez co jest większa szansa na nowy lepszy model.
+
+#### Uwaga na ekspertów
+
+mam dwa rodzje UI:
+
+-   induktywne - dla ekspertów
+    -   pozwala ekspertom robić wszystko
+    -   na UI widać schemat bazy danych
+    -   eksperci mają logikę w głowie a system traktują jako notatnik
+-   nastawione na zadania - dla laików
+    -   wszystko ma się zadziać po kliknięciu przycisku
+
+#### Weryfikacja modularyzacji
+
+Typowe problemy w przypadku modularyzacji:
+
+-   stawianie granic w złych miejscach
+-   przeciekanie modeli
+-   brakuje źródeł prawdy
+-   nie zadziałą w systmach rozporoszonych
+
+Zwykle diagram modularyzacji jest taki sam, czyli niezależne moduły które są podłączone do szyny danych
+
+Problem jest taki że dopiero jak nałoży się kierunki komunikacji to pojawi się plątanina połączeń
+
+![diagram_mod](./assets/diagram_mod.png)
+
+A w momencie jak przeanalizujesz treść tej komunikacji to odnajdziesz przeciekanie modeli, czyli zmiana w jednym modeli powoduje kaskadę zmian technicznych i koordynacji wielu zespołów
+
+Poproś swojego architekta aby nałożył na swoją architekturę proces biznesowy w postaci karteczek z event stormingu.
+
+Jak zapraszasz ludzi na spotkanie to nie rób sobie za cel obnażenie braku kompetencji architekta, a raczej zakomunikuj transfer wiedzy od archtiekta do zespołu, następnie zadawaj pytania, ewentualnie stosując złote mosty
+
+#### Synchronizacja wiedzy biznesowej
+
+Spotkanie przydatne kiedy nie rozumiesz jak działa biznes
+
+Rozpisz strukturę AS IS i następnie poproś osobę z każdego działu aby przeszła po każdej karteczce i wyjaśniła jak to rozumie, jak wypływa każde zdarzenie na ich obszar biznesowy
+
+To może pokazaż że ta osoba zupełnie inaczje rozumie konsekwencje zdarzeń, może pracuje na złych założeniach
+
+To jest znak ża należy wykonać rzetelną analizę jak działą biznes, zanim zaczniemy tworzyć rozwiązanie
+
+#### Planowanie prac
+
+Możesz uzyć User Story mapping
+
+W tym mozna użyć zdzarzeń zamiast User Task i sortujesz je w względem priorytezacji implementacji
+
+#### Wycena
+
+Zespoły które przeszły już wielkrotnie analizę procesową mogą nabrać intyucji co do kosztu typowych elementów do implementacji
+
+
+#### Pizza
+
+Event sotrming nie jest formalny, jest jak pizza na którą możesz nakładać wszystko. Możesz wprowadzać nowe typy karteczek.
+
+#### Nie myśl
+
+Najlepszą radą dla niedoświadocznych modelarzy jest:
+
+**Nie myśl rozwiązaniem technicznym**
+
+W momencie jak dostajesz pytania przyjmij zaożenie że wszystko da się zrobić, na spotkaniu Twoim celem jest jak najlepsze zrozumienie problemu biznesowego. W takim momencie proces jeszcze mozę sie zmienić, więć zbyt wczesne myślenie o rozwiązaniu jest stratą czasu.
+
+### L05. Cyrk na kółkach
+
+#### Co się stało się
+
+Problemy w komunikacji często wynikają z problemów lękowych u innych osób
+
+![lek](./assets/lek.png)
+
+### L06. Elementarz Komunikacji
+
