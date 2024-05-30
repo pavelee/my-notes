@@ -19,7 +19,7 @@ https://edu.devstyle.pl/products/domain-drivers
 ### L01. Despota-driven Development
 
 -   Problem jest gdzie do wszystkiego podchodzimy do CRUD
--   Głównym problemem jest to że dane są edytowane zróżnych miejscach
+-   Głównym problemem jest to że dane są edytowane różnych miejscach
 -   Problemem jest to że procesy operują na danych pomiędzy różnymi modułami
 -   CRUD może być większą ilością kodu w projekcie niż kod biznesowy
 -   System płytki to system gdzie pomiędzy UI a bazą danych nie ma żadnej warstwy biznesowej
@@ -32,7 +32,7 @@ https://edu.devstyle.pl/products/domain-drivers
 ### L02. Disaster-driven Design
 
 -   W zaleznosci od klienta musisz dostosować swoje podejście
--   W jaki sposób sprawić wrazenie zeby klient myslal ze wiemy co robimy:
+-   W jaki sposób sprawić wrazenie zeby klient myślał ze wiemy co robimy:
     -   Mowa ciała - kazdy ruch ktory zaczynasz powinnien wrocic do pozycji wyjsciowej. Czyli jak machasz reka do góry to powinna wrocic do pozycji wyjsciowej z ktorej zaczynała
     -   zwiezłe wypowiedzi - mówisz krótko i na temat
     -   przydziwięki i dopełniacze - nie powinno się kończyć zdania tak jakby to było pytanie do klienta
@@ -313,8 +313,8 @@ https://edu.devstyle.pl/products/domain-drivers
         -   Design - będziemy uczyć się projektować oprogramowanie
         -   Driven - będziemy uczyć się jakie są drivery biznesowe i architektoniczne
         -   Domain - podział problemu na niezależne obszary, domeny biznesowe, dogłebne zrozumienie krytycznych obszarów
-    -   Są systemy gdzie zrozumienie domenyn nie jest krytyczne bo ona jest trywialna
-    -   Czasmi są firmy gdzie są inne drivery np. szybkie powstanie kodu, działanie baterii itp.
+    -   Są systemy gdzie zrozumienie domeny nie jest krytyczne bo ona jest trywialna
+    -   Czasami są firmy gdzie są inne drivery np. szybkie powstanie kodu, działanie baterii itp.
 -   Czy DDD jest dla mnie?
     -   Tak, natomiast skorzystasz z tych narzędzi które będą dla Ciebie teraz przydatne
     -   Finalnie to Ci się przyda na kolejnych poziomach kariery
@@ -1227,7 +1227,6 @@ W tym mozna użyć zdzarzeń zamiast User Task i sortujesz je w względem priory
 
 Zespoły które przeszły już wielkrotnie analizę procesową mogą nabrać intyucji co do kosztu typowych elementów do implementacji
 
-
 #### Pizza
 
 Event sotrming nie jest formalny, jest jak pizza na którą możesz nakładać wszystko. Możesz wprowadzać nowe typy karteczek.
@@ -1249,4 +1248,134 @@ Problemy w komunikacji często wynikają z problemów lękowych u innych osób
 ![lek](./assets/lek.png)
 
 ### L06. Elementarz Komunikacji
+
+#### Metaprogramy
+
+Metaprogramy to schematy myślowe które wpływają na nasze zachowanie, uruchamiają się kontekstowo
+
+Należy inaczej podchodzić do Event storming, w zależności z kim pracujesz
+
+#### Podobnieństwa vs Różnice
+
+Sortowanie informacji w zależności od nastwienia na:
+
+-   podobnieństwa
+    -   szukają tego co się zgadza
+    -   obawa przed zmianą
+    -   ekspanowanie podobnieństw i analogii
+-   różnice
+    -   szukają przeciwieństw
+    -   lubią zmiany
+    -   wybór przed odrzucenie
+    -   zgoda przez brak różnic
+
+#### Co to dla mnie znaczy?
+
+Projektukjąć TO BE z AS IS i pracując z osobami którę są nastawione na podobnieństwa możesz skończyć z rozwiązaniami które są takie same jak obecne. W takim przypadku użyj zdarzeń pivotowych aby rozpisywać wokół zdarzeń milowych. Samo używanie czasowników może zerwać z schematem myślowym na rzeczownikach
+
+Jednocześnie modelując AS IS z osobami nastawionymi na różnicę może Ci się rozjechać rzeczywistość z modelem, w takim przypadku postaw zdarzenia początkowe i końcowe jako ramy celu
+
+#### Ogół vs Szczegół
+
+Opis rzeczywistości
+
+-   Sczegół
+    -   kwantyfikatory szczegółowe
+        -   będą mówić istnieją takie przypadki
+    -   detale
+        -   skupieni na detalach dlatego nie radza sobie z obrazek czałości
+    -   etapy i sekwenje
+        -   Potrzebują podziału na mniejsze etapy, sekwenje
+    -   liniowy przypadek
+        -   układają informacje w liniowe sekwencje krok po kroku
+-   Ogół
+    -   kwantyfikatory ogólne
+        -  "bo ty zawsze", "bo ty nigdy", "ogólnie to jest tak"
+    -   generalizacje
+    -   kolejność nie ma znaczenia
+        -   nie zwracają uwagi na kolejność, nie widzą zależności przyczynowo-skutkowych
+    -   gubienie się w szczegółach
+        -   długie siedzenie w detalach jest dla nich frustrujące
+
+#### Co to dla mnie znaczy?
+
+DLa osób które mają tendencje do wchodzenia w szczegóły, pytaj "Dlaczego to jest ważne?" (pytaj w górę) oraz odnoś się do celu czyli do ostatniego zdarzenia
+
+Dla osób które mają tendencje do ogólniania, odnoś się do wspólnego interesu, np. "Aby zredukować ryzyko, obniżyć koszty, zwiększyć zyski, potrzebuje zejść głębiej". Ważne aby pamiętać aby to był dobry moment, miejsce gdzie warto kopać głębiej
+
+#### Od problemu vs cel
+
+Nastawienie do świata
+
+-  Unikanie
+    -   filtrowanie problemów i zagrożeń
+        -   wszędzie widzą problem, skupiają się na tym co kiedyś nie wyszło
+    -   sam brak problemu, oznacza że jest dobrze (nie jest źle)
+        -   nie trzeba psuć, uważaj tylko nie spadnij
+    -   problemy rozporaszają w dążeniu do celu
+        -   problemy łatwo odwracają ich uwagę
+    -   wiedzą czego nie robić
+        -   ale nie wiedzą przez to co robić
+-   Dążenie
+    -   filtrowanie na cele i korzyści
+        -   motywją ich koryści
+    -   zawsze może być lepiej
+        -   jest dobrze ale może być lepiej
+    -   nie widzą problemów dążąc do celu
+        -   będą reagować silnie na nagrody, natomiast problemy zurzają na innych
+
+Osoby ustawionę na unikanie nie będą chcialły planować bo są pewne że coś sie wyspie po drodzę, takie osoby trzeba zapewniać że damy sobie radę bo będziemy wiedzieć co robić
+
+Natomiat osoby nastawione na cel zupełnie nie widzą po drodze żadnych problemów, "jakoś trzeba pokonać e tam", dla takich osób jeżeli zaczniesz im wyliczać możliwe problemy techniczne to będzie to odbierane przez biznes jako marudzenie
+
+Zanim zaczniesz zwracać na coś problem zawsze sie zastanów:
+
+**Czy to jest najlepszy moment aby zwrócić uwagę na jakiś problem?**
+
+Jeżeli to jest ten moment to połącz to z zagrożeniem jakiegoś konkretnego celu.
+
+#### Co to dla mnie znaczy?
+
+Jeżeli osoby nastawione na unikanie zaczną odchodzić od celu, przypomnij im co jest naszym celem spotkania oraz cel procesu ostatniego zdarzenia. 
+
+Jeżeli chcesz uwypublikć problem to poproś kogoś aby wskazał jakiemu celu zagraża ten problem
+
+#### Źródło referencji
+
+Źródło referencji
+
+-   Wewnętrzne
+    -   własna retrospektywa
+    -   poczucie, że się wie
+        -   będą mówić że to po prostu wiedzą
+    -   potrzeba samodzielnego sprawdzenia
+        -   sam wiem, sam muszę sprawdzić, będę wiedział jak sprawdzę
+    -   osobiste decyzje
+        -   nie zważają na opinie innych
+        -   takimi osobami jest trudno zarządzać
+    -   pochwały nie służą do potwierdzania
+        -   nie potrzebują zewnętrznych pochwał, nie szanują pochwał kogoś kto się nie zna
+    -   pochwały budują status
+        -   pochwały są im potrzebne do budowania statusu w grupie
+
+-   Zewnętrzne
+    -   opinie innych
+        -   bo większość ludzi, bo klienci kupują, tak wszyscu mówią, bo Pan X tak mówi
+    -   wiedza pochodzi z zewnątrz
+        -   bo ktos coś im powiedział
+    -   pochwałą jest informacją zwrotną
+        -   potrzebują zewnętrznych poleceń informacji zwrotnych, oraz pochwał aby wiedzieć że podążają w dobrym kierunku
+
+
+W momencie jak pracujesz z osobą która szuka źródłe zewnętrznych powoływanie się na własne doświadczenia moze być nie wystarczające (chyba że jesteś ekspertem w danej dziedzinie), bądź przygotowany że poprosi się o wyniki badań itp.
+
+W momencie jak pracujesz z kim nastawionym na wewnętrzne, powyoływanie się na inne osoby będzie odbierane jako brak zrozumeinia ich problemu projektowego, lepiej zaproponować własny eksperyment, np. tutaj jest repo z tym nowym kodem, sprawdź go osobisćie, zobacz jak działa, daj znać co o tym myślisz
+
+#### Co to dla mnie znaczy?
+
+Podczas stormingu możesz trafić na osoby wszechwiedzące które nie zważają na opinie innych, zwykle takie osoby będą nastawione na unikanie problemów, najlepiej skupić się na problemie i spytać tą osobę jak by rozwiązała ten problem
+
+**Ważne jest pozostawienie złotych mostów, możliwość wycofania się z jakiś błędynch twierdzeń z zachowaniem twarzy**
+
+Najlepiej zapytać udająć zaciekawnie a nie z wyższością: **"Czy to twierdzenie będzie też dobrze działać w innym kontekście?"**
 
