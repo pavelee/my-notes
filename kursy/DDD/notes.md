@@ -1290,7 +1290,7 @@ Opis rzeczywistości
         -   układają informacje w liniowe sekwencje krok po kroku
 -   Ogół
     -   kwantyfikatory ogólne
-        -  "bo ty zawsze", "bo ty nigdy", "ogólnie to jest tak"
+        -   "bo ty zawsze", "bo ty nigdy", "ogólnie to jest tak"
     -   generalizacje
     -   kolejność nie ma znaczenia
         -   nie zwracają uwagi na kolejność, nie widzą zależności przyczynowo-skutkowych
@@ -1307,7 +1307,7 @@ Dla osób które mają tendencje do ogólniania, odnoś się do wspólnego inter
 
 Nastawienie do świata
 
--  Unikanie
+-   Unikanie
     -   filtrowanie problemów i zagrożeń
         -   wszędzie widzą problem, skupiają się na tym co kiedyś nie wyszło
     -   sam brak problemu, oznacza że jest dobrze (nie jest źle)
@@ -1336,7 +1336,7 @@ Jeżeli to jest ten moment to połącz to z zagrożeniem jakiegoś konkretnego 
 
 #### Co to dla mnie znaczy?
 
-Jeżeli osoby nastawione na unikanie zaczną odchodzić od celu, przypomnij im co jest naszym celem spotkania oraz cel procesu ostatniego zdarzenia. 
+Jeżeli osoby nastawione na unikanie zaczną odchodzić od celu, przypomnij im co jest naszym celem spotkania oraz cel procesu ostatniego zdarzenia.
 
 Jeżeli chcesz uwypublikć problem to poproś kogoś aby wskazał jakiemu celu zagraża ten problem
 
@@ -1345,6 +1345,7 @@ Jeżeli chcesz uwypublikć problem to poproś kogoś aby wskazał jakiemu celu 
 Źródło referencji
 
 -   Wewnętrzne
+
     -   własna retrospektywa
     -   poczucie, że się wie
         -   będą mówić że to po prostu wiedzą
@@ -1366,7 +1367,6 @@ Jeżeli chcesz uwypublikć problem to poproś kogoś aby wskazał jakiemu celu 
     -   pochwałą jest informacją zwrotną
         -   potrzebują zewnętrznych poleceń informacji zwrotnych, oraz pochwał aby wiedzieć że podążają w dobrym kierunku
 
-
 W momencie jak pracujesz z osobą która szuka źródłe zewnętrznych powoływanie się na własne doświadczenia moze być nie wystarczające (chyba że jesteś ekspertem w danej dziedzinie), bądź przygotowany że poprosi się o wyniki badań itp.
 
 W momencie jak pracujesz z kim nastawionym na wewnętrzne, powyoływanie się na inne osoby będzie odbierane jako brak zrozumeinia ich problemu projektowego, lepiej zaproponować własny eksperyment, np. tutaj jest repo z tym nowym kodem, sprawdź go osobisćie, zobacz jak działa, daj znać co o tym myślisz
@@ -1379,3 +1379,53 @@ Podczas stormingu możesz trafić na osoby wszechwiedzące które nie zważają 
 
 Najlepiej zapytać udająć zaciekawnie a nie z wyższością: **"Czy to twierdzenie będzie też dobrze działać w innym kontekście?"**
 
+## Moduł 05 - Heurystyki Szukania Modeli
+
+### L01. Rozwiązanie zadania
+
+Powinniśmy przypadki sprowadzić do testów akceptacyjnych
+
+testów pokazują nam do czego dążymy, jakie są nasze cele
+
+### L02. Podział strategiczny - pojęcia
+
+#### Każdy z każdym na szynach
+
+Zamiana komunikacji wszysyc do wszyscy na szynę to nie jest rozwiązanie, nadal nie wiemy co się dzieje w systemie
+
+#### Storming to dopiero początek
+
+Spotkanie event sotming process level może być celem samym w sobie aby transferować wiedze
+
+Storming to tylko wsad do dobrej architektury
+
+Będziemy używać heurystyk aby szukać rozsądnych granic modeli którę są zgodne z driverami architektury oraz taktycznymi
+
+Po stormingu musi dojść do przeanalizowania zebranych informacji
+
+#### Lekko sakrastyczny wstęp
+
+Agile Software Development został skrócony do Agile, nie wiadomo dlaczego
+
+Agile nie rozwiązuje w tym momencie problemów z tym że zmiany kaskadowo przechodzą przez zespoły, mimo że Agile miał to rozwiązać, zwinne podejście w tym przypadku nie działa
+
+DDD pomaga zwrócić uwagę na:
+
+-   zależność pomiędzy kontekstowymi modelami
+-   driver architektoniczny pojedyńczego źródła prawdy
+
+#### Drivery architektoniczne
+
+-   Driver autonomii modułów
+    -   niezależna praca zespołów
+        -   zmiany w jednym module nie powinny wymagać zmian w innym module
+    -   niezależne wdrożenia i deployment
+    -   odporność na awarie
+    -   uwolniony potencjał innowacji
+        -   pomysły jakiegos obszaru nie powinny być chamowane przez inny obszar, chamować można poprzez oczekiwania na innych
+
+Jak zaczynasz pracę z czyimś projektem zapytaj jakie były drivery architektoniczne, jakie były cele, co chcieli osiągnąć. Bez tego nie jesteśmy wstanie podjąć decyzji czy podjęte decyzje są poprawne.
+
+Czasami drivery nie były określane wcale.
+
+#### Po co dzielić?
