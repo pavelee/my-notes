@@ -1431,3 +1431,210 @@ Jak zaczynasz pracę z czyimś projektem zapytaj jakie były drivery architekto
 Czasami drivery nie były określane wcale.
 
 #### Po co dzielić?
+
+-   Powody do zmian
+    -   autonomia pracy
+        -   podział pracy
+    -   autonomia zmian
+        -   zmiany w jednym module nie powinny wpływać na inne moduły
+        -   typowym przykładem jest zmiana na inną implementacje lub innego dostawcę
+    -   autonomia skalowania
+        -   skalowanie jednego modułu nie powinno wpływać na inne moduły
+    -   izolacja błędów
+        -   błąd w jednym module nie powinien wpływać na inne moduły
+    -   bezpieczeństwo
+        -   bezpieczeństwo jednego modułu nie powinno wpływać na inne moduły
+
+#### Jak nie dzielić?
+
+Zły podział może przynieść więcej pracy niż monolityczna struktura
+
+-   Ryzykowne metodyki podziału
+    -   vertical slice po makietach ekranów
+        -   dzielenie systemu z deep modelem spowoduje sporo problemów ze sprzężeniem
+        -   jeżeli tak podzielisz to będziesz miał problemy ze spójnością danych
+    -   vertical slice po krokach procesu
+        -   to samo co wyżej
+    -   struktury rzeczowników
+        -   to samo co wyżej dla nie trywialnej logiki biznesowej
+    -   podążanie za struktukturą organizacyjną
+        -   to samo co wyżej
+        -   jeżeli komunikacja w firmie jest chaotyczna to podział systemu będzie chaotyczny
+
+Brak podziału modułów per dział może prowadzić do problemu ownershipu, czyli nikt nie czuje się odpowiedzialny za dany moduł
+
+#### Odwrócenie metodyki
+
+**Najpierw sprawdź jakie byłby interakcje i następnie wydziel moduły**
+
+tak aby zmiany atomowe którę muszą być spójne były wewnątrz prostokątów
+
+#### Heurystyki do racjonalnego zarządzania symlulacją
+
+Zaczynamu od wysokopoziomowych heurystyk biznesowych wyznaczają gdzie warto się pochylić nad heurystykami precyzyjnymi. Mówiąc inaczej dzięki heurystykom biznesowym zwężamy obszar poszukiwań heurystyk precyzyjnych.
+
+Wstrzymanie się z podziałem do momentu przeprowadzenia rzetelnej analizy behawioralnej.
+
+Różne heurystyki powinny dawać taką samą odpowiedź w zależności od miejsca podziału modułów
+
+Dążymy do autonomicznego modelu i modułów które są niezależne od siebie
+
+#### Jak korzystać materiałów na temat heurystyk?
+
+Myśl o heurystkykach jako symolowaniu tego co może się zdarzyć i odseparowaniu od tego co jest stabilne
+
+**Pamiętaj! Aby sprawdzić czy heurystyka przybliża Cie do celu, musisz najpierw określić cel przy pomocy driverów architektonicznych**
+
+np. Chcey podzielić system tak aby system był odporny na awarie i skalowalny
+
+-   Wpływ driverów architektonicznych na decyzje
+    -   driver architektoniczny
+        -   określa cel, np. odporność na awarie
+    -   atrybut jakościowy
+        -   określa metrykę celu, np. dany obszar biznesowy jest niestabilny, jego awaria nie może wpłynąć na inne obszary
+    -   heurystyka
+        -   ogranicza miejsca badania symulacji
+        -   np. tam gdzie prawdoopodobnie będie granica modułów
+        -   im więcej heurystyk tym większa pewnosć
+    -   symulacja
+        -   sprawdzenie atrybutów jakościowych w miejscach wskazanych przez heurystyki
+
+Powinnismy korztać z klocków które znam i wiem że działają w danym kontekście
+
+#### Podstawowe pojęcia a właściwe pojęcie
+
+![evans](./assets/evans.png)
+
+Na początek myśl o osobnych modelach.
+
+![model](./assets/model.png)
+
+#### Rys historyczny
+
+DDD powstało kiedy modne były wielkie systemy, które były trudne do zrozumienia, kilkudziesięciu programistów pracowało nad jednym systemem
+
+Evans mówił o tworzeniu mniejszych modeli kierując się heurystyką lingwistyczną, czyli szukanie znaczenia słów w innych kontekstach. Osobnych konktekstach znaczeń językowych.
+
+Bounded Context trzeba traktować jako jedną z heurystyk do separacji modeli
+
+**Najelpiej mówić model zamiast Bounded Context**
+
+**Szukanie bounded contextów i poddomen to heurystyki do szukania autonomicznych modeli**
+
+#### Pojęcie: Domeny
+
+Domeny to osobne sfery wiedzy którę występują w realnym świecie który pojektujemy.
+
+To pierwsza heurystyka która naprowadza na modularyzację
+
+-   Domeny i subdomeny
+    -   planowanie etapów projektów
+    -   zarządzanie zasobami (domena)
+        -   szkolenia (subdomena)
+        -   urlopy
+        -   park maszyn
+        -   magazyn
+
+Domeny i subdomeny istnieją w rzeczywistości w organizacji, widoczne to jest w komunikaccji
+
+-   Typy domen
+    -   core
+        -   powód powstania systemu
+        -   przewaga nad konkuencją
+        -   product
+        -   krytyczne - inwestujemy w jakość
+    -   generic core (nie występuje w literaturze)
+        -   jak wyżej, ale wyabstrahowane, reużwalny w ramach organizacji
+        -   często nazywanę platformą
+        -   capibility (dostępność, powszechny element w systemie)
+        -   krytyczne - inwestujemy w jakość
+    -   generic
+        -   gotowe rozwiązania niekrytynczych obszarów
+        -   można kupić lub open source
+        -   np. wystawianie faktur
+    -   supporting
+        -   obszary które nie są kluczowe dla biznesu
+        -   np. zarządzanie urlopami
+
+Pamietaj aby zdać pytanie do biznesu:
+
+**"Aby sprawdzić czy nie możemy wykorzystać gotowego rozwiązania, muszę zadać kilka pytań"**
+
+Dla każdej domeny określmy jej krytyczność, to pozwala znaleść priorytety oraz przydzielić odpowiedinie zasoby ludzkie
+
+Warto znać mapy wardleya aby zrozumieć jakie obszary są kluczowe dla biznesu
+
+![map_wardley](./assets/map_wardley.png)
+
+Mapa pokazuje w dwóch warstwach:
+
+-   wnoszona wartość
+-   utrorowanie
+
+Z poziomu IT mapa pomaga dopierać zasoby do obszarów które są kluczowe dla biznesu
+
+np. w momencie jak moduły przechodzą w do commodity to przekazujemy je do zespołów które są odpowiedzialne za utrzymanie
+
+#### Pojęcia - Bounded Context
+
+Dzielenie na osobne modele jest ok dopóki modele nie potrzebują informacji z innych modeli, wtedy zwykle zaczynają się problemy
+
+Musimy się zastanwoić jako możemy połączyć modele w sposób który nie spowoduje problemów
+
+Przestrzeń i reguły modelu nazywa się Bounded Context
+
+Kontekst ograniczony to kontekst w którym dany model ma sens
+
+Możesz o tym myśleć jak namespace w programowaniu, przestrzenie nazw się nie przecinają
+
+Lepiej używać słowa model niż Bounded Context
+
+np. zamiast Bounded Context optymlizacji projektu to lepiej powiedzieć model w konkteście optymalizacji projektu
+
+#### Model
+
+Tworzymy modele zorientowana na konkretny problem dla poddziedziny biznesowej
+
+**Model tworzymy pod kątem pytań, jakie chcemy postawić**
+
+np. model projektu ziemi będzie różny w zależności od potrzeb biznesowych
+
+W kodzie możesz tworzyć osobne modele per pytania biznesowe
+
+np. graf odpowiadan na pytanie co się może odbyć jednocześnie a co nie?
+
+#### Moduł
+
+W brażny IT czesto używamy słów ale nikt nie wie co one znaczą
+
+-   Moduł
+-   komponent
+-   Architektura
+
+-   Moduł
+    -   jednostka logicznego podziału kodu słuząca jako artekat wdrożeniowy
+    -   moduł jest samowystarczalny (ma swoje API i bazę danych lub część bazy danych)
+-   Moduł może zawierać w sobie reużwalne komponenty
+
+
+Każdy model zamykamy w osobnym module, technicznie mozę sie zdarzyć że ten sam model będzie zaimplementowany w kilku modułach
+
+
+#### Środowisko wdrożeniowe
+
+Często jedem moduł to jeden mikroserwis, ale czasami moze się zdarzyć że driver architektoniczny zachęca do zrobienia monolitu modułowego
+
+
+#### Dla Facilitatorów
+
+W jaki sposób się uczymy?
+
+Różne osoby w różny sposób uczą się, pewnie spodkasz każdy z tych typów podczas stormingu
+
+![typ_uczenia](./assets/typ_uczenia.png)
+
+Tutaj zachodzi cykl colba, czyli cykl uczenia się
+
+![cykl_colba](./assets/cykl_colba.png)
+
+
