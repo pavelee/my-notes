@@ -1221,6 +1221,8 @@ To jest znak ża należy wykonać rzetelną analizę jak działą biznes, zanim 
 
 Możesz uzyć User Story mapping
 
+![user_story_mapping](./assets/user_story_mapping.png)
+
 W tym mozna użyć zdzarzeń zamiast User Task i sortujesz je w względem priorytezacji implementacji
 
 #### Wycena
