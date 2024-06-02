@@ -1701,3 +1701,66 @@ Jeżeli będziesz to znał to możliwe że nawet będziesz mógł pominąć even
 Finalnie możesz zrobić event storming process level aby sprawdzić czy te modele są poprawne i czy może nie zgubliśmy jakiś wymagań.
 
 #### Domain Drivers szukają głównych pytań
+
+zrozumienie że są różne typy pytań
+
+-   single source od truth
+-   pytanie o jedno źródło prawdy które podlega regułom biznesowym
+    -   pytanie o to jaki zasóbj jest dostępny
+-   pytania która nie zmienają stanu
+    -   co by było gdyby (nie zmienia stanu, symulacja)
+-   jakie kolwiek inne pytania które są istotne dla biznesu
+
+    -   ile mam na stanie koparek które są wolne itp.
+
+-   Co istotnego chcą zobaczyć użytkownicy na ekranie? (UI)
+
+#### Ryzyko
+
+Pytanie o szacowane ryzyko?
+
+Osoba finlanie podejmuję decyzje ale chce mieć wszystkie informacje w jednym miejscu.
+
+Reguły często się zmiejają więc chcemy aby były spójne ze sobą
+
+-   Czy łamiemy reguły tworząc harmonogram?
+-   Które reguły powodują że harmonogram jest niemożliwy?
+
+Szukamy które pytania są tym samym ale w innym kontekście, to pozwala nam na podział modułów
+
+#### Symulacje
+
+Poprzez heurystykę pytań sprawdzamy zasadność modelu
+
+-   Chcemy wiedzieć jak potencjalnie może wyglądać projekt
+-   Jak potencjalnie nowy projekt wpłynie na ryzyko innych projektów
+-   Czy warto zamknąć inne projekty aby zrealizować ten projekt
+
+Czy istnieją sensowne pytania które wynikają ze złożenia dwóch modeli?
+
+Wykonanie zbyt wczesnego podziału przed analizą bottom-up może prowadzić do dużych modeli które są trudne do zrozumienia
+
+#### Dostępność
+
+Dostępność to typowy archetyp, zawsze jest dostępność w każdym systemie.
+
+Często się mówi że została wypromowana przez konferencję DDD, ale to jest tylko jeden z archetypów
+
+-   Kiedy będzie dostępny zasób?
+-   Kto załozył blokadę?
+
+Tutaj mamy pytania o single source of truth biznesowej informacji która się zmienia komenadami
+
+-   Jakie mamy zasoby? Jakie będą mieć umiejętności?
+
+-   Jaki jest plan projektu? Co następuje po czym?
+
+-   Jaki jest status projektu?
+
+Mozę być zdarzenie które jest środowiskowe które wyzwala tylko algorytm, nie wpływa na stan systemu
+
+#### Obecna mapa modeli
+
+Pamiętaj, Vertical slice to prawie zawsze zły pomysł, to zwykle łamie single source of truth
+
+### L04. Heurystyka: alternatywy w przebiegu procesu
