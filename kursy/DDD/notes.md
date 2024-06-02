@@ -1616,14 +1616,11 @@ W brażny IT czesto używamy słów ale nikt nie wie co one znaczą
     -   moduł jest samowystarczalny (ma swoje API i bazę danych lub część bazy danych)
 -   Moduł może zawierać w sobie reużwalne komponenty
 
-
 Każdy model zamykamy w osobnym module, technicznie mozę sie zdarzyć że ten sam model będzie zaimplementowany w kilku modułach
-
 
 #### Środowisko wdrożeniowe
 
 Często jedem moduł to jeden mikroserwis, ale czasami moze się zdarzyć że driver architektoniczny zachęca do zrobienia monolitu modułowego
-
 
 #### Dla Facilitatorów
 
@@ -1637,4 +1634,70 @@ Tutaj zachodzi cykl colba, czyli cykl uczenia się
 
 ![cykl_colba](./assets/cykl_colba.png)
 
+### L03. Heurystyka: główne pytania
 
+#### Zbliżenie analizy i architektury
+
+Jest to heurystyka która daje najwięcej wartości względem poświęconego czasu.
+
+-   Single Source of Truth
+    -   Musi istnieć jedno źródło prawdy odnośnie każdego ważnego pytania biznesowego
+        -   Mogą istnieć kopie tych źródeł ze względów wydajnościowych
+    -   Wszelkie zmiany stanu (command) muszą najpierw przejść przez to źródło prawdy
+
+Rozbicie tego źródła prawdy powoduje problemy w koordynaacji pracy. Problem może dojść do poziomu katastrofy w przypadku systemów rozproszonych
+
+##### Hurystyka głównych pytań
+
+-   Wpisz aktorów i aktory, którzy będą korzystać z systemu
+-   dla każdego z nich: zapisz na jakie pytania będą szukać odpowiedzi w systemie
+-   sprawdź czy pytania są istotne
+    -   w ilu miejscacj procesu są zadawane? (wpływają na proces)
+    -   jak często są zadawane?
+    -   czy wpływają na cele strategiczne?
+-   oznacz zdarzenia która wpływają na te pytania
+-   dowiedz się, które muszą być spójne atomowo
+
+![pytania_proces](./assets/pytania_proces.png)
+
+#### Jak zadawać pytania o atomość?
+
+Jak zadasz pytanie do biznesu które zdarzenia mają zajść atomowo?
+
+Dostaniesz pewnie odpowiedź:
+
+-   nie rozumiem co oznacza atomowość
+-   boje się energii atomowej
+-   wszystkie
+
+**Sposób jaki zadajesz pytania determunuje odpowiedź**
+
+**Najlepiej zadać pytanie o to co się stanie jak operacje będa od siebie oddalone w czasie, jakie będą skutki? (brak spójności)**
+
+Jeżeli biznes Ci odpowie że nie może tak być to znaczy że te dwa zdarzenia muszą być spójne atomowo! To oznacza że muszą zachodzić w jednym środowisku wykonawczym
+
+#### Jak odróżniać pytania?
+
+Przypisanie stałych pytań do zdarzeń jasno pokazuje że pewne osobne zespoły mogą pracować nad dokładnie tym samym pytaniem biznesowym, czyli wykonują taką samą pracę
+
+#### Niejawne poddomeny
+
+Taką metodą zadawania pytań możesz odkrywać niejawne poddomeny, możesz się zastanawiać czy do tego potrzebujesz osobnych bounded contextów (modeli)
+
+![evans](./assets/evans.png)
+
+#### Archetypy modeli biznesowych i wzorce analityczne
+
+Co w momencie jak bizesn nie potrafi zadać pytań? Lub po prostu nie mamy dostępu do biznesu?
+
+Tutaj może pomóc Literatura
+
+![literatura](./assets/literatura.png)
+
+Możesz przejżeć typowe archetypy i poszukać czegoś podobnego aby mieć dobre pytania biznesowe
+
+Jeżeli będziesz to znał to możliwe że nawet będziesz mógł pominąć event storming process level, dzięki dobrym pytaniom mamy gotowe poddomeny a potem już podziały achitektoniczne
+
+Finalnie możesz zrobić event storming process level aby sprawdzić czy te modele są poprawne i czy może nie zgubliśmy jakiś wymagań.
+
+#### Domain Drivers szukają głównych pytań
