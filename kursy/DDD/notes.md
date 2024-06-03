@@ -1764,3 +1764,31 @@ Mozę być zdarzenie które jest środowiskowe które wyzwala tylko algorytm, ni
 Pamiętaj, Vertical slice to prawie zawsze zły pomysł, to zwykle łamie single source of truth
 
 ### L04. Heurystyka: alternatywy w przebiegu procesu
+
+#### Myślenie procesowe vs Myślenie regułowe
+
+Każda organizacja dąży do stworzenia prcesu dlatego że procesy dają przewidywalność oraz powtarzalność
+
+Firmy dbają o procesy aby:
+
+-   zminimalizować ryzyko że stracą pracownika który wie jak coś robi
+-   mogą zastąpić pracownika innym, szczególnie drogich ekspertów
+
+Proces powinnien być szczególnym przebiegiem przez nasze komponenty
+
+Co jest pierwsze proces czy reguły?
+
+Zwykle pierwsze reguły, np. ograniczenia prawne, regulacyjne. Następnie na nie nakładamy sekwencje czasowe, po to aby pracownicy którzy rozumieją powiązania pomiędzy pracownikami nie byli potrzebni
+
+Dlaczego zaczynamy analize od procesów?
+
+-   zaczynamy od miejsc gdzie już są procesy lub się skrystalizują
+-   nasi rozmówcy zwykle są przyzwyczajeni do rozmów o procesach
+
+Co się cześciej zmienia? Procesy czy reguły?
+
+Raczej to procesy, reguły są zwykle stałe
+
+Czasami nawet jest zmiana procesów tylko po to aby pokazać pracownikom kto tutaj teraz rządzi (nowy zarząd)
+
+![reguly](./assets/reguly.png)
