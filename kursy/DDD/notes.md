@@ -1792,3 +1792,113 @@ Raczej to procesy, reguły są zwykle stałe
 Czasami nawet jest zmiana procesów tylko po to aby pokazać pracownikom kto tutaj teraz rządzi (nowy zarząd)
 
 ![reguly](./assets/reguly.png)
+
+Procesowe reguły mogą się zmieniać, ale zwykle są one związane z regułami biznesowymi
+
+Zdefiniowane procesy do konkretne użycie systemu oraz przejście przez zdefiniowane reguły
+
+#### Heurystyka: Alternatywne wejścia do procesu
+
+Świetna heurystyka która służy też jako walidator modeli i procesów
+
+![proces_alternatywa](./assets/proces_alternatywa.png)
+
+-   Sprawdzaj czy są alterantywne wejścia do każdedej z komend
+    -   np. dojście do zakupu z pomnięciem koszyka
+-   Sprawdzaj tam gdzie mamy zbiór wydarzeń
+    -   możliwe że wydarzy się tylko podzbiór tych zdarzeń (z powodu wejścia z innego procesu)
+        -   blokujemy towary bo ktoś je dostał gratis z innego procesu
+
+#### Generyczne poddomeny
+
+![proces_poddomena](./assets/proces_poddomena.png)
+
+W przypadku kiedy kilka procesów zbiera się do jednej grupy zdarzeń, to znaczy że mamy do czynienia z generyczną poddomeną. Sprawdź heurystyką głównych pytań czy nie pomineliście gdzieś źródła prawdy
+
+#### Konsekwencja dla Architektury
+
+API modułu powinno być na tyle ogólne aby inne procesy mogły z niego korzystać
+
+Jeżeli nie odkryjesz tego że są inne procesy którę mogą uderzać do komendy może to spowodować że inne procesy będą musiały korzystać z API które nie jest generyczne, np. wymaga obiektu zamówienia
+
+Jest to wtedy sytuacja upstream - downstream, gdzie poddomena jest upstream i wymusza na innych procesach korzystanie z API które nie jest generyczne
+
+Finalnie taka heurystyka powinna naś prowadzić do mapwania open hostów
+
+#### Heurystyka: alternatywne wejścia z pod-procesu
+
+Analogicznie co do szukania wejśc od procesu powinniśmy szukać alteratywnych wyjść z podprocesu
+
+![wyjście_porprocesy](./assets/wyjście_porprocesy.png)
+
+Tutaj nie chodzi o zakończenie procesu z powodu błędu ale rozgałęzienia które są wartościowe dla biznesu
+
+Zapytaj czy po tym widoku musi być wykonana taka sama komenda?
+
+Np. czy po wygnenerowaniu oferty zawsze musi nastąpić jej zatwierdzenie? Nie chodzi o to że użytkownik coś musi zrobić ale że ma taką możliwość
+
+Możesz też zapytać: Czy procesy mogą się wykonać częściowo?
+
+#### Konsekwencja dla architektury
+
+Podobnie jak z poprzednia heurystyką prawdopobnie odkryliśmy osobną poddomenę i upewniamy się czy na pewno mamy jedno źródło prawdy
+
+![wyjscie_z_procesu](./assets/wyjscie_z_procesu.png)
+
+Wyjście z procesu w przypadku rozcięcia powinno być uniwersalne
+
+Widok rozumiemy jak zwracane dane z powodu wykonania kwerendy
+Komenda to rozmiemy jako zapytanie do moduły które nie zmienia jego stanu
+
+#### Heurystyka: wejścia i wyjścia
+
+![wejscie_wyjscie](./assets/wejscie_wyjscie.png)
+
+Może być tak że mamy wiele alternatywnych wejść i wyjść
+
+W takim przypadku mamy już bardzo jasno widoczny podzia na poddomeny.
+
+Problemem jest to że nie możemy powiedzieć która strona jest upstream a która downstream
+
+-   Strategia dla równoważnych podprocesów
+    -   opracowanie modelu pośredniego (publish langauge)
+    -   dodanie nowej poddomeny orkiestrującej proces (orchestration domain)
+
+#### Heurystyka: Wszystko wpływa na wszystko
+
+![wszystko_wszystko](./assets/wszystko_wszystko.png)
+
+W takim przypadku kiedy reguły biznesowe ulegną zmianie to 6 zespołów musi koordynować swoją pracę
+
+Jeżeli widzisz taką sytuacje to prawdobonie pominąłeś domenę pomiędzy nimi  
+
+![wszystko_wszystko_1](./assets/wszystko_wszystko_1.png)
+
+Możesz znaleść pomoc w książkach aby wyjśc z takiej sytuacji
+
+![literatura_podprocesy](./assets/literatura_podprocesy.png)
+
+#### Konsekwencja dla architektury
+
+Bez odkrycia scoringu mielibyśmy orgie mikroserwisów oraz paraliż zmian w zespołach
+
+Użycie scoringu po środku daje Ci możliwość oparcai się o event sourcing i podrożowanie w czasie
+
+#### Porady dla Facilitatorów
+
+Często jest obawa o pytanie o alternatywne wejścia i wyjścia jako że biznes może to odbierać jako zbyt skomplikowane
+
+Użycj sprawdzonej struktury aby nie być odebrany jako naciągający
+
+Po to aby KORZYSC_DLA_KLIENTA
+potrzebujemy zrobić AKTYWNOŚĆ
+
+np. po to aby użyć gotowych rozwiązań z rynku potrzebuje zadać teraz pytanie o alternatywne wejścia i wyjścia
+
+Pytania służą do zebrania punktów swobody modelu aby dobrać gotowe rozwiązanie
+
+#### Domain Drivers szukają alternatywnych przebiegów
+
+Zwykle jak zadasz dobre pytania to ta hurystyka tylko potwierdzi że dobrze zaprojektowałeś modele
+
+### L05. Heurystyka: Pivotal Events
