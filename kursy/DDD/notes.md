@@ -1870,7 +1870,7 @@ Problemem jest to że nie możemy powiedzieć która strona jest upstream a któ
 
 W takim przypadku kiedy reguły biznesowe ulegną zmianie to 6 zespołów musi koordynować swoją pracę
 
-Jeżeli widzisz taką sytuacje to prawdobonie pominąłeś domenę pomiędzy nimi  
+Jeżeli widzisz taką sytuacje to prawdobonie pominąłeś domenę pomiędzy nimi
 
 ![wszystko_wszystko_1](./assets/wszystko_wszystko_1.png)
 
@@ -1902,3 +1902,47 @@ Pytania służą do zebrania punktów swobody modelu aby dobrać gotowe rozwią
 Zwykle jak zadasz dobre pytania to ta hurystyka tylko potwierdzi że dobrze zaprojektowałeś modele
 
 ### L05. Heurystyka: Pivotal Events
+
+Podczas event stormingu mogły się trafić zdarzenia którę dają wrażenie kamieni milowych dla procesu
+
+-   Pivotal Events
+    -   nie jest łatwo wycofać
+        -   zwykle okazuje się że jest osobny podproces wycofania
+    -   pojawia się zmiana typu
+        -   ![zmiana_typu](./assets/zmiana_typu.png)
+        -   warto stworzyć osobne modele ponieważ będą miały zupełnie inne reguły operacyjne
+        -   inne operacja na każdym z tych modeli
+        -   **zrobienie tego w jednym modelu spowoduje że stracimy wyrazistość modelu**
+        -   może też spowodować że nie będziemy mogli zrobić alternatywnych wejść i wyjść
+        -   to też prowadzi że np. w procesie porówniania ofert też będziemy operować na obiekcie order
+
+Pivotal events wydzielają granice pomiędzy poddomenami
+
+Używając tej heurystyki modelujemy "becoming" czyli zmiana istoty rzeczy, w praktyce lepiej jest to zrobić jako osobne klasy bo nie musimy walczyć z wielkimi klasami
+
+#### Uwagi dla Facilitatorów
+
+Zaczynamy od tej heurystyki kiedy chcemy modelować stan TOBE
+
+Jak zrobisz analizę AS IS to możesz na końcu poprosić o wskazanie zdzarzeń pivotalnych, jeżeli tego biznes nie rozumie to poproś o wskazanie zdarzeń które jest ciężko wycofać
+
+Następnie zadaj pytania:
+
+-   Czym operujemy przed, a czym po tym zdarzeniu?
+-   Czy zmieni się struktura danych?
+-   Czy te struktury mogą być użyte w innych procesach?
+
+Możliwe że taka analiza wskazę alternatywne wejścia i wyjścia
+
+#### Drivers Demo
+
+Warto zwrócić uwagę na modele którę mają bardzo dużo zdarzeń, szczególnie takich które są niezależne od siebie
+
+Jeżeli coś się nazwywa managment to zwykle jest to "worek" na wszystko
+
+![pivot](./assets/pivot.png)
+
+![after_pivot](./assets/after_pivot.png)
+
+### L06. Heurystyka: Capability vs Produc
+
