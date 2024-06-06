@@ -1944,5 +1944,54 @@ Jeżeli coś się nazwywa managment to zwykle jest to "worek" na wszystko
 
 ![after_pivot](./assets/after_pivot.png)
 
-### L06. Heurystyka: Capability vs Produc
+### L06. Heurystyka: Capability vs Product
+
+#### Topolgie zespołów
+
+![team_topology](./assets/team_topology.png)
+
+-   Zespoły nastawione na produkty (product)
+    -   czyli na to co możesz sprzedać
+-   Zespoły nastawione na zdolności (capability)
+    -   reużywalne moduły platformowe
+
+
+Żadna z tych topologii nie zadziałą jeżeli nie są dobrze wydzielone niezależne moduły i konteksty
+
+Najlepiej połaczyć obie te topoogie
+
+#### Konteksty procesowe i zasobowe
+
+Jeżeli mamy styk dwóch poddomen to możemy je zintegrować poprzez:
+
+-   komunikacja zdarzeniami w modelu publish language
+-   koordynator procesu pomiędzy dwoma poddomenami
+
+Nie chcemy aby domeny generyczne wiedziały jakie są kolejene kroki w procesie
+
+-   Bo mogą brać udział w wielu procesach
+-   Bo z tego powodu przestaną być generyczne
+
+Potrzebujemy nadrzędnych dziedzin które będą koordynować procesy, mają w sobie stan procesu oraz etapy procesu
+
+![controller](./assets/controller.png)
+
+Domeny procesowe biorą na siebie odpowiedzialność której nie chcemy mieć na poziomie generycznych domen
+
+#### Dla Facilitatorów
+
+Aby spradzić czy domena generyczne jest naprawdę generyczna to musimy sobie odpowiedzieć na pytanie:
+
+Czy jeśli bym zamknął tą domene generyczną w innym module to czy znaleźli by się chętni aby ją kupić?
+Czy taka domena ma wartość sama w sobie?
+
+W ten sposbó też sprawdzamy potencjał produktyzacjny
+
+Domeny produktowe dają możliwość niezależnej pracy zespołów, możliwość eksperymentowania w niezależny sposób
+
+Wydzielenie wspólnych capability umożliwa ujednolicenia UX, innowacje na poziomie całego biznesu
+
+#### Demo Drivers
+
+[DD_M05L06_MAPA_MODELI](./assets/DD_M05L06_MAPA_MODELI.png)
 
