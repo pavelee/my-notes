@@ -1955,7 +1955,6 @@ Jeżeli coś się nazwywa managment to zwykle jest to "worek" na wszystko
 -   Zespoły nastawione na zdolności (capability)
     -   reużywalne moduły platformowe
 
-
 Żadna z tych topologii nie zadziałą jeżeli nie są dobrze wydzielone niezależne moduły i konteksty
 
 Najlepiej połaczyć obie te topoogie
@@ -1994,4 +1993,36 @@ Wydzielenie wspólnych capability umożliwa ujednolicenia UX, innowacje na pozio
 #### Demo Drivers
 
 [DD_M05L06_MAPA_MODELI](./assets/DD_M05L06_MAPA_MODELI.png)
+
+### L07. Uwagi i pułapki sub-domen
+
+Mamy typowe porblemy i pułapki które możemy spotkać podczas analizy subdomen
+
+#### Prawo conway'a i dryft architektoniczny
+
+"Architektura systemu jest pochodną szlaków komunikacyjnych w organizacji"
+
+Jeżeli znajdziesz subdomeny które nie mapują się na działy w organizacji (a tak może być) to musisz wziąść pod uwagę kilka kwestii:
+
+-   Ownership - kto będzie właścicielem odkrytych generycznych subdomen?
+    -   rozwiązaniem jest tutaj transparentna mapa kontekstów
+
+#### Role
+
+Wiązanie się na reguły jest błędne ponieważ role się zmieniają w czasie a kod za tym nie będzie nadążał
+
+#### Splątanie na UI
+
+Interfejs graficzny zmienia się najczęściej, nie powinien być powiązany z logiką biznesową. Często UI wyświetla dane z różnych domen, to może kusić aby tak projektować architekturę. Ale jeśli zmieni się projekt pod kątem UX?
+
+#### Archetypy
+
+Warto zapoznać się z gotowymi archetyami aby nie wymyślać koła na nowo
+
+#### Kiedy nie szukać poddomen?
+
+Nie powinniśmy na siłe szukać poddomen, jeżeli nie ma potrzeby to nie szukajmy
+
+### L08. Destylacja kontekstów: dwukierunkowa analiza lingwistyczna
+
 
