@@ -2025,4 +2025,223 @@ Nie powinniśmy na siłe szukać poddomen, jeżeli nie ma potrzeby to nie szukaj
 
 ### L08. Destylacja kontekstów: dwukierunkowa analiza lingwistyczna
 
+#### Bounded Context
+
+Jeżeli nie znajdziemy subdomeny to nie znaczy że ona znikneła, po prostu będzie zaimplementowana jako statusy na bazie czy plątanina pomiędzy modułami.
+
+Zawsze chcemy budować modele odpowiednie do klasy problemu.
+
+Modele mają sens tylko w jasno określonych kontekstach czyli tzw. Bounded Context
+
+Poddomeny odrywamy ale Bounded Contexty wymyślamy
+
+Lepiej używam słowa model niż Bounded Context, jest to często lepiej zrozumiałe dla biznesu
+
+#### Różnice pomiędzy Bounded Contextami a poddomenami
+
+DDD powstało wtedy kiedy orgainizacje jeszcze nie były przesięknięte IT, w tamtych czasach mapowanie poddomen z technicznymi rozwiązaniami były nieodzowne
+
+W większości aktualnych książek jest pomijane odkrywnie ukrytych poddomen, nie znajdziesz u nich heurystyk jakie do tej pory ćwiczyliśmy.
+
+Jeżeli nie odkryjesz ukrytych poddomen będzie konieczność silnego wiązania pomiędzy poddomenami a bounded contextami
+
+Szukamy generycznych poddomen tak aby stały się automatycznymi kontekstami dla wyspecjalizowanych modeli
+
+Dlatego jest propozycja aby uprościć język i po prostu mówić o osobnych modelach zamiast Bounded Contextów, a nawet lepiej autonomicznych modelach, o modelach wyspecjalizowanych do rozwiązawania konkretnych zadań.
+
+Natomiast istotne jest zapoznanie się z tymi terminami używanymi w książkach aby jednak zachować zdolność komunikacji z osobami które znają te terminy i czytały książki
+
+#### Cel tworzenia modeli dziedzin
+
+Modele nie są odzwierciedleniem rzeczywistości, a tylko reprezentacją wycinka potrzebego do rozwiązania problemu
+
+-   Cel tworzenia modeli dziedzin
+    -   płaszczyzna komunikacji
+        -   komunikacja z expertami dziedzinowymi, którzy wiedzą jak działa biznes lub chcą się dowiedzieć
+        -   reprezentacja modelu musi być czytelna dla
+    -   baza wiedzy
+    -   narzędzie do zadawania pytań
+    -   narrzędzie do walidacji pomysłów
+    -   projekt do implementacji
+        -   na tym nam najbardziej zależy
+        -   chcemy aby model był implementowalny
+        -   aby implementacja spełniała drivery architektoniczne
+        -   dobieramy modele tak aby pisanie kodu było przyjemne i łatwe do zrozumienia
+
+W sekcji techniczej zajumujemy się każdym modelem z osobna, ale najpierw musimy znaleść dobre granice pomiędzy modelami
+
+![problem_solution_space](./assets/problem_solution_space.png)
+
+reguła kciuka - na pewno każda generyczna subdomena to osobny bounded context, chcemy aby model w takiej to niezależnej subdomenie był traktowany jako capibility w naszej architekturze, czyli był zamknięty w reużywalne komponenty
+
+Domeny procesowe które są planowane jako osobne produkty, warto stworzyć osobne konteksty i zapewnić niezależność prac
+
+Najlepsza prosta rada: założ na początku że każda poddomena to osobny bounded context, podczas destylacji kontekstów będiemy weryfikować to założenie
+
+Po weryfikacji może się okazać że kilka modeli jest tak podobnych do siebie że nie ma sensu ich rozdzielać, w takim przypadku mogą być w jednym kontekście
+
+Zbytnio naiwne połączneie kilku modeli moze spowdować "kule błota", kosztem zaoszczędzenia kilku godzin pracy możemy stracić kilka miesięcy na debugowaniu
+
+#### Jedyną stałą jest zmiana
+
+**Zawsze zakładamy że granice kontekstów ulegną zmianie.** Dowiemy się czegoś nowego lub biznes się zmieni.
+
+Są techniki którę pozwalają przenosić funkcje, klasy pomiędzy kontekstami.
+
+**Kluczem jest świadome zarządznie caplingiem**
+
+#### Wieloznaczności vs uogólnienia
+
+Destylacja kontekstów to pozbywanie się elementów które nie są istotne z punktu modelowania.
+
+Pierwszym poziomem destylacji kontekstu jest analiza lingiwstyczna. Niektóre słowa są wieloznaczne w biznesie.
+
+![wieloznacznosc](./assets/wieloznacznosc.png)
+
+np. zasób jest dodawany do planowania ale również zasób jest w kontekście utrzymania. Co istotne że w każdym z tych kontekstów model będzie się różnił. Potrzbujemy inne dane oraz inne reguły. **Jedynie ID będzie takie samo.**
+
+Na pozimie rozwiązania będziemy mieć różne klasy resource. W praktyce dobrze jest dodać prefixy dla tych klas np.
+
+-   PlanResource
+-   MaintenanceResource
+
+Ktoś mógłby powiedzieć że możemy zsumować pola w jedej klasie ze wszystkich kontekstów. Pierwszym problem jaki napotkasz to będzie "wyścig" commitów.
+
+Gra commitów to gra która polega na tym że kto pierwszy wykona push idzie do domu a reszta się merguje.
+
+Właśnie po to się osobne bounded contexty aby pokazać że te rzeczowniki oznaczają coś innego w różnych kontekstach.
+
+#### Scenka rodzajowa #1
+
+Może się zdarzyć że ktoś opowiadając o obiekcie powie różne sprzecze rzeczy np. raz dokument ma jeden status a raz inny.
+
+**Co istotne należy pamiętać aby zacząć rozmawiać o zachowaniach**, ale to co jest pewne w tym momencie mamy do czynienia z innymi kontekstami.
+
+![konteksty](./assets/konteksty.png)
+
+Czyli możemy założyć że jak się coś takiego zdarzy to pewnie ekspert dziedzinowy mówi tym samym rzeczownikiem o dwóch różnych rzeczach.
+
+#### Scenka rodzajowa #2
+
+```
+np. "Jako manager, chce dodać nowe ogłoszenie, po to aby moi klienci mogli je kupić"
+
+Definiuje wówczas kategorie i cenę oraz parametry: częstość emisji
+
+Mogę zmienić kategorie i wpływa to na już sprzedane ogłoszenia, chyba że zostały wydrukowane, to wtedy nie.
+
+Mogę zmienić częstotliwość, ale już to nie wpływa na już sprzedane ogłoszenia.
+
+Jako pracnik HR chce kupić ogłoszenie, po to aby pojwilo się w gazetach, socjalach itp.
+
+Czasem chce zmienić częstotliwość emisji, o ile nie przekroczy to mojego budżetu
+```
+
+Takie wymagania często prowadzą do tego że mamy mase ifów i kombinatorykę przypadków testowych.
+
+![konktekst_rozwiazanie](./assets/konktekst_rozwiazanie.png)
+
+Wystarczy pół godziny analizy poddomen, aby znaleśc rozwiązanie:
+
+-   Szablony ogłoszeń
+-   Produkt handlowy
+    -   tym handlujemy
+-   Drukowanie produktu
+    -   to co już się wydarzyło
+
+![archetypy_kontekst_rozwiazanie](./assets/archetypy_kontekst_rozwiazanie.png)
+
+Rozwiązanie z użyciem archetypów z książki:
+
+-   Szablon produktu
+-   Instancja produktu
+-   Zamówienie
+
+#### Wieloznaczność vs uogólnienia - ciąg dalszy
+
+w książkach DDD zwykl znajdziesz informacje o usuwaniu wieloznaczności jako destylacje kontekstów
+
+W każdym kontekście może istnieć dowolna ilość klas i funkcji
+
+![slowo_kontekst](./assets/slowo_kontekst.png)
+
+-   Techniki generalizacji
+    -   uogólnienie - pozbycie się szczegółów
+        -   np. w systmie faktorowych faktura i zamówienie to może być dla nas Dokument który jedynie co nam potrzebne do jego ID i data utworzenia. Tworzymy częśc współną która jest nam potrzebna.
+    -   wyabstrahowanie - wyłonienie istotnych szczegółów
+        -   jest to trudniejsze niż uogólnienie
+        -   szukamy nowych pojęć których nie było w puli pojęć konkrentych
+        -   ![wiele_slow_kontekst](./assets/wiele_slow_kontekst.png)
+        -   dochodzimy do sytuacji kiedy wiele słow ma takie samo znacznie w jednym kontekście
+            -   **Wiele rzeczy jest nierozużnialna od siebie w pewnym kontekście**
+        -   np. w kontekście planowanie nie musimy rozróżniać od siebie zasobu ludzi, maszyn itp. to co robimy to wyabstrahujemy to co jest istotne w kontekście planowania czyli dostępność oraz zdolności
+        -   zdolność wyabstrahowania nie jest powszechna wśród programistek i programistów oraz analityków. Da się ukończyć kursy czy studia bez tej zdolności.
+        -   można to robić poprzez różne techniki proceduralne, tak aby sobie poradzić bez dobrej znajomości domeny
+    -   zmiana reprezntacji
+
+Pozbywanie się nieistotnych szczegółów czyli takich które nie mają wpływu na modelowany problem
+
+#### Destylacja kontekstów
+
+Musimy znaleść zdarzenia które wpływają na zmianę stanów, które to znajdują odpowiedź na główne pytania. Wiemy też które komendy wpływają na tą odpowiedź, te które są inicjatorem tych właśnie zdarzeń
+
+Na przykładnie kontekstu dostępności
+
+Chcemy odpowiedź na pytanie czy zasób jest dostępny w jakimś okresie czasu
+
+![komendy_zdarzenia](./assets/komendy_zdarzenia.png)
+
+zbieramy komendy i zdarzenia które odpowiadają na te pytania.
+
+Na poziomie implementacji komendy nie muszą być implementowane zgodnie z wzorcem command handler, mogą to być po prostu service
+
+zdarzenia to też nie muszą eventy publikowane na publishera, wystarczy nawet zmiana pola na bazie danych.
+
+Często się zdarza że prowadzimy event storming z ludzmi nie zdolnymi do abstrahowania, używali słów konkretnych. Nam modelarzom nie wolno zerwać cienkiej linii porozumienia. Nie powinniśmy ich zarzucać pomysłami na generyczne abstrakcje.
+
+Czas na abstrahowanie jest podczas budowania mapy kontekstów.
+
+###### Destylacja
+
+destylacja może polegać na pozbyciu się nie potrzebnych informacji.
+
+Np. jednynie co nas interesuje to zapisanie właściciela blokady i na ile czasu
+
+![destylacja](./assets/destylacja.png)
+
+Zdarzenie które jest parafrazą komendy są dosyć normalne w prostych modelach
+
+Przeciekanie kontekstu jest wtedy kiedy zaprosisz do kontekstu kogoś z innego kontekstu i zmiany z temtego kontekstu kaskadowo wpływają na inne konteksty
+
+Finalnie powinna być zgoda archtektury z analizą, jeżeli mamy kontekst np. availibility to zapewne powinniśmy to wydzielić jako osobny moduł czy nawet mikroserwis
+
+Architekt często może mieć problem z tym że nie zna głównych pytań biznesowych. Analityk może je znać ale brakuje mu zrozumienia techniczych aspektów co powoduje błędy przy próbie zaprojektowania modelu.
+
+Dlatego istotna jest rola modelarza który integruje te dwa światy.
+
+#### Demo Storming
+
+Jeżeli mamy projekt w wielu kontekstach to prawdobonie na poziomie taktycznym będzie można to wyabstrahować do czegoś bardziej pasującego do tego kontekstu (zamisat projektu)
+
+np. pracownik i koparka mogą być tym samym w jednym kontekście a winnym zupełnie czymś innym
+
+np. dostępność i zasoby nie muszą odróżniać od siebie ludzi od maszyn
+
+np. mieć specyficzny kontekst per typ zasobu
+
+![budowanie_kontekstu](./assets/budowanie_kontekstu.png)
+
+#### Drivery architektoniczne w destyFlacji kontekstów
+
+-   Dodatkowe heurystyki
+    -   Spójność heurtystyki (to co musi się zmieniać razem, musi być w jednym miejscu). Czyli znajdnować się w jednym kontekście. 
+    -   SLA (kiedy integrujesz wiele modułów, to aby wyliczyć SLA, musisz je pomnożysz przez siebie)
+    -   wspólne dane (wystarczą Ci read modele), czyli dodatkowy kontekst
+    -   Single Point of Failure (więcej strzałek - większe ryzyko)
+    -   Zależności dwukierunkowe (wiadomix)
+    -   Antywymagania (czego na prawdę nie chcemy lub nie możemy)
+
+**Rolą projektana jest redukcja możliwych decyzji których zmiana jest kosztowna**
+
+### L09. Podsumowanie odkrytych modeli 
 
