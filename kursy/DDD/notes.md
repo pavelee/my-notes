@@ -2234,7 +2234,7 @@ np. mieć specyficzny kontekst per typ zasobu
 #### Drivery architektoniczne w destyFlacji kontekstów
 
 -   Dodatkowe heurystyki
-    -   Spójność heurtystyki (to co musi się zmieniać razem, musi być w jednym miejscu). Czyli znajdnować się w jednym kontekście. 
+    -   Spójność heurtystyki (to co musi się zmieniać razem, musi być w jednym miejscu). Czyli znajdnować się w jednym kontekście.
     -   SLA (kiedy integrujesz wiele modułów, to aby wyliczyć SLA, musisz je pomnożysz przez siebie)
     -   wspólne dane (wystarczą Ci read modele), czyli dodatkowy kontekst
     -   Single Point of Failure (więcej strzałek - większe ryzyko)
@@ -2243,5 +2243,21 @@ np. mieć specyficzny kontekst per typ zasobu
 
 **Rolą projektana jest redukcja możliwych decyzji których zmiana jest kosztowna**
 
-### L09. Podsumowanie odkrytych modeli 
+### L09. Podsumowanie odkrytych modeli
+
+Po odkryciu modeli powinno się przejść do szukania relacji pomiędzy modelami
+
+Istotne aby przed tym krokiem zweryfikować czy z tym modeli możemy odtworzyć proces jaki zachodzi w biznesie
+
+![mapa_modeli_1](./assets/mapa_modeli_1.png)
+
+Co istotne w trakcie developmentu pojawią się koordynatory modeli, ale co najważniejsze trzeba sprawdzić czy z tymi modeli możemy odpowiedzieć na pytania jakie będą zadawane w trakcie procesu
+
+Sprawdzamy przepływ sterowania, czyli jakie komendy są wywoływane w odpowiedzi na zdarzenia
+
+Finalnie chodzi nam o to aby sprawdzić czy nie mamy tutaj ryzyka że to zupełnie nie zadziała, jeżeli tak to trzeba wrócić do analizy
+
+## Moduł 06 - Mapa Autonomicznych Modeli
+
+### L01. Modularyzacja bez mapowania - czyli wyszło “jak zwykle”
 
