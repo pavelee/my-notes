@@ -2261,3 +2261,15 @@ Finalnie chodzi nam o to aby sprawdzić czy nie mamy tutaj ryzyka że to zupełn
 
 ### L01. Modularyzacja bez mapowania - czyli wyszło “jak zwykle”
 
+Nie ma znaczenia jak bardzie jesteś kumaty, nie ma szans abyś wszystko przewidział.
+
+#### Przypomnienie
+
+Problem się pojawia jak logika zaczyna się pojawiać wielkotornie w wielu modułach, szczególnie jeśli jest źródło prawdy na dosyć istotne pytanie biznesowe
+
+![mozliwosci_rozwiaznia_problemu_dry](./assets/mozliwosci_rozwiaznia_problemu_dry.png)
+
+#### Zawężanie stokżka możliwości
+
+
+
