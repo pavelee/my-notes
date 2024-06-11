@@ -2271,5 +2271,35 @@ Problem się pojawia jak logika zaczyna się pojawiać wielkotornie w wielu mo
 
 #### Zawężanie stokżka możliwości
 
+Potrzebne metryki porównawczne i następnie wybranie samego rozwiązania
 
+#### Modularyzacja to nie koniec
 
+To co było częstym problem modularyzacji to zapominanianie o tym że poszeczególne modele nie żyją w izolacji, zawsze się jakoś mapują, integrują ze sobą.
+
+-   pierwsze rozwiąznie - problem z wyciekiem danych i jednym źródłem prawdy
+-   drugie rozwiązanie - problem z kierunkiem przypływu danych, co jeśli chielibyśmy je odwrócić?
+-   czwarte rozwiązanie - problem z odpowiedzialnością za nowy byt, kto jest odpowiedzialny za nowy byt który pojawił się w wyniku integracji
+-   piąte rozwiązanie - jest ok, ale może troche mniej optymalne
+-   trzecie rozwiązanie - jest ok, ale może być mniej rozwojowe z powodu braku danych w alokacji na temat np. prawnych
+
+Zawsze zapisuj ADR (Architecture Decision Record) aby później wiedzieć dlaczego coś zrobiliśmy. Rozwiązanie może się jeszcze zmienić.
+
+Zawężamy stożek możliwości:
+
+-   patrzymy na potencjalne wyciekanie szczegółów implementacyjnych
+-   patrzymy na przeciekanie danych pomiędzy modelami
+-   patrzymy czy potencjalnie zduplikowana logika jest zmienna
+-   patrzymy który model ma się do którego dostosować
+    -   jeżeli mamy dwa modele to opcje są trzy
+        -   kompletnie niezależne od siebie
+        -   wzajemnie zależne od siebie
+        -   upstream - downstream, czyli albo jeden model jest zależny od drugiego albo odwrotnie
+-   patrzymy na liczbę zespołów pracujących
+-   patrzymy na atrybuty jakościowe
+    -   wynikają z obciążenia
+    -   specyfiki wdrożenia systemu
+
+Dużo tutaj było mówione o czymś co nazywamy mapą kontekstów
+
+### L02. Mapa Kontekstów (Mapa Zależności Między Modelami) - Twój najważniejszy artefakt
