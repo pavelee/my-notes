@@ -2285,6 +2285,8 @@ To co było częstym problem modularyzacji to zapominanianie o tym że poszeczeg
 
 Zawsze zapisuj ADR (Architecture Decision Record) aby później wiedzieć dlaczego coś zrobiliśmy. Rozwiązanie może się jeszcze zmienić.
 
+![relacja](./assets/relacja.png)
+
 Zawężamy stożek możliwości:
 
 -   patrzymy na potencjalne wyciekanie szczegółów implementacyjnych
