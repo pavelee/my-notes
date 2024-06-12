@@ -2305,3 +2305,101 @@ Zawężamy stożek możliwości:
 Dużo tutaj było mówione o czymś co nazywamy mapą kontekstów
 
 ### L02. Mapa Kontekstów (Mapa Zależności Między Modelami) - Twój najważniejszy artefakt
+
+Mapa kontekstów główny artedakt strategicznego DDD
+
+![mapa_kontekstów](./assets/mapa_kontekstów.png)
+
+Najlepiej to nazywać:
+
+**Mapa zależności pomiędzy modelami tworzonymi w kontekście rozwiązywania konkretnych problemów**
+
+Mapa kontekstów oraz mapa modeli jest używane wymiennie
+
+Mapa służy do komunikacji pomiędzy techniczymi i nie technicznymi osobami
+
+**Co istotne pilnuj aby wszystkie decyzje architektocznie były podejmowane przy tej mapie**
+
+### Propagacja modelu
+
+-   propagacja struktur
+    -   w systemie brak enkapsulacji struktur powoduje problematyczne sprzężenie
+-   propagacja odpowiedzialności
+-   propagacja źródła prawdy
+    -   dwa modele zaczynają odpowiadać na to samo pytanie
+    -   w momencie jak dwa modele odpowiadają na to samo pytanie to prowadzi do problemów z rozwojem systemu
+    -   uniknięcie sytuacji joinów po mikroserwisach
+    -   znając źródła odpowiedzi na pytania wiesz kto, kogo, o co i po co pyta, to zawęża stożek możliwości komunikacji pomiędzy modelami
+
+Aby dobrze podzielić system trzeba podjąc decyzje o kierunkach i formach zależności pomiędzy modelami
+
+-   mapa kontekstów (mapa modeli)
+    -   kluczowe narzędzie każdego modelarza
+    -   pomaga zrozumieć zależności pomiędzy modelami i zespołami
+    -   pokazuje jak różne części systemu czy organizacji współpracują ze sobą, kto od kogo zależy i jak ta zależność wygląda
+
+### Po co mi mapa modeli?
+
+Sama modularyzacja nie wystarczy aby utrzymać sensowną architekturę
+
+-   Po co mapa modeli?
+    -   ujawnia, od jakich usług zależy konkretne rozwiązanie oraz kto zależy od danego zespołu czy usługi
+    -   pomaga w indentyfikacji wąskich gardeł i ryzyk
+    -   dokumentuje decyzje, pomaga wdrażać nowy zespół w system
+        -   może być też artefaktem dokumentującym na przykład event storming procesowy
+    -   waliduje pomysły
+        -   product owner widzi co może jeszcze zbudować z obecnych elementów systemu
+        -   pokazuje capability co może się przekładać na nowe produkty
+
+Pojęcie mapa kontekstów sugeruje modelujemy modele i pojęcia z naszych kontekstów
+
+![konteksty1](./assets/konteksty1.png)
+
+Na takiej mapie widać relacje pomiędzy modułowe, widać relacje pomiędzy zespołami. Czy na przykład moduły o sobie wiedzą lub zupełnie nie wiedzą.
+
+To bardzo ważny element bo on potem wpływa na pracę programistów i utrzymanie systemu.
+
+Tylko mapa modeli wyłapuje dysfunkcje które są niewidoczne lub są słabo widoczne na samej liście modułów. Na liście nie ma relacji tylko same moduły.
+
+![problem_mapy](./assets/problem_mapy.png)
+
+Mapa np. pokazuje że dwa konteksty są zbyt mocno ze sobą powiązane, odpowiadają na te same pytania, co prowadzi do problemów z rozwojem systemu. Co prowadzi do rozmycia odpowiedzalności, nie wiadomo kto ma implementować nowe funkcje.
+
+Dodatkowo silne sprzężenie zespołów i potrzebe ciągłego koordynowania pracy pomiędzy nimi.
+
+-   Mapa modeli wykrywa
+
+    -   przenikanie informacji
+    -   makiawelizm (ktoś jest zbyt mocno zależny od kogoś)
+    -   niezdrowe zależności zespołowe
+        -   np. ważna funkcja w zespole jest blokowana bo czekamy na jakieś API
+
+-   sposoby współpracy które pokazuje mapa modeli
+    -   niezależne (free)
+    -   wzajemnie zależme (mutally dependent)
+    -   upstream - downstream (jeden zależy od drugiego)
+
+Problem z mapami z książek jest taki że zwykle jest przydatna dla kogoś kto już dobrze zna system, więc tak naprawdę nie potrzebuje tej mapy.
+
+![mapa_modeli_ksiaza](./assets/mapa_modeli_ksiaza.png)
+
+Zanim stworzysz jakikolwiek artefakt zadaj sobie pytanie po co tworzysz. Tutaj zwtkle odpowiedzią będzie zapisanie inforacji którę będą odpowiadały na typowe pytania:
+
+-   dlaczego musimy wersjonować API?
+-   dlaczego awaria tego systemu powoduje awarię innego systemu?
+-   gdzie znajduje się wiedza o tym jak działa system?
+
+Mapa kontekstów powinna służyć jako dokumentacja stormingu procesowego. Przenieś na mapę wszystkie elementy z event stormingu.
+
+warto dodać do mapy:
+
+-   głowne pytania na jakie kontekst odpowiada
+-   komendy jakie przyjmuje
+-   jakie widoki wyświetla
+-   jakie zdarzenia emituje
+-   dodać słowa ze słownika biznesowego, opis
+-   typy złożności problemu oraz strategie testowania
+    -   to pozwala osobom technicznym wiedzieć czego się spodziewać w kodzie
+-   zespół który się zajmuje danym kontekstem oraz wymagane od niego kompetencje
+
+![idealna_mapa](./assets/idealna_mapa.png)
