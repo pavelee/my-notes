@@ -2374,10 +2374,20 @@ Dodatkowo silne sprzężenie zespołów i potrzebe ciągłego koordynowania prac
     -   niezdrowe zależności zespołowe
         -   np. ważna funkcja w zespole jest blokowana bo czekamy na jakieś API
 
+```
 -   sposoby współpracy które pokazuje mapa modeli
     -   niezależne (free)
+        -   publish language - każdy ma swoje API, wspólny język
+        -   sperate ways - każdy idzie swoją drogą
+            -   tutaj godzimy się na ryzyka czyli zdublikowane źródła prawdy
     -   wzajemnie zależme (mutally dependent)
+        -   shared kernel
     -   upstream - downstream (jeden zależy od drugiego)
+        -   Conforimist - czyli biorę to co dają
+        -   Anti-Corruption Layer - warstwa antykorupcyjna
+        -   Customer-Supplier - downstream ma wpływ na upstream
+        -   Open-Host Service - wystawienie generycznego API dla innych (publiczne API)
+```
 
 Problem z mapami z książek jest taki że zwykle jest przydatna dla kogoś kto już dobrze zna system, więc tak naprawdę nie potrzebuje tej mapy.
 
@@ -2403,3 +2413,104 @@ warto dodać do mapy:
 -   zespół który się zajmuje danym kontekstem oraz wymagane od niego kompetencje
 
 ![idealna_mapa](./assets/idealna_mapa.png)
+
+### L03. Strategie dostosowywania się - poradnik modelarza
+
+W przypadku relacji Symulacji z alokacją mamy sytracje relacji na zasadzie conformisty, czyli biorę to co dają
+
+-   każda zmiana zewnętrznego modelu wpływa na mój model
+    -   nie mam żadnej strefy zgniotu, czyli zawsze muszę się dostosować
+-   ma sens tylko w przypadku bardzo stablinego i dojrzałego modelu lub w przypadku narzuconych norm (na przykład przez regulatora)
+    -   regulacje się zmieniają i musisz się do nich dostosować (jesteś conforimistą z założenia)
+
+#[zaleznosci](./assets/zaleznosci.png)
+
+Tutaj mamy problem gdzie zmiana w alokacji przepływa pośrednio do planingu który jest zależny od alokacji i mamy awarie w planingu.
+Czyli mamy sytuację zmiany kaskadowe.
+
+**Taką sytuacje możemy wyłapać przed katastrofą ale tylko na mapie modeli.**
+
+W takiej stuacji warto przygotować strefę zgniotu czyli przygotować się na to że model do którego jesteś podpięty jest zmienny
+
+#[ACL](./assets/ACL.png)
+
+Nazywamy to Aniti-Corruption Layer, czyli warstwa antykorupcyjna. To jest warstwa która pozwala na to aby zmiany w zewnętrznym modelu nie wpływały na nasz model. Przykład życiowy: Nie będziesz mógł wejśc w swoich butach w domu ale jeżeli zmienisz buty to już będziesz mógł.
+
+ACL powstrzymuje wypływanie struktrury z jednego modelu do drugiego. Natomiast pytanie czy to zabezpieczenia przed propagacją logiki pomiędzy modelami?
+
+-   Anti-Corruption Layer
+    -   strefa zgniotu - tylko przez nią przechodzą zmiany
+    -   tylko do niej propagują zmiany
+    -   w środowisku rozposzonym może być problem z duplikowaniem logiki
+
+#### Shared Kernel
+
+![shared_kernel](./assets/shared_kernel.png)
+
+Shared kernel to relacja gdzie modele są wzajmnie od siebie zależne
+
+Ma to sens kiedy zespoły są w relacji partnerskiej, czyli współpracują ze sobą
+
+![relacja_partnership](./assets/relacja_partnership.png)
+
+czyli zespoły razem pracują, planują i dowożą produkt, jest to wzorzec organizacyjny
+
+Natomist jest ryzyko że jak będziesz w partnership ze zbyt duża ilością zespołów to zaczniesz się gubić i spędzać zbyt dużo czasu na spotkaniach i koordynacji
+
+W momencie jak downstream chcey wpływać na upstream mamy sytuacje Customer-Supplier
+
+#### Customer-Supplier
+
+-   typ relacji gdzie downstream może mieć wpływ na upstream
+-   wymagania przez downstream powinny być wzięte pod uwagę przez upstream
+
+![customer-suplier](./assets/customer-suplier.png)
+
+Ma to taki problem że jak upstream ma już wiele klientów to może być problem z dostosowaniem się do wszystkich wymagań
+
+Czyli mimo że jesteś upstream to zaczynasz zachowywać się jako downstream w sytacji patologii
+
+#### Open-Host Service
+
+![open-host-service](./assets/open-host-service.png)
+
+-   oferuje wspólny model i funkcjonalność dla wielu zastosowań
+-   może być rozumiane jako publiczne API dla wielu kosumentów
+
+Wystawiamy generyczne API przez co możemy optymalizować cokolwiek poprzez wykorzystanie domknięcia które odpowiada na pytanie czy zasób wystaczy aby zaspokoić potrzebę
+
+generyczny API przed DDD nazywało się modułem ogólnego przeznaczenia
+
+#### Publish language
+
+-   dobrze udokomentowany język współdzielony przez konteksty
+-   każdy kontekst można tłumaczyć na i z tego języka
+-   czasem definiowany jest poprzez konsorcium (najważniejszych klientów, najważniejsze zespoły)
+
+![publish_language](./assets/publish_language.png)
+
+Jest to język na który wszyscy się umawiają, nie powinnien być zmieniany bez zgody wszystkich
+
+#### Podsumowanie
+
+mapa modeli to wzroce organizacyjne, nie techniczne,
+
+np. niezależność zespołów można osiągnąć poprzez publish language lub tworzyć swoje modele niezależnie
+
+![sposoby_wspolpracy_modeli](./assets/sposoby_wspolpracy_modeli.png)
+
+Co istotne
+
+-   Open-host service
+    -   minimalizuje problem bycia dostawcą usług dla wielu klientów
+-   Shared kernel
+-   Anit-Corruption Layer
+    -   minimalizuje bycie conforimistą
+
+to są techniki a nie wzorce organizacyjne, które zapobiegają propagacji modelu
+
+Modele coreowe nie powinny być w relacji downstream z innymi modelami
+
+### L04. Logiczne poziomy integracji kontekstów
+
+
