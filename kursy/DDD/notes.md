@@ -2513,4 +2513,131 @@ Modele coreowe nie powinny być w relacji downstream z innymi modelami
 
 ### L04. Logiczne poziomy integracji kontekstów
 
+W momencie rozpisywania komunikacji modułów możemy rozpisywać:
+
+-   Kto kogo pyta?
+    -   czyli kto jest inicjatorem zdarzenia
+-   z jaką intentencją?
+    -   zdarzenie
+        -   zaproponowanie faktu, oznajmienie bez konkretnego adresata
+        -   właścicielem jest emiter
+        -   wielu odbiorców albo nie ma odbiorcy
+        -   wysłający jest jeden
+    -   komenda
+        -   zmiana stanu / wywołanie zachowania, to jest rozkaz i najpewniej chcemy znać jej stan wykonania
+        -   właścicielem jest konsument
+        -   jeden odbiorca
+        -   wysłających jest wielu
+    -   query
+        -   odczyt danych, brak zmian stanu
+        -   właścicielem jest konsument
+        -   jeden odbiorca
+        -   wysłających jest wielu
+-   w jaki sposób?
+
+    -   system nierozproszony
+        -   temporal coupling
+        -   łatwiejszy w implementacji
+        -   wiązanie w czasie, muszą razem działać
+        -   często błąd w jednym module kończy się automatyczną porażka w innym module (np. wyczerpanie pamięci)
+    -   system rozproszony
+
+        -   messaging
+
+            -   temporal coupling
+            -   spatial decoupling
+                -   integrowne moduły nie muszą się widzieć (fizyczny adres nie jest znany)
+            -   failure isolation
+            -   trudny do implementacji, debugowania
+            -   asynchroniczne
+            -   versioning
+            -   at least vs at most once
+            -   inbox and outbox pattern
+
+        -   REST, RCP
+            -   temporal coupling
+            -   failure isolation
+            -   łatwe do implementacji oraz debugowania
+            -   sync or async
+            -   versioning
+            -   at least vs at most once
+            -   inbox and outbox pattern
+
+-   jakimi narzędziami?
+    -   Dla messages
+        -   Kafka
+        -   RabbitMQ
+        -   ActiveMQ
+        -   ZeroMQ
+    -   Rest
+        -   Spring
+        -   Django
+        -   Flask
+        -   Express
+    -   W świecie nierozposzonym
+        -   method call
+        -   oberve pattern
+        -   in-memory event i command bus
+
+![komunikacja](./assets/komunikacja.png)
+
+Co istotne jeżeli na mapie kontekstów jest zbyt dużo problemów to one potem lawinoow się popagują w dół
+
+**Pamiętaj że najważniejsze jest zrozumiemie kto od kogo logicznie zależy**
+
+Zastanów się następnie jaka jest intencja komunkacji?
+
+-   Czy chcesz kogoś poinformować?
+-   Czy komuś coś rozkazać?
+-   Czy o coś zapytać?
+
+Opresyjne zdarzenie jest wtedy kiedy emiter dokładnie wie co się powinno wydarzyć (błędnie użyte zamisast komendy)
+
+#### Małe sprostowanie
+
+![CQRS](./assets/CQRS.png)
+
+Tak zwykle wygląda relacja ale może się zdarzyć że właścicielem komendy nie będzie konsument, np. kiedy jest regulator który nakazuje zmianę
+
+**Jeżeli znasz koleny krok procesu - użyj komendy**
+
+Następnie zawężamy stożek niepewności poprzez wybranie w jaki sposób chcemy komunikować się pomiędzy modelami oraz jakimi narzędziami
+
+#### A co jak nie masz sprawczości?
+
+Nawet jak zostały już podięte decyzje to możesz np. dodać extra warstwe ACL która przetłumaczy to na język który jest zrozumiały dla twojego modelu
+
+#### Typy zdarzeń
+
+"Opublikowane" to jeszcze gorzej niż "publiczne", czyli jeżeli robisz zdarzenie gdzie masz obiekty które zostały zserializowane
+
+-   event notification
+    -   informacja o fakcie
+-   event carried-state
+    -   informacja o fakcie oraz stanie
+
+
+Zdarzeń z event sourcingu nie używamy do integracji pomiędzy modułami
+
+#### Podsumowanie
+
+Mape kontekstów biorą pod uwagę
+
+-   przenikanie modelu
+-   przenikanie źródła prawdy
+-   relacje pomiedzy zespołami
+
+Przy definiowaniu mapy konktekstów pamiętaj:
+
+-   logicznie wiązanie to coś innego niż wiązanie w czasie
+-   dojrzałość i liczebność zespołów
+    -   im mniej zespołów i bardziej dojrzałe tym lepiej
+-   stabilność modelu
+-   atrybuty jakościowe
+-   wpływy regulatorów
+
+![mapa1](./assets/mapa1.png)
+
+### L05. Dramat mapowania kontekstów w kilku aktach
+
 
