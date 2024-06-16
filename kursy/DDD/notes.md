@@ -2640,4 +2640,44 @@ Przy definiowaniu mapy konktekstów pamiętaj:
 
 ### L05. Dramat mapowania kontekstów w kilku aktach
 
+#### Zachłysnąć się zdarzeniem
+
+![problem_1](./assets/problem_1.png)
+
+rozwiązaniem jest to aby wystawić OpenHost Service tak aby każdy model samodzielnie decydował o swojej logice
+
+![rozwiazanie_1](./assets/rozwiazanie_1.png)
+
+Możliwe że potrzebujesz extra logiki, w takim razie możesz dodać pośredni model który będzie tłumaczył zdarzenia
+
+![rozwiaznie_1_plus](./assets/rozwiaznie_1_plus.png)
+
+Pamiętaj o heurystyce, **Czy na pewno nie brakuje mi modelu mapującego?**
+
+Opresyjne zdarznenie np. kako się wylało, które ukrycie znaczy po prostu posprzątaj
+
+#### Problem komunikacji generyków z core'ami
+
+![problem_2](./assets/problem_2.png)
+
+![rozwiazanie_2](./assets/rozwiazanie_2.png)
+
+W takim przypadku aby core nie dostosował się do generyka możemy dodać ACL który będzie tłumaczył zdarzenia i będzie strefą zgniotu
+
+#### Zagadka Mariana
+
+![problem_3](./assets/problem_3.png)
+
+![rozwiazanie_3](./assets/rozwiazanie_3.png)
+
+Użycie tak zwanego czystego fabrykatora, czyli coś co spowoduje ze nie będzie wiązania pomiedzy modelami którymi nie chcemy mieć wiązania
+
+#### Obecna mapa modeli
+
+![mapa_3](./assets/mapa_3.png)
+
+##  Moduł 07 - Klasyfikacja Problemów Modelarskich
+
+### L01. Rozwiązanie zadania
+
 
