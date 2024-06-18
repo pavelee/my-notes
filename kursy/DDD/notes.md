@@ -2616,7 +2616,6 @@ Nawet jak zostały już podięte decyzje to możesz np. dodać extra warstwe ACL
 -   event carried-state
     -   informacja o fakcie oraz stanie
 
-
 Zdarzeń z event sourcingu nie używamy do integracji pomiędzy modułami
 
 #### Podsumowanie
@@ -2676,8 +2675,49 @@ Użycie tak zwanego czystego fabrykatora, czyli coś co spowoduje ze nie będzie
 
 ![mapa_3](./assets/mapa_3.png)
 
-##  Moduł 07 - Klasyfikacja Problemów Modelarskich
+## Moduł 07 - Klasyfikacja Problemów Modelarskich
 
 ### L01. Rozwiązanie zadania
 
+![rozwiazanie_zadanie_5](./assets/rozwiazanie_zadanie_5.png)
+
+W momencie kiedy masz sytuacje że aby odpowiedzieć na pytanie które wymaga integracji z wieloma kontekstami to jest moment na użyvcie usługi mapującej (np. ACL), tak aby nie było bezpośredniej integracji z corowym modelem
+
+### L02. If ifowi nierówny
+
+#### Code review
+
+Dekompozycja funkcjonalna - to antywzorzec w projektowaniu obiektowym który polega na modelowaniu proceduralnym i zastosowaniu klas jako kontenerów na podprocedur
+
+#### Podchodzimy do taktyki
+
+klasyfikujemy problemy tak aby następnie każdą klasę problemu zamodelować w osobnym kontekście odpowiednimi elementami konstrukcyjnymi
+
+Zawsze chcemy dopasować bulding block adekwatnie do klasy problemu
+
+#### Rodzaje logiki
+
+Niezmienniki - reguły dziedzinowe 
+
+![rodzaje_logiki](./assets/rodzaje_logiki.png)
+
+Zwykle w systemie mamy powtarzalne problemy które możemy podzielić na rodzaje logiki
+
+#### Elementy konstrukcyjne
+
+![roadzje_logiki_building_blocks](./assets/roadzje_logiki_building_blocks.png)
+
+#### U mnie wszystko jest funkcją
+
+Takie podejście jest dobre dopóki mamy prosty skrpyt który jest mały i nie rośnie, takie podejście w dużym systemie biznesowym spowodowałoby paraliż systemu i projektu
+
+#### Resposiblility Driven Design
+
+![ksiazka1](./assets/ksiazka1.png)
+
+Zawsze jak towrzysz nową klaskę to zastanów się jaką rolę będzie ona grała w Twoim systemie, mówiąc inaczej jaki będzie rodzaj logiki zawarty w niej. Możesz zawrzeć tylko jeden rodzaj logiki w jednej klasie
+
+Responsibility Driven Design to lepsze podejście niż Single Responsibility Principle ponieważ łatwiej przekłada się na kod.
+
+### L03. Jak rozpoznawać - CRUD
 
