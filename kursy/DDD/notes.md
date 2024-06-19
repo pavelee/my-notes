@@ -2721,3 +2721,36 @@ Responsibility Driven Design to lepsze podejście niż Single Responsibility Pri
 
 ### L03. Jak rozpoznawać - CRUD
 
+#### Jak rozpoznawać?
+
+Musimy się nauczyć rozpoznawać rodzaje logiki w naszym systemie i odpowiednio je klasyfikować
+
+#### CRUD
+
+![typowy_crud](./assets/typowy_crud.png)
+
+Jeżeli widzisz taki wynik process level event storming to znaczy że mamy możliwe dwa przypadki:
+
+-   Modelarz nie przyłożył się do swojej pracy, nie zdał pytań behing oraz becoming
+-   Mamy do czynienie z problemem klasy CRUD
+
+Mogą się zdarzyć jakieś reguły walidacji ale głównie opierasz się na CRUD
+
+#### CRUD zakamuflowany
+
+![ukryty_crud](./assets/ukryty_crud.png)
+
+Możliwe że mamy syutajce gdzie jest curd ale też skomplikowana logika biznesowa, w takim przypadku dobrym pomysłem jest rozbicie na dwa modele
+
+np. w przypadku kiedy wykonuje się edycja dokumentu po prostu ten CRUD będzie powiadamiał model o tym że zmieniło się pole X, tak aby ten model mógł zareagować
+
+**Najlepiej nie łączyć CRUD z głęboką domeną**
+
+Często CRUD nazywa się notatką, dlatego że dobrze opisuje klasę problemu jaki rozwiązuje
+
+#### Demo
+
+Nie dziedziczymy po BaseAgregrateRoot wtedy kiedy danie nie są chronione żadnymi regułami to tylko CRUD
+
+### L04. Jak rozpoznawać - Transformacja i Prezentacja
+
