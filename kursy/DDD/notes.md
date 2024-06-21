@@ -2754,3 +2754,43 @@ Nie dziedziczymy po BaseAgregrateRoot wtedy kiedy danie nie są chronione żadny
 
 ### L04. Jak rozpoznawać - Transformacja i Prezentacja
 
+#### Transformacja i prezentacja danych
+
+Transformacja i prezentacja danych często idą ze spobą w parze
+
+Co istotne tutaj nie mamy żadnego zmiany stanu, to jest tylko przekształcenie danych
+
+![transformacje_prezentacja](./assets/transformacje_prezentacja.png)
+
+rozpoznasz to po tym że nie zdarzeń na event stormingu
+
+Model prezentacyjny to kontrakt
+
+![read_model](./assets/read_model.png)
+
+Read model czyli modele którę są tylko projekcją danych których zmiany zachodzą w źródłach prawdy
+
+np. Kalendarz to tylko projekcia danych, to że klikamy na kalendarzu to nie znaczy że wykonujemy operacje na kalendarzu, a raczej na innych modelach, a każde kliknięcie do wysłanie komendy do źródła prawdy
+
+**Wszystkie zmiany stanu najpierw przechodzą przez źródło prawdy**
+
+#### Techniki implementacji
+
+-   implementacje read modelu
+    -   kwerendy do źródeł prawdy
+    -   widoki zmateriaizowane
+    -   cache odświeżany np. eventami ze źródeł prawdy
+
+#### Tipy
+
+Eventy state transport - czyli eventy które przenoszą stan są ok do odświeżania cache nawet jak zdradzają dziedzinę 
+
+Nie musisz po stronie domeny tworzyć cronów które uderzają eventami że wygasły jakieś dane po stronie źródła prawdy, wystarczy że dodasz do eventu TTL i cache sam się odświeży
+
+**Myśl o cache jak o czymś, co zawsze można usunąć i odtworzyć ze źródeł prawdy**
+
+#### Demo
+
+
+
+
