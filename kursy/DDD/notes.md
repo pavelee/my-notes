@@ -2697,7 +2697,7 @@ Zawsze chcemy dopasować bulding block adekwatnie do klasy problemu
 
 #### Rodzaje logiki
 
-Niezmienniki - reguły dziedzinowe 
+Niezmienniki - reguły dziedzinowe
 
 ![rodzaje_logiki](./assets/rodzaje_logiki.png)
 
@@ -2783,14 +2783,56 @@ np. Kalendarz to tylko projekcia danych, to że klikamy na kalendarzu to nie zna
 
 #### Tipy
 
-Eventy state transport - czyli eventy które przenoszą stan są ok do odświeżania cache nawet jak zdradzają dziedzinę 
+Eventy state transport - czyli eventy które przenoszą stan są ok do odświeżania cache nawet jak zdradzają dziedzinę
 
 Nie musisz po stronie domeny tworzyć cronów które uderzają eventami że wygasły jakieś dane po stronie źródła prawdy, wystarczy że dodasz do eventu TTL i cache sam się odświeży
 
 **Myśl o cache jak o czymś, co zawsze można usunąć i odtworzyć ze źródeł prawdy**
 
-#### Demo
+### L05. Jak rozpoznawać - Integracja
 
+#### Integracja
 
+![swim_lines](./assets/swim_lines.png)
 
+Poblemy integracyjne pojawiają się kiedy musimy pobrać dane z innych modułów i je obrobić dodatkowo
 
+Jest to bardzo widoczne na swim lines na event stormingu procesowym, kiedy zaczynasz widzieć że zdarzenia z jednego modelu są wysyłane do drugiego modelu
+
+![integracja_modele](./assets/integracja_modele.png)
+
+Tak samo widać to na mapie powiązań z modułami
+
+W momenice jak mamy OHS (Open Host Service) to one wymuszają w jaki sposób należy się integrować z innymi modelami, co istotne nie wymuszają ich modelu dziedzinowego ale mają specjalny model z poziomu API
+
+W tym przypadku moduły typu porcesowego czy produktowego będą miały role orkiestratora i będą odpowiedzialne za integrację
+
+#### Publish language
+
+W systemach rozporoszonych może być pokusa aby pozbywać się koordynatorów na rzecz eventów, to niestety może prowadzić do stowrzenia rozporoszenego monolitu czyli systemu w którym konteksty przeciekają między sobą
+
+Możemy próbować wyłonić publiczny język dla systemu ale to będzie w praktyce bardzo ciężkie do realizacji, szczegółnie dla dużego systemu oraz dla bizensu który nie jest dojrzały
+
+Język publiczny nie musi być modelem z żadnego kontekstu, jest to model na poziomie procesów systemwów, każdy kontekst powinnien w takieh sytuacji być wstanie konsumować i emitować zdarzenia z publish language
+
+![publish_languageu](./assets/publish_languageu.png)
+
+Jeżeli dystrubucja eventów posiada logikę wystarczy dodać model dyspozytora.
+
+#### Autonomia
+
+Chcemy osiągnąć stan że modele nie wiedzą o szczegółach innego modelu, jeżeli chce się dopytać to może w relacji customer - suplier.
+
+Natomiast tutaj istotne jest określenie granic pomiędzy tymi modelami.
+
+Niestety z czasem życia systemu może być wymuszenie dodanie modelu orkiestrującego, a to może spowodować że nasza koncepcja zdarzeń w architekturze rozproszonej może się rozmyć. W takiej sytuacji możemy dodać managera tzw. Saga Managera.
+
+#### Model integracji
+
+![przykladowy_proces_sprzedazowy](./assets/przykladowy_proces_sprzedazowy.png)
+
+Przykład kiedy mamy wywołanie komendy i potem kilka zdarzeń biznesowych, z punktu widzenia biznesu kolejność może nie mieć znaczania ale jeżeli zejdziemy na poziom techniczny sytuacja może się zmienić. Jeżeli któreś zdarzenie uderze do zewnętrznego systemu to mamy ryzyko że nie zadziała i to może nieść kolejne konsekwencje.
+
+np. zdarzenie zapłacono za produkt powinno się wywołać razem ze zdarzeniem dodano premie dla pracownika, ale co jeśli płatność zostanie przerwana? Wtedy premia nie powinna być dodana, w przypadku technicznych zdarzeń takie sytuacje mogą się zdarzyć.
+
+**To co istotne to chcemy zamodelować ten scenariusz porażki**
