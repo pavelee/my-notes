@@ -2836,3 +2836,20 @@ Przykład kiedy mamy wywołanie komendy i potem kilka zdarzeń biznesowych, z pu
 np. zdarzenie zapłacono za produkt powinno się wywołać razem ze zdarzeniem dodano premie dla pracownika, ale co jeśli płatność zostanie przerwana? Wtedy premia nie powinna być dodana, w przypadku technicznych zdarzeń takie sytuacje mogą się zdarzyć.
 
 **To co istotne to chcemy zamodelować ten scenariusz porażki**
+
+Musimy uwzględnić włąściwe adresowanie komunikatów.
+
+![problem_integracji_ilosc_skokow](./assets/problem_integracji_ilosc_skokow.png)
+
+Pytanie czy lepiej integrować bezpośrednio moduły czy jednak robić pośrednika który jest odpowiedzialny za przekazanie informacji. Tutaj zawsze jest dylemat.
+
+-   Pośrednik oznacza więcej skoków aby wykonać pracę
+-   Pośrednik to single point of failure
+-   Bezpośrednie integracje mogą prowadzić do przenikania modeli i dostosowywania się do innych modeli
+-   Dużo zależy od zespołów i tego jak są zorganizowane, jak zwykle to wszystko zależy od sytuacji
+
+#### Demo
+
+Moduł ryzyka jest problemem integracyjnym
+
+Czerwoną flagą jest momnet kiedy wszystkie modele zaczynają być integractyjne (wszystko ze wszystkim), czyli integrator integruje się z innymi integratorami
