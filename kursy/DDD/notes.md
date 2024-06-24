@@ -2853,3 +2853,39 @@ Pytanie czy lepiej integrować bezpośrednio moduły czy jednak robić pośredni
 Moduł ryzyka jest problemem integracyjnym
 
 Czerwoną flagą jest momnet kiedy wszystkie modele zaczynają być integractyjne (wszystko ze wszystkim), czyli integrator integruje się z innymi integratorami
+
+### L06. Jak rozpoznawać - Rywalizacja o zasoby
+
+#### Historia pewnego requestu
+
+Jest to klasa problemu najbardziej kojarzona z taktycznym DDD i popularnymi w świecie DDD Agregatami
+
+![agregatory](./assets/agregatory.png)
+
+Komenda może zwracać wynik operacji ale nie dane domenowe, zmienia to stan i może mieć wpływ na inne komendy czy wywołanie ponownie tej samej komendy.
+
+Komenda to nie musi być CommandHanlder, może to być service czy metoda HTTP w Rest API typu POST
+
+**Chodzi o intencje zmiany**
+
+W momencie jak jest ryzyko dwóch mechanizmów zapisywanych w tym samym czasie to powinniśmy użyć optimistic lockingu czyli w momencie jak jeden mechanizm zapisuje to drugi nie może zapisywać
+
+![domena_w_aplikacji](./assets/domena_w_aplikacji.png)
+
+Warstwy służą do zmian warstw abstrakcji, nie jest istotne czy warstwy są oznaczone osobnymi pakietami ale to że realizujemy logikę innego poziomu. Nie chcemy aby zdarzenia z warstwy górnej były znane przez warstwę dolną
+
+![architektury](./assets/architektury.png)
+
+#### Poziomy reguł
+
+Jak odróżnić reguły domenowe od reguł aplikacyjnych oraz infrastrukturalnych?
+
+Wyobraź sobie że biznes pracuje z kartkami, ołowkami i telefonami. Jakie reguły by zostały? To właśnie te są regułami domenowymi.
+
+np. "jeżeli użytkownik właścicel reklamacji chce ją zamknąć" to jest reguła domenowa, ponieważ jest na wyższym poziomie abstrakcji gdzie szczegóły techniczne nie mają znaczenia.
+
+![przyklad_reguly_domeonwej](./assets/przyklad_reguly_domeonwej.png)
+
+#### Rodzaje zmian stanu
+
+Event sourcing to zapisywanie w bazie danych sekwencji zdazreń, to jest bardzo dobre do zapisywania historii zmian stanu
