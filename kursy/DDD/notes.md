@@ -2889,3 +2889,79 @@ np. "jeżeli użytkownik właścicel reklamacji chce ją zamknąć" to jest regu
 #### Rodzaje zmian stanu
 
 Event sourcing to zapisywanie w bazie danych sekwencji zdazreń, to jest bardzo dobre do zapisywania historii zmian stanu
+
+#### Jak wykrywać zmiany stanu na modelu procesu
+
+Odryjesz w event storming process level kiedy zobaczysz że na odpowiedź pytania ma wpyłw wiele zmian stanu czyli zdarzeń. Na przykład na dostępność zasobu ma wpływ wiele zdarzeń czyli zmian stanu.
+
+Jeżeli w systemie możemy jednocześnie wysyłać wiele komend które mogą mieć wpływ na ten sam stan to mamy ryzyko wyścigu
+
+#### Modele tworzone w kontekście rozwiązania konkretnego problemu
+
+Destylacja modeli:
+
+-   Gromadzimy wszystkie zdarzenia która mają wpływ na odpowiedź na pytania na która odpowiada model i gromadzimy komendy które są przyczyną zaistnienia tych zdarzeń
+-   pozbywamy się pojęc nieistotnych dla tego kontekstu modelu
+    -   czyli takich które nie są powiązane regułami domenowymi z tym kontekstem
+
+#### Event stormimng - desing level
+
+Rozmawiamy z eskpertami dziedzinowymi, czyli osoby które więdzą jak działa obszar bizensu (poddomena) i konkretny obszar działania tego bizensu
+
+![mapa_kontekstow_1](./assets/mapa_kontekstow_1.png)
+
+Zaczynamy od pokazania mapy kontekstów, następnie skupiamy się na modelu który chcesz stworzyć
+
+![model_ktory_chcesz_stworzyc](./assets/model_ktory_chcesz_stworzyc.png)
+
+Celem nie jest przekonanie eksperta do Twojego pomysłu, celem jest wypracowanie wspólnego modelu.
+
+Jeżeli eksprty zakwestionuje wypracowane słownictwo to dopasowujesz się do eksperta. Wychodzimy z założenia że to co się dowiedzialieśmy na poziomie analizy procesowej jest niekompletne. Dodania zdarzeń i komend.
+
+**Najbardziej nam zależy na dodaniu reguł domenowych**
+
+Co istotne na poziomie process level zależało nam na dobrej jakości zdarzeniach, natomiast na poziomie taktycznym zależy na precyzyjnych regułach domenowych
+
+![zdarzenia_domenowe](./assets/zdarzenia_domenowe.png)
+
+Dla każdej komendy pytamy się eksperta co musi być spełnione aby mogło zadziać się zdarzenie lub co blokuje zajście tego zdarzenia lub decyduje o wyborze jednego z wielu zdarzeń. Zdarzenia możemy dodawać.
+
+Dobrym sposobem jest pytanie czy dane zdarzenie może zadziać się ponownie jeżeli już wcześniej się wydarzyło. Np. czy można zasób zablokować jeżeli już zostało zablokowane przez kogoś innego. To pozwala wyworzyć pierwszą prostą regułę domenową.
+
+![tactic_design_reguly](./assets/tactic_design_reguly.png)
+
+Dobrze jest zapisać kązdą taką regułę na osobnej kartece.
+
+Zapytaj o spójność trasakcyjną po ludzku: 
+Czy stałoby się coś złego jeżeli byśmy te reguły sprawdzili osobno?
+Jaka byłby konsekwencja gdybyśmy nie sprawdzili któreś z reguł, ale zrobili to nieco później?
+
+Możesz wziąść konkretny use case i zrobić: Czy to będzie dla was ok jeżeli będzie możlie zablokowanie zasobu który jest już zajęty przez kogoś innego?
+
+Jeżeli tutaj znajdziemy spójność to te dane i reguły zamknięty w jednej klasie
+
+To co enkapsuluje takie elementy nazywamy w DDD Agregatem
+
+#### Podejście bottom-up
+
+Jeżeli nie możesz podejść top-down z jakiegoś powodu to możesz podejść bottom-up
+
+-   Wypisz wszystkie rzeczowniki, ale nie grupuj ich w nadrzędne struktury
+-   Dodaj reguły i połącz je z rzeczwonikami
+-   Dowiedź się które reguły muszą być spójne atomowo
+-   W ten sposób odnajdziesz granice agregatów
+-   Problem pojawi się jeżeli rzeczwonik będzie powiązany z wieloma regułami które są w innych kontekstach
+
+![analiza_rzeczownikow](./assets/analiza_rzeczownikow.png)
+
+#### Współpraca na styku analityk-dev
+
+Byłby łatwiej się dogadać jakbyśmy z analitykami rozmawiali w sposób DDD
+
+#### Złożone modele rywalizacji o zasoby
+
+Meta model to powtarzalna struktura w które można wpasować modele konkretnego biznesu czyki tzw. modele dla modeli
+
+### L07. Łączenie klas problemów
+
+
