@@ -2932,7 +2932,7 @@ Dobrym sposobem jest pytanie czy dane zdarzenie może zadziać się ponownie je�
 
 Dobrze jest zapisać kązdą taką regułę na osobnej kartece.
 
-Zapytaj o spójność trasakcyjną po ludzku: 
+Zapytaj o spójność trasakcyjną po ludzku:
 Czy stałoby się coś złego jeżeli byśmy te reguły sprawdzili osobno?
 Jaka byłby konsekwencja gdybyśmy nie sprawdzili któreś z reguł, ale zrobili to nieco później?
 
@@ -2964,4 +2964,85 @@ Meta model to powtarzalna struktura w które można wpasować modele konkretneg
 
 ### L07. Łączenie klas problemów
 
+#### Trójpodział logiki - Open/Close Principle w praktyce
+
+W modelu złożonego modelu zwykle możemu wydzielić strukturę wyższego rzędu charakteryzującą się różną podatnością na zmiany
+
+Open/Close Principle - Umożliwia dodawania nowych klas bez modyfikacji istniejących klas
+
+Warto wydzielić w modelu części które charkateryzują się różną podatnością na zmiany
+
+![trojpodzial](./assets/trojpodzial.png)
+
+-   Logika stabilna
+    -   rzadko podelga zmianom
+    -   są to głównie operacje zmiany stanu
+    -   agregaty albo trasnformaty
+-   Logika zmieniająca się
+    -   przykrywamy stabilnym interfejsem
+    -   delegujemy na zewnątrz stabilnych struktur
+-   Wybór domknięć
+    -   Trasnformata która zwraca inne transformty na podstawie parametrów
+    -   Logikę hermetyzujemy w fabrykach lub funkcjach
+
+![trojpodzial_przyklad](./assets/trojpodzial_przyklad.png)
+
+#### Knowladge Level + Operations Level
+
+![podzial_problemu_dwie_warstwy](./assets/podzial_problemu_dwie_warstwy.png)
+
+Niektóre problemy warto podzielić na dwie warstwy, operacyjną i wiedzy.
+
+-   Warstwa wiedzy
+    -   Jest to grupa obiektów która określa jak inna grupa obiektów powinna się zachowywać
+    -   Pozwala rozwijać system bez programowania i łatwiej wprowadzać zmiany
+    -   Przykład definicja produktu
+    -   definiujemy to co jest możliwe do zdefiniowania
+-   Warstwa operacyjna
+    -   Przykład instacja produktu
+
+#### Model wieliej skali
+
+Model wielkiej skali to wzorzec w którym dzielmy model na cztery poziomy
+
+-   Capability (poziom zdolności)
+    -   to co oferuje nasz system
+    -   model może mieć zachowania
+    -   Transformaty lub zmiana stanu
+-   Operations (poziom operacji)
+    -   Jakie operacje wspiera nasz system na bazie potencjalu
+    -   Wywołanie metod z poziomu capability z parametrami
+    -   Transformaty lub zmiana stanu
+    -   Proces zakupu lub reklamacji
+-   Policy (poziom polityk)
+    -   dostraja poziomi operacji
+    -   modelują wariacje operacji biznesowych
+    -   Transformaty
+    -   Na poziomie techniczym to domknięcia operacji
+    -   Różne sposoby liczenia rabatów czy różne sposoby reklamacji
+
+
+![big_model](./assets/big_model.png)
+
+#### Decision Support
+
+Niektóre systemy podejmują decyzje, transformaty które produkują transformaty polityk. Jaki rabat nadać, jak rozpatrzeć reklamację
+
+#### Podsumowanie
+
+Meta modele przemawiają do zespołów które zderzyły się z problemami złożonymi z wielu klas problemów ale go przeoczyły.
+
+Brak nadrzędnej struktury powoduje komplikacje i trudności w dostarczaniu.
+
+Więcej informacji w rozdziale 16 i 17 Evansa
+
+#### Demo
+
+Transformat - dostaje dane i zwraca przetworzone dane
+
+**Jeżeli chcesz skalować unikaj stanu**
+
+## Moduł 08 - Transformaty (Obliczenia)
+
+### Implementacja transformacji/obliczenia - Strategia Testowania, Value Objects i Domain Services
 
