@@ -3021,7 +3021,6 @@ Model wielkiej skali to wzorzec w którym dzielmy model na cztery poziomy
     -   Na poziomie techniczym to domknięcia operacji
     -   Różne sposoby liczenia rabatów czy różne sposoby reklamacji
 
-
 ![big_model](./assets/big_model.png)
 
 #### Decision Support
@@ -3045,4 +3044,92 @@ Transformat - dostaje dane i zwraca przetworzone dane
 ## Moduł 08 - Transformaty (Obliczenia)
 
 ### Implementacja transformacji/obliczenia - Strategia Testowania, Value Objects i Domain Services
+
+Co ważne mimo że kod jest z dziedzony core wcale nie musi zawierać agregatów
+
+#### Utopijny brak stanu
+
+Idealną sytuacją jest moment kiedy nie mamy stanu i wszystko jest obliczane na podstawie danych wejściowych.
+
+W takiej stuacji możemy bez problemu zrównoleglać obliczenia
+
+![brak_stanu_korzyksc](./assets/brak_stanu_korzyksc.png)
+
+#### Strategia testowania
+
+Taka sytuacja jak wyżej też jest idalna do testowania.
+
+-   Strategie testowania
+    -   output based (input-output)
+        -   koncentrujemy się tylko na relacji pomiędzy danymi wejściowymi i danymi wyjściowymi
+        -   system poddawany takiemu testowi jest traktowany jak czarna skrzynka
+        -   zazywaczaj bez mocków i stabów
+        -   najstabiliniejsza metoda testowania
+            -   test polega tylko na wejściu i wyjściu, nie na wnętrzu systemu
+
+Możemu nie mockować zależności jeśli to też są transformaty, w innym przypadku warto je zmockować bo mają np. side effecty. To zwykle świadczy że zależność jest czymś z klasy problemu integratora i musimy go zamockować.
+
+#### A jednak ten mock...
+
+Możemy mieć wyjątek kiedy transormator to jakieś zewnętrzne API czy coś co nas kosztuje i jest wolne, wtedy warto to zmockować
+
+Pamiętaj,
+
+```
+Cel testów: bezpieczeństwo, stabilność, możliwość zmiany algorytmu
+
+Strategia testowania: zazywaczaj output-based (input-output)
+```
+
+W przypadku kiedy chcesz ustablizować testy to możesz skorzystać z Assert Object Pattern, czyli zwracasz obiekt który ma metody assercji
+
+#### Elementy konstrukcyjne
+
+**Niemutowalność to cecha obiektów, która zapobiega zmianie ich stanu po utworzeniu, gwaranująć stałość i niezmienność danych w czasie.**
+
+#### Potęga Value Objects
+
+Value objecy czyli obiekty wartości, które modelują konceptujalną całość poprzez powiązanie atrybutów.
+
+Chroni nas to przed prymitywami jako argumentami i częstymi zmianami w kodzie
+
+Mogą też samodzielnie wykonywać trasnformacje na swoich danych
+
+-   Value Objecy są niemutowalne, czyli nie zmieniają swojego stanu
+    -   Niemutowalność zachowujemy poprzez zwracanie nowych obiektów ze zmienionymi danymi zamiast zmiany stanu obiektu
+-   Pozwalają modelować dodatkowe deskryptywne operacje
+-   Pozwalają na wyrażenie intencji dziedziny i przeciwdziedziny transformaty, czyli mamy dwa Value Object, pierwszy reprezentuje dane wejściowe a drugi dane wyjściowe
+-   Potrafią same sprawdzić swoją poprawność
+-   ułatwiwją zmianę reprezentacji bez ruszania kodu całej transformaty
+-   Dwa Value Object są równ jeżeli mają takie same wartości
+
+```
+Cel: niemutowalność, zmiana reprezentacji, walidacja, czytelność
+
+Strategia implementacji: obiekty wartości
+```
+
+**Przy implementacji konceptu z przestrzeni problemu, załóż że modelujesz Value Object, a potem (ewentualnie) wyprowadź się z błędu**
+
+Idealnie jak Value Object będzie też trasnformatą ale w praktyce to nie zawsze jest możliwe bo może być potrzebne inne Value Object
+
+#### Serwisy domenowe
+
+To są bezstanowe obiekty które pomagają w implementacji które pomagają w wykonaniu operacji która nie pasuje do żadnego z Value Object
+
+```
+Cel: testowalność, zamknięcie transformaty za stabilnym interfejsem
+
+Strategia implementacji: na przykład serwisy domenowe
+```
+
+To tez może być nazywane czystym fabrykatem czyli coś co nie ma stanu i zwraca obiekt
+
+Jeżeli Twój problem to transformata:
+
+-   zależy nam na niemutowalności -> ValueObject
+-   złożone transforaty -> serwisy domenowe
+
+### L02. Implementacja transformacji/obliczenia - Heurystyki doboru paradygmatu
+
 
