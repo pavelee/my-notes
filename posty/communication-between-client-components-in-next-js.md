@@ -1,4 +1,4 @@
-https://www.thisdot.co/blog/communication-between-client-components-in-next-js
+I'mhttps://www.thisdot.co/blog/communication-between-client-components-in-next-js
 
 ## wspólny kliencki komponent 
 
@@ -48,4 +48,6 @@ export default function UsingQueryParamsPage() {
   );
 }
 ```
+
+## wykorzystanie server action 
 
