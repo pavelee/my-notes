@@ -51,3 +51,37 @@ export default function UsingQueryParamsPage() {
 
 ## wykorzystanie server action 
 
+tworzymy server action które zmienia stan i wykonuje refresh cache 
+
+```js
+// app/storing-state-on-server/actions/actions.ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+
+export async function incrementCounterAction() {
+  // Call API/database to increment counter value
+
+  // Revalidate the path to purge the caches and re-fetch the data
+  revalidatePath("/storing-state-on-server");
+}
+```
+
+następnie wywołujemy akcje po stronie klienta 
+
+```js
+// app/storing-state-on-server/components/button.tsx
+"use client";
+import { incrementCounterAction } from "@/app/storing-state-on-server/actions/actions";
+
+export default function Button() {
+  const handleClick = async () => {
+    await incrementCounterAction();
+  };
+
+  return <button onClick={handleClick}>Increment</button>;
+}
+```
+
+dane są pobierane podstronie kompostu serwerowego 
+
