@@ -3132,4 +3132,57 @@ Jeżeli Twój problem to transformata:
 
 ### L02. Implementacja transformacji/obliczenia - Heurystyki doboru paradygmatu
 
+Nie masz często wpływu na paradygmat programowania ale masz wpływ na miejsce i sposób implementacji transformatora
 
+#### Gdzie są dane do obliczeń?
+
+Obliczenia powinniśmy trzymać jak najbliżej źródła danych
+
+Zawężamy stożek możliwości
+
+![transformata.png](./assets/transformata.png)
+
+Możemy umieścić transformatę nawet po stronie frontu, jeżeli na to pozwala prywatność i nie boimy się tego że ktoś nie wykona aktualizacji swojego klienta i będzie korzystał z nieaktualnego algorytmu
+
+![baza_transformata](./assets/baza_transformata.png)
+
+Nawet transforatę można umieścić po stronie bazy danych kiedy jest blisko tych danych
+
+Natomiast po stronie aplikacji jest znacznie łatwiej o testy i pracę z algorytemem
+
+#### Wybór paradygmatu
+
+Zrozum problem i zastanów się czy możesz ten problem łatwiej rozwijązać pisząć kod funkcyjny niż używająć obiektów które świetnie radzą sobie ze stanem ale gorzej z trasnformacją
+
+Jeżeli masz problem grafowy to dobrze jest pomyśleć jaką bazę korzystasz, jeżeli skorzytasz z bazy relacyjnej to może to być bardzo nie wydajne przy skalowaniu problemu
+
+Transformaty to zazwyczaj procedury, tutaj się sprawdza. Natomiast funkcyjny jest bardziej czytelny i łatwiejszy do testowania, natomiast pamiętaj też o umiejętnościach zespołu, mogą woleć obiektowy
+
+**Nie potrzebujesz paradygmatu funkcyjnego, żeby implementować w stylu funkcyjnym**
+
+Mogę myśleć proceduralnie lub funkcyjnie w języku obiektowym
+
+![modele_typy](./assets/modele_typy.png)
+
+Czy najpierw modelujemy dany czy domenę?
+
+Domena - abstrakcyjna reprezentacja rzeczywistości, obiekty i funkcje w aplikacji
+Dane - jak dane są ustruktryzowane i przechowywane
+
+W przypadku transformat nie róbimy obu rzeczy tylko wybieramy gdzie będą transformacje
+
+#### Domain Model
+
+![modelowanie_domena](./assets/modelowanie_domena.png)
+
+Modelowanie domenowe nie ma znaczenia jakiej jest postaci, ważne aby było dopasowanie do problemu
+
+-   Bogaty Domain Model
+-   Anemiczny Domain Model
+
+#### Podsumowanie
+
+-   Zastanów się gdzie jest najwięcej danych do obliczenia
+    -   po stronie klienta
+    -   po stronie serwera
+-   Weź pod uwagę złożoność i zmienność trasformaty
