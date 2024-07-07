@@ -3186,3 +3186,67 @@ Modelowanie domenowe nie ma znaczenia jakiej jest postaci, ważne aby było dopa
     -   po stronie klienta
     -   po stronie serwera
 -   Weź pod uwagę złożoność i zmienność trasformaty
+
+### L03. Transformacje - Dlaczego mieszają się z innymi klasami problemów?
+
+#### Ucieknij od stanu
+
+Problemem jest to że każdy system który robi coś wartościowego zmienia stan.
+
+Rzadko w biznesie znajdziemy odizolowane problemy transformacyjne.
+
+[odizolowanie_problemu](./assets/odizolowanie_problemu.png)
+
+Musisz samodzielnie odizolować problemy z wymagań biznesowych, biznes nie zrobi tego za Ciebie
+
+Wsyzstkie problemy można sprowadzić do klasycznych problemów:
+
+-   transformaty
+-   prezentacja danych
+-   rywalizacja o zasoby
+-   intergracja
+-   CRUD
+
+Odizolowywanie problemu pokazuje nam ukryte modele lub konteksty
+
+#### Dlaczego nie widzimy transformat?
+
+-   "lokalność" danych
+    -   mamy wszystkie dane w jednym miejscu, zdefiniowne w wymaganiach
+    -   wiem jakie ma być wyjście
+    -   gorzej nam idzie zauważenie że taka transformata i jej wynik wymaga zebrania danych w jakimś czasie lub pobrane z innych systemów
+    -   ![czas_reguly](./assets/czas_reguly.png)
+-   "różnica" pomiędzy dziedziną, a przeciwiedzina
+    -   np. przy liczeniu RRSO we wejściu mamy liczby i na wyjściu mamy liczbę co nas kieruje autonatycznie do transformaty
+    -   gorzej jak daynmi są jakieś reguły a wynikiem np. harmonogram
+-   sugestywne wymagania
+    -   to jest najczęstszy powód dlaczego przekombinowujemy rozwiązanie
+
+#### Cholerne wymagania
+
+Często biznes mówi po "klingońsku" czyli tebelkami i kolumnami bo liczą że w ten sposób szybciej dostaną rozwiązanie
+
+Istotne aby zawsze pytać o kosnekwencje złamania reguły biznesowej oraz wokół intencji jej modelowania
+
+![zrozumienie_problemu_wymagania](./assets/zrozumienie_problemu_wymagania.png)
+
+![wymagania_przyklad](./assets/wymagania_przyklad.png)
+
+Dobre wymagania rzadko zdarzają się w pierwszej iteracji, ale jeżeli zadasz dobre pytania to w kolejnej iteracji dostaniesz lepsze wymagania
+
+#### Jakimi elementami myślisz?
+
+-   Marian używa encji oraz serwisów
+    -   Jest to podejście które działa ale gorzej jeżeli mamy tylko takie podejście
+-   Braian używa agregatu
+    -   Agregat to dobre podejście ale nie zawsze jest to najlepsze podejście
+
+**Myślenie rozwiązaniem, a nie problemem**
+
+Myślenie poprzez typowe problemu takie jak trasnformata, prezentacja danych, rywalizacja o zasoby, integracja, CRUD
+
+To pozwala nam odwiązywać od siebie rzeczy które mają różne klasy złożoności
+
+![klasy_problemow_razem](./assets/klasy_problemow_razem.png)
+
+![klasy_problemow_razem_1](./assets/klasy_problemow_razem_1.png)
