@@ -3250,3 +3250,51 @@ To pozwala nam odwiązywać od siebie rzeczy które mają różne klasy złożon
 ![klasy_problemow_razem](./assets/klasy_problemow_razem.png)
 
 ![klasy_problemow_razem_1](./assets/klasy_problemow_razem_1.png)
+
+### L04. Model wielkiej skali przy transformatach + podsumowanie
+
+#### Trójpodział logiki w transformatach
+
+![symulacja_fasada](./assets/symulacja_fasada.png)
+
+Istotne jest zauważenie co jest stabilne (jest polityką) a co nie jest stabilne
+
+![trojporzial_transformata](./assets/trojporzial_transformata.png)
+
+![transformata_zadanie](./assets/transformata_zadanie.png)
+
+Tutaj mamy stałe polityki:
+
+-   stała opłata
+-   obniżka o procent
+-   obniżka o kwotę
+
+Wynikiem zawsze jest liczba (opłata)
+
+To kiedt aplikujemy zależy od kanału, czasu, dnia
+
+Mogą się zwieksząć ilości reguł "kiedy" ale polityki są raczej stabilne, dzięki separacyji tych warstw, dzielimy coś co jest stabilny od czegoś co jest niestabilne
+
+#### Podsumowanie
+
+-   Użyteczna metafora
+    -   kalkulator, translator. Każdy ma swój kalkukator i jego użycie nie wpływa na stan innych kalkulatorów
+-   Użyteczne metryki
+    -   złożoność (czas, pamięć)
+-   Użyteczne drivery
+    -   rozszerzalność
+    -   skalowalność (poprzez zrównoleglanie)
+    -   testowalność
+-   strategia testowania
+    -   output-based (input-output)
+-   użyteczne elementy konstrukcyjne DDD
+    -   value object
+    -   polityki
+    -   domain services
+-   paradygmat
+    -   proceduralny
+    -   styl funkcyjny
+        -   side-effect free functions
+        -   niemutowalność
+
+Przykład DDD w kinie: https://github.com/ddd-by-examples/cinema
