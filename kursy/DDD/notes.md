@@ -3298,3 +3298,33 @@ Mogą się zwieksząć ilości reguł "kiedy" ale polityki są raczej stabilne, 
         -   niemutowalność
 
 Przykład DDD w kinie: https://github.com/ddd-by-examples/cinema
+
+## Moduł 09 - Rywalizacja o Zasoby (Jednostki spójności - czyli agregaty)
+
+### L01. Czy to jeszcze CRUD czy już rywalizacja o zasoby?
+
+#### Transformaty i CRUD'y są łatwe
+
+Transformata jest wygodna bo nie wspóldziemimy stanu pomiędzy wątkami programu
+
+**Agregat, jednostka spójności, jednostka blokowania to jest to samo**
+
+W przypadku crudów jednie musimy zadbać o to aby zapis i odczyt były spójne
+
+#### Rywalizacja o zasoby jest trudniejsza
+
+Tutaj musimy mieć informacje które zmiany stanu powinny sobie wchodzić w drogą a które nie
+
+Brak dobrej analizy powoduje że dobieramy złą klase problemu do klasy rozwiązania
+
+Chcemy się dowiedzieć czy dane danego if'a mogą się zmienić podczas uruchoamiania tego if'a
+
+Pytania:
+
+-   jaka jest konsekwnencja jednoczesnej zmiany?
+-   Czy mamy środowisko many-writers, many-readers? Czy mamy współbieżność?
+
+![reguly1](./assets/reguly1.png)
+
+### Anomalie w bazie danych
+
