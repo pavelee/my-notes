@@ -20,3 +20,7 @@ utrzymanie SRP powoduje że będziesz wstanie ponownie reuzyc tych samych kompon
 
 obiekty w systemie powinny być otwarte na rozszerzanie, zamknięte na modyfikacje 
 
+tłumacząc na React:
+
+**Komponent nie powinien być zmieniany a jedynie reuzywany w innych komponentach**
+
