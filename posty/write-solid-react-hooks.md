@@ -16,3 +16,7 @@ zadaj pytania
 
 utrzymanie SRP powoduje że będziesz wstanie ponownie reuzyc tych samych komponentów
 
+## OCP
+
+obiekty w systemie powinny być otwarte na rozszerzanie, zamknięte na modyfikacje 
+
