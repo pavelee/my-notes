@@ -2,6 +2,8 @@ https://www.perssondennis.com/articles/write-solid-react-hooks
 
 ## SRP
 
+**moduł powinien być odpowiedzialny tylko za jedną rzecz**
+
 komponent powinien robić tylko jedną rzecz 
 
 zadaj pytania 
