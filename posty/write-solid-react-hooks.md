@@ -26,4 +26,10 @@ tłumacząc na React:
 
 ## LSP
 
+**jeżeli komponent dziedziczy po jakimś komponencie powinien akceptować takie same propsy i mieć taki sam return aby był kompatybilny z rozszerzanym komponentem** 
+
+to onacza z jeśli mamy UseLocalStorage hook to jeśli stworzymy UseLocalAndRemoteStorage to ten hook powinien być kompatybilny z tym pierwszym pod kątem parametrów oraz return 
+
+celem jest to aby dało się łatwo podmienić na dziedziczy element bez potrzeby zmian w kodzie
+
 
