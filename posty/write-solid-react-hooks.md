@@ -32,4 +32,7 @@ to onacza z jeśli mamy UseLocalStorage hook to jeśli stworzymy UseLocalAndRemo
 
 celem jest to aby dało się łatwo podmienić na dziedziczy element bez potrzeby zmian w kodzie
 
+## ISP
+
+
 
