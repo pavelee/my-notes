@@ -24,3 +24,6 @@ tłumacząc na React:
 
 **Komponent nie powinien być zmieniany a jedynie reuzywany w innych komponentach**
 
+## LSP
+
+
