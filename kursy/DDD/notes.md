@@ -3326,5 +3326,30 @@ Pytania:
 
 ![reguly1](./assets/reguly1.png)
 
-### Anomalie w bazie danych
+#### Anomalie w bazie danych
 
+Problem rywalizacji o zasoby jest problemem stanowym, to finalnie baza danych jest źródłem finalnym miejscem gdzie mamy aktualny stan danych
+
+Problem lost update niektóre z danych nie zostały zapisane, jakiś zapis został zgubiony.
+
+W przypadku CRUD problem jest mniej ryzykowny.
+
+Typowy problem jest w przypadku kiedy mamy regułę że możemy zmienić dany rekord tylko N razy w ciągu czasu np. dnia. Jeżeli mamy kilka wątkow z tym samego zapytania to może to być problem. Co istotne problem występuje przy wielu użytkownikach, jeśli mamy tylko jeden użytkownik to problem nie ma.
+
+Też może nie być rywalizacji o zasoby, jeśli użtkownicy zmieniają tylko swoje dane, to problemu nie ma.
+
+CRUD czy rywalizacja o zasoby?
+
+-   czy instrukcje warunkowe posiadają dane które w trakcie sprawdzannia reguły mogą zostać zmienione?
+
+#### Jedna tabelka vs wiele tabelek z regułami
+
+Zwykle problem rywalizacji jest spowodowany tym że mamy dany w jednej tabeli.
+
+W budowaniu wydajnych systemów jest ważne aby zablokować tylko to co muszę ale nie więcej.
+
+Write-skew to problem w którym dwie lub więcej transakcje wykonują niezależne modyfikacje w współdzielonych danych, co prowadzi do złego stanu systemu.
+
+Idealnie aby dane które powinny zmieniać się razem aby były w jednej tabeli, tak aby były objęte jednym lockiem (jedna tabelka, jeden lock).
+
+### L02. Dlaczego w agregatach nie chodzi o obiektowość?
