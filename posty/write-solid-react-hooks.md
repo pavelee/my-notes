@@ -36,7 +36,7 @@ celem jest to aby dało się łatwo podmienić na dziedziczy element bez potrzeb
 
 interfejsy powinny szczegółowe tak aby rozweselający je nie musiał implementować czegoś czego nie będzie używał, analogowe komponenty powinny używać tylko interfejsów które są użyteczne 
 
-innymi słowy nie tworzymy wielkich interfejsów a grupy mniejszych wyspecjalizowanych 
+**innymi słowy nie tworzymy wielkich interfejsów a grupy mniejszych wyspecjalizowanych**
 
 ## DIP
 
