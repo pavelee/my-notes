@@ -3353,3 +3353,115 @@ Write-skew to problem w którym dwie lub więcej transakcje wykonują niezależn
 Idealnie aby dane które powinny zmieniać się razem aby były w jednej tabeli, tak aby były objęte jednym lockiem (jedna tabelka, jeden lock).
 
 ### L02. Dlaczego w agregatach nie chodzi o obiektowość?
+
+Pamiętaj, celem jest wydestylowanie potencjalnie konfliktujących się komend w agregatach. Oraz nie blokowanie tych które do konflitku nie mogę doprowadzić, zachowując system skalowalny.
+
+Możemy to sprawdzić poprzez parowanie każdej komendy z każdą inną i sprawdzenie czy mogą się blokować.
+
+Prosty test modelarza na destylacje jednostki
+
+-   Sprawdź które komendy się ze sobą blokują, a jakie nie.
+-   Uwaga! Komenda może się blokować sama ze sobą.
+-   Uwaga! Komenda może się blokować same ze sobą w zależności od użytych parametrów
+-   Uwaga! Komendy mogą w jedną jednostkę spójności na zasadzie przechodnościo
+
+Bogaty Model (Obiekty z regułami) vs Anemiczny Model (get/set i logiką w serwisach)
+
+-   Anemiczny model
+    -   często wykorzystywany bo programiści nie znają innej opcji
+    -   Powoduje że mamy kod proceduralny w klasach
+
+Pamiętaj, obiektowe nie znaczy lepsze, to znaczy że mamy obiektowy kod, obiektowe jest lepsze jak problem jest obiektowy, np. kiedy problem musi zarządzać stanem i go enkapsulować w klasach
+
+często używane argumenty do używania obiektowego modelu
+
+-   bo wypada
+-   testowalność
+-   ponowne użycie (reguły)
+
+Jakie są elementy konstrukcyjne, które tworzą architekturę?
+
+-   encje (tabele) i serwisy (skrypty)
+-   obiekty (stan z regułami)
+
+Obiektowość daje nam możliwość ponownego reużycia reguł zapisanych w modelu, nie musimy tego kopiować jeżeli to jest w serwisie
+
+Proceduralnie nie oznacza gorzej niż obiektowość
+
+Kod anemiczny ma sens i działa jeżeli mamy jeden serwis per jedną encję, to zwyklę się dzieje przy CRUD-owych operacjach dlatego tam kod proceduralny jest ok.
+
+![serwis_anemiczny](./assets/serwis_anemiczny.png)
+
+Kod proceduralny utrudnia nam myślenie o jednostce spójności.
+
+![serwis_anemiczny_lockowanie](./assets/serwis_anemiczny_lockowanie.png)
+
+W kodzie procedudalnym możemy to uzyskać jeżeli serwis dotyka tylko swojego stanu i żadnego innego.
+
+![agregat_vs_procedura](./assets/agregat_vs_procedura.png)
+
+Celem nie jest programowanie obiektowe, celem jest ukrycie stanu i pewność sprawdzania reguł
+Celem jest prywatność stanu który będzie blokowany
+Celem jest szybki i spójny odczyt danych które będą blokowane
+
+Programowanie obiektowe nie jest warunkiem wystarczającym do dobrej implementacji agregatu.
+
+Technicznie nie jest też warunkiem koniecznym.
+
+Ważniejsz jest decyzja co do jednostki spójności niż decyzja co do implementacji.
+
+### Styl w kodzie jest drugorzędny
+
+**Dyskusja o obiektowości czy proceduralnym kodzie jest drugorzędna przy złym ksztzałcie agregatu**
+
+Oceń
+
+-   Które komendy mają się blokować, a które nie?
+    -   Czasem proces biznesowy wyklucza blokadę
+-   Jaka jest częstotoliwość wykonywania komend?
+    -   Czy są skoki?
+-   ile danych będzie wyciąganych do podjęcia decyzji?
+
+Jednostka spójności jest decydentem, pozwala na coś lub nie
+
+Chcemy mieć kohezje aby wczytać jak najmniej danych przy podjemowaniu decyzji
+
+Kohezja miara jak dobrze grupujemy rzeczy które są zależne od siebie
+
+![kohezja](./assets/kohezja.png)
+
+np. jak wiele pól jest używanych przez metody klasy, jeżeli wszystkie pola klasy są wykorzystywane przez wszystkie metody klasy to kohezja to 100% (najlepsze)
+
+Kohezja jest informacją a nie celem samym w sobie, jeżeli kohezja jest mała to raczej nasz system jest niewydajny i niestabilny
+
+Koheezja jest metryką kontekstową. To nie jest dobra metryka do ocen fasad. Ale dobra do oceny jenostek spójności
+
+### Rozmiar jest ważny
+
+-   Co oznacza że obiekt jest duży?
+    -   ilość linii kodu nie jest dobrą metryką, bo jednostka spójności może tyle wymagać aby podjąć decyzję
+
+Natomiast co istotne pytania:
+
+-   Ile danych będzie wyciąganych do podjęcia decyzji?
+-   Jaka jest częstotoliwość wykonywania komend?
+-   Jak te dane będą blokowane?
+
+![jednostka_spojnosci_1](./assets/jednostka_spojnosci_1.png)
+
+### Uwaga na skoki komend
+
+Zadaj sobie pytanie czy komendy mogą skakać się w kolejności
+
+### Słynny agregat
+
+Agregat = graf obiektów z którymi komunikujemy się TYLKO poprzez jego korzeń. Graf obiektów które zawsze muszą być spójne.
+
+Celem stworzenia Agregatu nie jest agregacja obiektów.
+
+Celem agregatu jest agregacja reguł, tak aby:
+
+-   to, co miało być spójne wzajemnie się blokowało
+-   a to co nie musi być spójne mogło wykonywać się równolegle
+
+Graf obiektów to konsekwencja a nie cel
