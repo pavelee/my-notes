@@ -40,7 +40,11 @@ interfejsy powinny szczegółowe tak aby rozweselający je nie musiał implement
 
 ## DIP
 
+### Dependency inversion 
 
+### Inversion of Control
+
+### Dependency Injection
 
 
 
