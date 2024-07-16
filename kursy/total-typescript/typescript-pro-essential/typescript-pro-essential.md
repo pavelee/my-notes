@@ -11,3 +11,25 @@ Początkowo powstał silnik w C# który tłumaczenie C# na javascript było bard
 ![assets/typescript.png](assets/typescript.png)
 
 W TS mamy serwer który działą w twoim IDE i momencie jak dokonujesz zmian to kompiluje i podkreśla wszystkie błędy
+
+## Instalacja typescript
+
+instalacja globalnie
+
+```
+npm -g install typescript
+```
+
+instalacja lokalnie
+
+```
+npm install -D typescriptF
+```
+
+następnie możemy użyć np.
+
+```
+tsc --version
+```
+
+aby sprawdzić czy tsc działa
