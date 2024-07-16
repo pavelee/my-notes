@@ -3410,7 +3410,7 @@ Technicznie nie jest też warunkiem koniecznym.
 
 Ważniejsz jest decyzja co do jednostki spójności niż decyzja co do implementacji.
 
-### Styl w kodzie jest drugorzędny
+#### Styl w kodzie jest drugorzędny
 
 **Dyskusja o obiektowości czy proceduralnym kodzie jest drugorzędna przy złym ksztzałcie agregatu**
 
@@ -3436,7 +3436,7 @@ Kohezja jest informacją a nie celem samym w sobie, jeżeli kohezja jest mała t
 
 Koheezja jest metryką kontekstową. To nie jest dobra metryka do ocen fasad. Ale dobra do oceny jenostek spójności
 
-### Rozmiar jest ważny
+#### Rozmiar jest ważny
 
 -   Co oznacza że obiekt jest duży?
     -   ilość linii kodu nie jest dobrą metryką, bo jednostka spójności może tyle wymagać aby podjąć decyzję
@@ -3449,11 +3449,11 @@ Natomiast co istotne pytania:
 
 ![jednostka_spojnosci_1](./assets/jednostka_spojnosci_1.png)
 
-### Uwaga na skoki komend
+#### Uwaga na skoki komend
 
 Zadaj sobie pytanie czy komendy mogą skakać się w kolejności
 
-### Słynny agregat
+#### Słynny agregat
 
 Agregat = graf obiektów z którymi komunikujemy się TYLKO poprzez jego korzeń. Graf obiektów które zawsze muszą być spójne.
 
@@ -3465,3 +3465,34 @@ Celem agregatu jest agregacja reguł, tak aby:
 -   a to co nie musi być spójne mogło wykonywać się równolegle
 
 Graf obiektów to konsekwencja a nie cel
+
+### L03. Heurystyki doboru paradygmatu 
+
+To że umiem progoramować obiektowow nie pomoże mi jeśli nie umiem zaprojektować agregatu (jednostka spójności)
+
+Jak mogę zaimplementowa√ agregatu?
+
+-   Proceduralnie
+    -   Reguły sprawdzone na poziomie serwisów
+    -   encje anemiczne (bez zachowań, same torby na dane)
+-   Obiektowo
+    -   reguły sprawdzane w obiektach
+    -   obiekty mają dane jak i zachowania
+-   Funkcyjne
+    -   niemutowalne funkcje, zwracają nowy obiekt z nowym stanem
+    -   typy danych
+    -   funkcje z regułami (zwracające nowy stan)
+    -   ![funkcyjne_agregat](./assets/funkcyjne_agregat.png)
+
+Finalnie najlepiej sprawdza się paradygmat obiektowy bo finalnie od stau nie uciekne a obiektowość świetnie nadaje się do enkapsulacji w agregatach
+
+#### Agregat w bazie danych?
+
+-   zazwyczaj mniej ekspersywny
+-   zazwyczaj trudniejszy do testowania
+-   zazwyczaj trudniejszy do modyfikowania
+-   wydajnieszy
+
+#### Regułą przeniesiona do bazy danych
+
+![paradygmaty](./assets/paradygmaty.png)
