@@ -42,9 +42,11 @@ interfejsy powinny szczegółowe tak aby rozweselający je nie musiał implement
 
 ### Dependency inversion 
 
-wyższe komponenty nie powinny być zależne od niższych komponentów. Powinny komunikować się poprzez abstrakcje, tak aby był wymienny 
+wyższe komponenty nie powinny być zależne od niższych komponentów. Powinny komunikować się poprzez abstrakcje, tak aby był komponenty niższego poziomu były wymienne jeżeli interfejs zostaje taki sam
 
 ### Inversion of Control
+
+moduł nie zarządza cyklem życia innego obiektu. w praktyce zależności są wstrzykiwane jako zależności przy inicjacji modułu.
 
 ### Dependency Injection
 
