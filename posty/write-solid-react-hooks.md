@@ -50,5 +50,6 @@ moduł nie zarządza cyklem życia innego obiektu. w praktyce zależności są w
 
 ### Dependency Injection
 
+jest sposób na implementacje IoC, komponentowi jest wstrzykiwane zależności. Dzięki temu komponent który go używa nie jest odpowiedzialny za cykl życia wstrzykiwanego obiektu
 
 
