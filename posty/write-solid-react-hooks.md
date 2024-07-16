@@ -52,4 +52,10 @@ moduł nie zarządza cyklem życia innego obiektu. w praktyce zależności są w
 
 jest sposób na implementacje IoC, komponentowi jest wstrzykiwane zależności. Dzięki temu komponent który go używa nie jest odpowiedzialny za cykl życia wstrzykiwanego obiektu
 
+### jak to wygląda w React 
+
+w react możemy użyć 
+
+- hooks, mimo że są w kodzie komponentu to pozwalają na odcięcie szczegółów implementacji od komponentu. Props oraz zwracane obiekty są jak abstrakcje dla komponentu 
+- HoC (higher order component)
 
