@@ -33,3 +33,23 @@ tsc --version
 ```
 
 aby sprawdzić czy tsc działa
+
+## Wykonanie kompilacji
+
+w folderze wykonujemy
+
+```
+tsc --init
+```
+
+następnie możemy przkompilować plik
+
+```
+tsc nazwa_pliku.ts
+```
+
+lub możemy uruchomić watch tak aby kompilować plik gdy zmieniamy go
+
+```
+tsc --watch nazwa_pliku.ts
+```
