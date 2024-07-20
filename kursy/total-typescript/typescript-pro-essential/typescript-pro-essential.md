@@ -69,4 +69,78 @@ Vite używa esbuild, który jest alternatywą do tsc, to pozwala Vita na większ
 
 Natomiast nadal lokalnie potrzebujemy TS aby sprawdzał typy i wyświetlał nam błędy, więc mamy tutaj połączenie TS i Vite, natomiast aby mamy ustawione noEmit aby TS nie gryzł się z Vite.
 
+### Uruchomienie TS w CI/CD na github
+
+przykładowy github action:
+
+```yml
+name: CI
+on:
+    # Runs against all pushes
+    push:
+        branches:
+            - "**"
+
+    # Runs against all pull requests
+    pull_request:
+        branches:
+            - "**"
+
+jobs:
+    ci:
+        # Runs on the latest version of Ubuntu, a linux distro
+        runs-on: ubuntu-latest
+        steps:
+            # Checks out the current branch using git checkout
+            - uses: actions/checkout@v3
+
+            # Sets up pnpm with version 7
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: 7
+
+            # Sets up node
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16.x
+                  # Sets up pnpm's cache
+                  cache: "pnpm"
+
+            # Install with frozen lockfile to ensure packages
+            # are not accidentally updated
+            - run: pnpm install --frozen-lockfile
+
+            # Run the 'ci' script defined in package.json
+            - run: pnpm run ci
+```
+
+Plik trzymany w .github/workflows/ci.yml
+
+### Uruchomienie skryptu TS w aplikacji
+
+zainstaluj tsx
+
+```
+npm install -D tsx
+```
+
+następnie dodaj skrypt do package.json
+
+```json
+{
+    "scripts": {
+        "my-script": "tsx scripts/my-script.ts"
+    }
+}
+```
+
+przykładowy skrypt
+
+```ts
+console.log("The script is working!");
+
+const [, , ...args] = process.argv;
+
+console.log(args);
+```
 
