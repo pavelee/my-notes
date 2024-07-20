@@ -53,3 +53,20 @@ lub możemy uruchomić watch tak aby kompilować plik gdy zmieniamy go
 ```
 tsc --watch nazwa_pliku.ts
 ```
+
+## Porównanie Vite i TS
+
+Co istotne w momencie integracji Vite z TS będziemy mieć w configu TS:
+
+```js
+...
+"omitEmit": true,
+```
+
+Co oznacza że TS nie generuje plików JS, ponieważ tym już zajmuje się Vite
+
+Vite używa esbuild, który jest alternatywą do tsc, to pozwala Vita na większą wydajność bez potrzeby sprawdzania typów i błędów
+
+Natomiast nadal lokalnie potrzebujemy TS aby sprawdzał typy i wyświetlał nam błędy, więc mamy tutaj połączenie TS i Vite, natomiast aby mamy ustawione noEmit aby TS nie gryzł się z Vite.
+
+
