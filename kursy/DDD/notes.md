@@ -3466,7 +3466,7 @@ Celem agregatu jest agregacja reguł, tak aby:
 
 Graf obiektów to konsekwencja a nie cel
 
-### L03. Heurystyki doboru paradygmatu 
+### L03. Heurystyki doboru paradygmatu
 
 To że umiem progoramować obiektowow nie pomoże mi jeśli nie umiem zaprojektować agregatu (jednostka spójności)
 
@@ -3496,3 +3496,84 @@ Finalnie najlepiej sprawdza się paradygmat obiektowy bo finalnie od stau nie u
 #### Regułą przeniesiona do bazy danych
 
 ![paradygmaty](./assets/paradygmaty.png)
+
+### L04. Rodzaje blokowania i dlaczego 4 zasady projektowania agregatów to w praktyce jedna?
+
+To o co chodzi w tych agregatach?
+
+O to aby zachować zdolność skalowalności z zachowaniem spójności danych.
+
+Celem jest aby stworzyć dużo małych ale nie za małych jednostek spójności,
+
+z jednej strony zbyt surowa jednostka spójności może prowadzić do wolnego systemu który może obsłużyć tylko jedno żądanie na raz, z drugiej strony zbyt mała jednostka spójności może prowadzić do problemów z zachowaniem spójności danych.
+
+![agregat_balans](./assets/agregat_balans.png)
+
+Jak mogę obsługiwać blokowanie?
+
+-   Pesymistycznie 
+    -   nie wpuszczę Cie, jeśli ktoś inny używa zasobu
+    -   pesymistcznie to znaczy dlatego że zakładamy że ktoś inny też będzie chciał używać zasobu
+    -   najczęściej poczekasz w kolejce aż zasób się zwolni
+    -   dobry wybór jeżeli zakładamy duże obciążenie systemu
+-   Optymistczne
+    -   wpuszczę Cie, nawet jeśli ktoś inny używa zasobu
+    -   ale przy "wyjściu" sprawdzę czy byłeś prze zasobie sam
+    -   dobry wybór, jeśli nie podejrzewamy dużego obciążenia systemu
+    -   Musimy się luczyć z kosztem błędu lub ponowienia operacji
+    -   Technicznie najczęściej obsługuje się to przez wersjonowanie danych, czyli zapamiętuje z jaką wersja danych operowaliśmy i jeżeli ktoś inny zmienił dane to nie zapisujemy zmian
+        -   Cześć baz danych automatycznie obsługuje wersjonowanie danych
+-   Kompensująca
+    -   pozwalamy na konflikty i niespójność danych
+    -   poprawiamy je później
+    -   Jest to technika reakcji na nie spójność a nie blokowania
+
+#### Modele transakcyjności
+
+Dobieramy modele transakcyjności:
+-   małe ryzyko - optimistyczne
+-   duże ryzyko - pesymistyczne
+-   szczególne wymania duzej dostępnośći w rozpoznawaniu konfliktów - kompensująca
+
+Z transakcji biznesowej wynika transakcja techniczna
+
+![spojnosc_natychmiastowa](./assets/spojnosc_natychmiastowa.png)
+
+spójność natychmiastowa
+-   mniejsza skalowalność
+-   brak okna desynchronizacji
+-   łatwiejsza w implementacji
+
+[spojnosc_koncowa](./assets/spojnosc_koncowa.png)
+
+spójność końcowa
+-   większa skalonowalność
+-   istnieje okno desynchronizacji
+-   trudniejsza w implementacji
+
+#### Obiekt vs Tabela
+
+Granice obiektów (które często odpowiadają granicom tabel/dokumentów) nie muszą równąć się granicy blokowania
+
+#### Kiedy mogę łamać zasady?
+
+Cztery dobre zasady projektowania agregatów
+
+-   modeluj prawdzwine niezmienniki w granicach spójności
+    -   if'y które muszą być sprawdzone natychmiastowo
+    -   jeżeli masz w swoim agregacie masz dane których nie potrzebujesz do podejmowania decyzji to nie potrzebnie poszerzasz agregat
+    -   **blokuj tylko to co muszisz i nic więcej**
+-   projektuj małe agregaty
+    -   aby jednostka blokowania jest mała
+-   w agregacie odwołuj się do innych agregatów tylko poprzez referencje
+-   stosuj spójność końcową poza granicami agregatu
+
+**Kiedy mogę złamać zasadę?**
+
+**Kiedy wiem, z czego wynika.**
+
+Podstawowa zasada projektowania agregatów:
+
+**Nie poszerzaj jednostki blokowania agregatu, jeśli nie musisz.**
+
+### L05. Persystencja agregatów
