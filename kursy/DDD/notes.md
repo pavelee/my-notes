@@ -3511,7 +3511,7 @@ z jednej strony zbyt surowa jednostka spójności może prowadzić do wolnego sy
 
 Jak mogę obsługiwać blokowanie?
 
--   Pesymistycznie 
+-   Pesymistycznie
     -   nie wpuszczę Cie, jeśli ktoś inny używa zasobu
     -   pesymistcznie to znaczy dlatego że zakładamy że ktoś inny też będzie chciał używać zasobu
     -   najczęściej poczekasz w kolejce aż zasób się zwolni
@@ -3531,6 +3531,7 @@ Jak mogę obsługiwać blokowanie?
 #### Modele transakcyjności
 
 Dobieramy modele transakcyjności:
+
 -   małe ryzyko - optimistyczne
 -   duże ryzyko - pesymistyczne
 -   szczególne wymania duzej dostępnośći w rozpoznawaniu konfliktów - kompensująca
@@ -3540,6 +3541,7 @@ Z transakcji biznesowej wynika transakcja techniczna
 ![spojnosc_natychmiastowa](./assets/spojnosc_natychmiastowa.png)
 
 spójność natychmiastowa
+
 -   mniejsza skalowalność
 -   brak okna desynchronizacji
 -   łatwiejsza w implementacji
@@ -3547,6 +3549,7 @@ spójność natychmiastowa
 [spojnosc_koncowa](./assets/spojnosc_koncowa.png)
 
 spójność końcowa
+
 -   większa skalonowalność
 -   istnieje okno desynchronizacji
 -   trudniejsza w implementacji
@@ -3577,3 +3580,62 @@ Podstawowa zasada projektowania agregatów:
 **Nie poszerzaj jednostki blokowania agregatu, jeśli nie musisz.**
 
 ### L05. Persystencja agregatów
+
+W idealnym świecie chce wczytać dane z jednego miejsca i zapisać w jednym miejscu jak najszybciej to możliwe.
+
+Persystencja jednostek spójności
+
+-   relacyjnie: jedna tabelka vs kilka tabel
+
+Jeżeli masz powiązane kolekcje w agregacie to zastanów się:
+
+**Czy na pewno jednostka spójności powinna mieć kolekcje zależną? Jaka reguła jest rozpięta na całej kolekcji obiektów?**
+
+Jeżeli Twój ORM wykonuje lazyloading to może to spowodwać problemy ze spójnością danych, ponieważ dane będą pobierane w różnym czasie. Może to mieć poważne konsekwencje jeżeli potem tymi danymi coś przeliczasz itp.
+
+ORM i jednostki spójności
+
+-   pułapka lazy loading
+-   write skew
+    -   kiedy odczytujesz w dwóch wątkach i zapisujesz w jednym
+
+ORM i jego zalety
+
+-   optimisic locking
+-   dirty checking
+-   mapowanie typów prostych
+
+Jeśli ORM przeszkadza: szukaj przyczyny w design obiekcie a nie narzędziu
+
+Pamiętaj że możesz skorzystać z Eager loading, czyli wczytanie wszystkich danych razem z głównym obiektem
+
+ORM zabrudza kod biznesowy
+
+ORM przeszkadza, jeśli jego użycie zmusa Ciebie do pozbycia się **kluczowych cech designu** Twojego projektu.
+
+#### Co z innymi typami baz danych?
+
+Dokument jest idalnym miejscem do persystencji agregatu
+
+Użycie event sorcingu - w postaci przyrostowego zapisu zdarzeń jako jedyne źródło prawdy
+-   audytowalność
+-   analityka - szukanie patternów w zdarzeniach
+-   debugowanie - podróż w czasie
+-   natomiast więcej danych do wcztytania
+    -   tutaj rozwiązaniem jest snapshot
+    -   prób wejścia
+
+Są głosy że event sourcing powinnien być domyślnym sposobem persystencji agregatów
+
+#### Co jest pierwsze? Model danych czy model domeny?
+
+
+-   Często działająca procedura:
+    -   znajdź komendy i reguły, które muszą być sprawdzane atomowo
+    -   określ dane obiektu
+    -   określ dane w bazie
+-   Musisz pamiętać o wydajnej persystencji
+    -   o tym jak i ile blojuję danych w bazie
+    -   oraz ile danych z nazy wczytuję
+
+**Doświadczony modelarz birze obie prespektywy niemal równocześnie pod uwagę**
