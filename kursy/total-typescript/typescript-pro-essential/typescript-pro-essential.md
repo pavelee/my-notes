@@ -179,3 +179,15 @@ lub
 ```ts
 [number, number?]
 ```
+
+### Set init z typem
+
+```ts
+const set = new Set<number>();
+```
+
+lub
+
+```ts
+const set: Set<number> = new Set();
+```
