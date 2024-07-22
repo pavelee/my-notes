@@ -144,3 +144,38 @@ const [, , ...args] = process.argv;
 console.log(args);
 ```
 
+### Array
+
+array też można zapisać jako
+
+```ts
+Array<number>;
+```
+
+### Tuple
+
+Tuple można też zapisać w formacie
+
+```ts
+[x: number, y: number]
+```
+
+to pozwala potem dostać podpowiedź od TS który parametr jest którym elementem
+
+np.
+
+rage: [x: number, y: number]
+
+#### Opcjonalny parametr w Tuple
+
+można to uzyskać na dwa sposoby:
+
+```ts
+[x: number, y?: number]
+```
+
+lub
+
+```ts
+[number, number?]
+```
