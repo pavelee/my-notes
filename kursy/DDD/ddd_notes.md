@@ -3618,6 +3618,7 @@ ORM przeszkadza, jeśli jego użycie zmusa Ciebie do pozbycia się **kluczowych 
 Dokument jest idalnym miejscem do persystencji agregatu
 
 Użycie event sorcingu - w postaci przyrostowego zapisu zdarzeń jako jedyne źródło prawdy
+
 -   audytowalność
 -   analityka - szukanie patternów w zdarzeniach
 -   debugowanie - podróż w czasie
@@ -3629,7 +3630,6 @@ Są głosy że event sourcing powinnien być domyślnym sposobem persystencji ag
 
 #### Co jest pierwsze? Model danych czy model domeny?
 
-
 -   Często działająca procedura:
     -   znajdź komendy i reguły, które muszą być sprawdzane atomowo
     -   określ dane obiektu
@@ -3639,3 +3639,68 @@ Są głosy że event sourcing powinnien być domyślnym sposobem persystencji ag
     -   oraz ile danych z nazy wczytuję
 
 **Doświadczony modelarz birze obie prespektywy niemal równocześnie pod uwagę**
+
+### L06. Strategia testowania, Application Services, Domain Services, Policies i inne
+
+-   Serwis Aplikacyjny w DDD
+    -   koordynuje proces biznesowy
+    -   komunikuje się ze światem zewnętrznym
+    -   zakłąda transakcje
+    -   sprawdza bezpieczeństwo
+    -   loguje
+    -   wysyła zdarzenia
+    -   odświeża widok
+
+Jest to po prostu prosty przykład użycia często używany z agregatami
+
+#### Serwisy aplikacyjne vs domenowe
+
+Pamiętaj że istotnym pytaniem jest co chcesz osiągnąć wyciągajać jakikolwiek serwis
+
+##### Serwis domenowy
+
+Cel: enkapsulacja, testowalność, zamknięcie potwrzającej się operacji za interfejsem
+
+Jest bezstanowy, logika tego serwisu nie pasuje do żadnego z agregatów
+
+wejściem serwisu są obiekty domenowe oraz tak samo na wyjściu są obiekty domenowe
+
+**Tutaj istotne wychodząc od celu a nie wzroca, omoijamy jałowe dyskusje o tym jak wyglądać w kodzie**
+
+Czym się rózni serwis domenowy od serwisu aplikacyjnego?
+
+![serwis_domenowy_aplikacyjny](./assets/serwis_domenowy_aplikacyjny.png)
+
+**Elementy konstrukcyjne są środkiem do celu, a nie celem\*\***
+
+zawsze pytaj o cel, sens danej konstrukcji
+
+#### Encje
+
+-   encja mają swoją tożsamość
+-   porównywalne poprzez identyfikator
+-   zmieniaja się w czasie
+-   np. korzeń jednej spójności
+
+#### Immutability
+
+**Załóż, że da się zbudować  agregat z samych value objectów**
+
+#### Tetsowanie
+
+-   output-based
+-   indirect state-based
+    -   testujesz stan wewnetrzny agregatu
+
+-   Jak publikować zdarzenia?
+    -   ze środka agregatu?
+    -   zwracać jako paramter zwrotny i publikować poprzez serwis?
+
+Nie ma to znaczenia, jeśli zachowujesz transakcyjność za pomocą wzroca outbox-pattern i zapewniasz że zdarzenia są konsumowane po zakończonej z sukcesem transakcji w agregatach
+
+#### Łaczenie z innymi klasami problemów
+
+wrzorzec specyfikacji, pozwala na sprawdzenie czy agregat jest w stanie obsłużyć żądanie
+
+### L07. Podsumowanie podstaw i zadania praktyczne
+
