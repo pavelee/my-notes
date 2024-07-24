@@ -3704,3 +3704,52 @@ wrzorzec specyfikacji, pozwala na sprawdzenie czy agregat jest w stanie obsłuż
 
 ### L07. Podsumowanie podstaw i zadania praktyczne
 
+-   użyteczna metafora
+    -   Technika zarządzania dostępem do ograniczonych zasobów w systemie
+        -   kontrolerem jest semafor czy strażnik
+-   Użyteczne metryki
+    -   kohezja - czyli jak silnie związane są ze sobą obiekty
+    -   ilość wczytywanych danych do podjęcia decyzji
+    -   liczba wzajemnie blokujących się komend
+-   Użyteczne drivery
+    -   spójność
+    -   skalowalność
+-   Strategie testowania
+    -   output-based
+    -   indirect state-based
+        -   testujesz stan wewnetrzny agregatu
+-   Użyteczne elementy z DDD
+    -   Agregaty
+        -   zbudowane z encji i value objectów
+        -   dostrajane politykami
+        -   emitujące zdarzenia
+        -   łączone za pomocą serwisów domenowych
+        -   orkiestrowane przez serwisy aplikacyjne
+-   paradygmat
+    -   obiektowy
+
+#### Zadanie
+
+![zadanie_portfel_tresc](./assets/zadanie_portfel_tresc.png)
+
+Zawsze na poczatku zadaj pytanie: Gdzie jest tutaj współbieżność danych?
+
+Brak współbieżności danych nie oznacza że nie mogę korzystać z czegoś co przypominają agregaty.
+
+Na przykład czegos co wygląda jak graf obiektów, z którym rozmawiam przez korzeń który podejmuje decyzję.
+
+Tutaj agregatem jest miejsce gdzie uczestnicy głosują bo jest ryzyko że ktoś jednocześnie zagłosuje z dwóch urządzeń jednocześnie.
+
+![zdadnie_portfel](./assets/zdadnie_portfel.png)
+
+**Nie szukaj agregatów tylko dlatego że w systemie mamy jakieś reguły**
+
+**ALE TO NIE OZNACZA ŻE NIE MOGĘ STWORZYĆ KLASY PORTFEL KTÓRA TROCHE WYGLADA JAK AGREGAT**
+
+Zwracaj uwagę na współbieżność, **zwracaj uwagę kto faktycznie podejmuje decyzję**
+
+#### Zadanie 2
+
+![zadanie_2_lekarz](./assets/zadanie_2_lekarz.png)
+
+
