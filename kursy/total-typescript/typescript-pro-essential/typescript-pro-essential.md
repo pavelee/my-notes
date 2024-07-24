@@ -191,3 +191,25 @@ lub
 ```ts
 const set: Set<number> = new Set();
 ```
+
+### Jak działa TS w VsCode
+
+VsCode posiada TS server który działa w tle i sprawdza typy w czasie pisania, przekazuje do VSCode błędy i wskazuje na je
+
+#### Szybki import
+
+zaznacz kod wciśnij CMD + . i potem Import All missing imports
+
+#### Usunięcie wszystkich nie potrzebnych importów
+
+1. Komenda "Organize Imports"
+2. Zaznacza CMD + . i wybierz "Remove Unused Imports"
+3. ALT + SHIFT + O
+
+#### Quick fixes
+
+Quick fixes mogą:
+
+-   wydzielić kod jako osobny funkcja
+-   usunąć niepotrzebne importy
+-   zrobić szybki refactoring
