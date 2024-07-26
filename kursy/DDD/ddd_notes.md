@@ -3752,4 +3752,41 @@ Zwracaj uwagę na współbieżność, **zwracaj uwagę kto faktycznie podejmuje 
 
 ![zadanie_2_lekarz](./assets/zadanie_2_lekarz.png)
 
+### Zaawansowane agregaty dynamiczne: Kiedy obiektowe agregaty nie wystarczają
+
+Przypomnienie:
+
+-   Oceń które komenty mogą się blokować, a które nie
+    -   Pamiętaj że czasem proces biznesowy wyklucza blokadę
+-   Jaka jest częstotliwość komend? czy są Skoki?
+
+#### Odchudzanie agregatu
+
+-   Agregat czasowy
+    -   Czy w biznesie jest naturalna granulacja czasu?
+    -   Bez zbadania wszystkich przypadków to niekoniecznie jest najlepsza rada
+
+Agregat czasowy może prowadzić do tego że będziesz miał wiele bardzo małych obiektów których będzie ogromnie dużo, dlatego nie jest najlepszym pomysłem i komentowanie agregatu czasowego jeżeli nie jest pewien czy to jest potrzebne
+
+#### Agregat dynamiczny
+
+Dla wielu małych agregatów, Wyjmowanie ich z bazy będzie niewydajne
+
+Logikę ich blokowania powinno się przenieść na bazę danych
+
+-   Dla wielu małych agregatów, Wyjmowanie ich z bazy będzie niewydajne
+
+-   Agregat dynamiczny
+    -   Niego kształt zależy od żądania
+    -   Nie da się go przewidzieć wcześniej
+
+**Wyciąganie jak najmniejszej ilości danych, oraz unikanie blokad to jest sposób na skalowanie naszego systemu**
+
+#### Agregaty w bazie danych
+
+Ile przesyłamy danych żeby podjąć decyzję?
+
+-   w skrajnych przypadkach wykorzystaj bazę danych
+
+#### Agregaty adaptacyjne
 
