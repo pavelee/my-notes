@@ -300,3 +300,73 @@ if (searchParams.name) {
 to wynika z tego że typescript Nie wie jaka będzie wartość zmiennej w momencie wykonywania funkcji, ponieważ
 
 Funkcja mogłaby się wykonać zupełnie innym momencie kiedy ta zmienna miały już zupełnie inną wartość
+
+### Union w TS
+
+W poniższym przypadku będzie to pola które są takie same w każdy z tych typów
+
+```ts
+type CircleShape = {
+    kind: "circle";
+    radius: number;
+};
+
+type SquareShape = {
+    kind: "square";
+    sideLength: number;
+};
+
+type Shape = CircleShape | SquareShape;
+```
+
+Czyli teraz:
+
+```ts
+shape.kind; // mamy wspolne pole
+```
+
+Dopiero jak zawęzimy do typu będziemy mieć inne pola
+
+```ts
+if (shape.kind === "circle") {
+    shape.radius; // Będziemy mieć podpowiedź innych pól od TypesCript bo wie co to jest
+}
+```
+
+### Switch z True
+
+W typescript mamy możliwość wykonania tricku z switchem i wartością true
+
+```ts
+function calculateArea(shape: Shape) {
+    switch (true) {
+        // Wykona się tylko jeśli prawda
+        case shape.kind === "circle": {
+            return Math.PI * shape.radius * shape.radius;
+        }
+        case shape.kind === "square": {
+            return shape.sideLength * shape.sideLength;
+        }
+        default:
+            throw new Error(`Should not be here!`);
+    }
+}
+```
+
+### Union gdzie jakaś opcja ma być domyślną
+
+```ts
+type Circle = {
+    kind?: "circle";
+    radius: number;
+};
+
+type Square = {
+    kind: "square";
+    sideLength: number;
+};
+
+type Shape = Circle | Square;
+```
+
+W tym przypadku będziemy mieć założenie że domyślnie to jest Circle, powinniśmy takie założenie mieć tylko na jednym z typów w Union
