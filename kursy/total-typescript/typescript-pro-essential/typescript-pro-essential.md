@@ -213,3 +213,90 @@ Quick fixes mogą:
 -   wydzielić kod jako osobny funkcja
 -   usunąć niepotrzebne importy
 -   zrobić szybki refactoring
+
+### Zbyt duży Union Type
+
+Technicznie jest możliwe że będzie zbyt duży UnionType i wtedy TS nie będzie w stanie go obsłużyć
+
+Natomiast to jest skrajny przypadek, raczej nie spotykany w praktyce
+
+### Boolean nie zadziała
+
+W typescript funkcja Boolean nie będzie działać, to jest ograniczenie TS
+
+### Typ Unknown
+
+Typ Unknown jest typem danych Do którego możemy przypisać dowolny inny typ danych. Jego zaletą jest to że typescript wtedy wymaga sprawdzenia czym jest ten typ dzięki czemu możemy do tego przepisać coś co jest zewnętrznego źródła
+
+![unkown](https://res.cloudinary.com/total-typescript/image/upload/b_rgb:212529/v1701888008/065-introduction-to-unknown.explainer_gjsjbm.png)
+
+W try catch error jest domyślnie typem Unknown
+
+```ts
+try {
+    ...
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(error.message);
+    } else {
+        throw error; // jeśli nie wiem co to jest to wyrzuć błąd
+    }
+}
+```
+
+W Przypadku unknown musimy zawsze dokładnie sprawdzać czym hest zmienna, czasami to może być sporo kodu
+
+```ts
+const parseValue = (value: unknown) => {
+    if (
+        typeof value === "object" &&
+        value !== null &&
+        "data" in value &&
+        typeof value.data === "object" &&
+        value.data !== null &&
+        "id" in value.data &&
+        typeof value.data.id === "string"
+    ) {
+        return value.data.id;
+    }
+
+    throw new Error("Parsing error!");
+};
+```
+
+### Typ Never
+
+Oznacza miejsce które nigdy się nie może wykonać w kodzie.
+
+![never](https://res.cloudinary.com/total-typescript/image/upload/b_rgb:212529/v1701888008/067-introduction-to-never.explainer_em4geb.png)
+
+Co istotne:
+
+-   Możesz przypisać never do wszystkich typów
+-   Nic nie możesz przypisać do never
+
+Pusty Array w TypeScript domyślnie dostaje typ never
+
+```ts
+const emptyArray = []; // type never[]
+```
+
+Jeżeli mamy metodę która rzuca wyjątkiem to możemy ją otypować jako never
+
+```ts
+const throwError = (message: string): never => {
+    throw new Error(message);
+};
+```
+
+### Dlaczego TS daje błąd w tym przypadku
+
+```ts
+if (searchParams.name) {
+    return users.filter((user) => user.name.includes(searchParams.name));
+}
+```
+
+to wynika z tego że typescript Nie wie jaka będzie wartość zmiennej w momencie wykonywania funkcji, ponieważ
+
+Funkcja mogłaby się wykonać zupełnie innym momencie kiedy ta zmienna miały już zupełnie inną wartość
