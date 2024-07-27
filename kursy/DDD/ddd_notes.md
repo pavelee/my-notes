@@ -3690,6 +3690,7 @@ zawsze pytaj o cel, sens danej konstrukcji
 
 -   output-based
 -   indirect state-based
+
     -   testujesz stan wewnetrzny agregatu
 
 -   Jak publikować zdarzenia?
@@ -3790,3 +3791,49 @@ Ile przesyłamy danych żeby podjąć decyzję?
 
 #### Agregaty adaptacyjne
 
+### L09. Zaawansowana walka o zasoby: Agregaty procesowe
+
+Bieganie z karteczkami nie rozwiązuje problemów modelarskich co najwyżej je wypukla
+
+Jak modelować dwa agregaty z powiązanymi regułami?
+
+-   Połączyć w jeden
+    -   Będzie problem ze skalowalnością
+    -   Będzie problem z nazewnictwem
+
+Jeżeli nie wykonamy strategicznej analizy to mamy ryzyko, że regułę będzie sprawdzał zły model
+
+-   Separuj i używaj spójności końcowej
+
+pytania pomocnicze przy łączeniu agregatów
+
+-   Jaka jest konsekwencja rozspójnienia?
+    -   Jak szybko musi nastąpić akcja kompensującą?
+    -   Jakie są konsekwencje dla firmy roz rozspójnienia?
+-   Czy jest możliwość rozspójnienia z powodów "pozasystemowych"?
+    -   Np. pracownik został zwolniony, awaria Koparki
+-   Czy jest przypadek życia gdzie używamy jednego agregatu bez drugiego?
+
+#### Agregat procesowy
+
+Łączy kilka agregatów transakcją na potrzeby spójności procesu biznesowego
+
+Można to nazwać dynamiczną granicą kontekstu
+
+#### Po 4 Nie zmieniaj dwóch agregatów transakcji
+
+Jeżeli prawie w każdym procesie musisz zmieniać jeden i drugi agregat to prawdopodobnie masz złe granicę kontekstów
+
+#### A co nam to mówi o jednostkach wdrożeniowych?
+
+Jeżeli jakieś agregaty zmienia się często razem to Trzymajmy je w jednej jednostce wdrożeniowej
+
+#### Kolejność odpytywania
+
+To zależy:
+-   Który agregat prawdopodobnie odpowie negatywnie na reguły
+    -   fail fast
+-   zbadaj koszt, najdroższe na sam koniec
+
+
+## Moduł 10 - Logika prezentacyjna i integracyjna
