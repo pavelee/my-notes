@@ -370,3 +370,54 @@ type Shape = Circle | Square;
 ```
 
 W tym przypadku będziemy mieć założenie że domyślnie to jest Circle, powinniśmy takie założenie mieć tylko na jednym z typów w Union
+
+
+### Kiedy interface jest lepszy od Type?
+
+W momencie kiedy wykonujemy rozszerzenie typów:
+
+```ts
+interface UserPart {
+  id: string;
+  name: string;
+  age: number;
+};
+
+interface UserPart2 {
+  id: number;
+  phone: string;
+};
+
+interface User extends UserPart, UserPart2 {};
+
+const user: User = {
+  id: "1",
+  name: "John",
+  age: 20,
+  phone: "123456789",
+};
+```
+
+W tym przypadku dostaniemy ładny error że pole `id` Nie jest identyczne i łatwiej znajdziemy błąd.
+
+W przypadku użycia Typów byśmy nie mieli takiego błędu a jednie nie pasujace pole byłby typu `never`
+
+### Dynamiczny klucz w TS
+
+możemy to zapisać na dwa sposoby:
+
+```ts
+const scores: {
+  [key: string]: number
+} = {};
+
+const scores: Record<string, number> = {};
+```
+
+gdzie `key` to może też być inną nazwą, technicznie to możliwe
+
+```ts
+const scores: {
+  [someIndex: string]: number
+} = {};
+```
