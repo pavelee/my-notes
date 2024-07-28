@@ -3831,9 +3831,57 @@ Jeżeli jakieś agregaty zmienia się często razem to Trzymajmy je w jednej jed
 #### Kolejność odpytywania
 
 To zależy:
+
 -   Który agregat prawdopodobnie odpowie negatywnie na reguły
     -   fail fast
 -   zbadaj koszt, najdroższe na sam koniec
 
-
 ## Moduł 10 - Logika prezentacyjna i integracyjna
+
+#### Betonowanie modelu
+
+#### Read model
+
+Techniczne jest to łatwy temat
+
+#### Heurystyka głównych pytań
+
+-   Typy pytań
+    -   lokalność danych (spójne)
+        -   gdzie są dane? skad je pobrać?
+    -   lokalność reguł
+        -   w jednym miejscu reguły który opowiadają na pytanie
+    -   kwerendy użytkownika
+        -   jakie zadaje pytanie użytkownik
+    -   "dziwne" anomalie
+        -   dziwne pytania biznesowe które mogą być zawiłe
+
+#### Pułapka modelowania - GUI Driven
+
+Częstym problemem modelowania jest potraktowanie modelu do odczytu jako modelu dziedzinowego
+
+Taki model do odczytu odczytują dane z różnych kontekstów. 
+
+#### Pułapka modelownia - dokument Driven
+
+![modelowanie_read_model](./assets/modelowanie_read_model.png)
+
+Możemy zrobić API CRUD ale idealnie aby pod spodem były logika domenowa która jest ukryta. Może tylko wspóldzielić ID w postaci Correlation ID
+
+#### Irrelewancja
+
+![podzial_komponentow_modelu](./assets/podzial_komponentow_modelu.png)
+
+CRUD - typowy crud
+Rich Domain - Tutaj mamy skomplikowaną logikę biznesową
+Transformations - Tutaj tlumaczymy modele do DTO
+
+Model dziedzinowy jest irrelewantny do prezentacji
+
+DTO - nie mają zachowań
+
+#### To, co jest dobre do wszystkiego, jest dobre do niczego
+
+Raporty często wymagają paradygmatu relacyjnego,
+
+a dla obiektów naturalnym sposobem zapisu jest dokumentowy
