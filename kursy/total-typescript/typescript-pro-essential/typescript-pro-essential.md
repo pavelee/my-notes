@@ -371,30 +371,29 @@ type Shape = Circle | Square;
 
 W tym przypadku będziemy mieć założenie że domyślnie to jest Circle, powinniśmy takie założenie mieć tylko na jednym z typów w Union
 
-
 ### Kiedy interface jest lepszy od Type?
 
 W momencie kiedy wykonujemy rozszerzenie typów:
 
 ```ts
 interface UserPart {
-  id: string;
-  name: string;
-  age: number;
-};
+    id: string;
+    name: string;
+    age: number;
+}
 
 interface UserPart2 {
-  id: number;
-  phone: string;
-};
+    id: number;
+    phone: string;
+}
 
-interface User extends UserPart, UserPart2 {};
+interface User extends UserPart, UserPart2 {}
 
 const user: User = {
-  id: "1",
-  name: "John",
-  age: 20,
-  phone: "123456789",
+    id: "1",
+    name: "John",
+    age: 20,
+    phone: "123456789",
 };
 ```
 
@@ -408,7 +407,7 @@ możemy to zapisać na dwa sposoby:
 
 ```ts
 const scores: {
-  [key: string]: number
+    [key: string]: number;
 } = {};
 
 const scores: Record<string, number> = {};
@@ -418,6 +417,82 @@ gdzie `key` to może też być inną nazwą, technicznie to możliwe
 
 ```ts
 const scores: {
-  [someIndex: string]: number
+    [someIndex: string]: number;
 } = {};
+```
+
+#### Typowanie klucza dla obiektu w TS
+
+możemy użyć typu `PropertyKey`
+
+```ts
+const o: {
+    [key: PropertyKey]: string;
+} = {};
+```
+
+#### W TS object jest traktowany jako każdy nie prymitywny typ
+
+```ts
+const acceptAllNonPrimitiveTypes = (input: object) => {};
+
+acceptAllNonPrimitiveTypes({});
+acceptAllNonPrimitiveTypes([]);
+acceptAllNonPrimitiveTypes(() => {});
+acceptAllNonPrimitiveTypes(/foo/);
+acceptAllNonPrimitiveTypes(new Error("foo"));
+
+acceptAllNonPrimitiveTypes(
+    // @ts-expect-error
+    null
+);
+acceptAllNonPrimitiveTypes(
+    // @ts-expect-error
+    undefined
+);
+acceptAllNonPrimitiveTypes(
+    // @ts-expect-error
+    "hello"
+);
+acceptAllNonPrimitiveTypes(
+    // @ts-expect-error
+    42
+);
+acceptAllNonPrimitiveTypes(
+    // @ts-expect-error
+    true
+);
+acceptAllNonPrimitiveTypes(
+    // @ts-expect-error
+    Symbol("foo")
+);
+```
+
+#### Użycie union jako klucza w obiekcie
+
+Możemy to uzyskać na dwa sposoby:
+
+```ts
+type Environment = "development" | "production" | "staging";
+
+type Configurations = {
+    [env in Environment]: {
+        apiBaseUrl: string;
+        timeout: number;
+    };
+};
+```
+
+lub poprzez użycie Record:
+
+```ts
+type Environment = "development" | "production" | "staging";
+
+type Configurations = Record<
+    Environment,
+    {
+        apiBaseUrl: string;
+        timeout: number;
+    }
+>;
 ```
