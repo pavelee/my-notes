@@ -1,0 +1,1 @@
+https://sergiodxa.com/tutorials/simplify-component-imports-with-typescript-namespaces
