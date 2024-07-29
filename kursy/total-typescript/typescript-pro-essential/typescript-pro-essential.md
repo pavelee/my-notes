@@ -496,3 +496,40 @@ type Configurations = Record<
     }
 >;
 ```
+
+#### Łączenie interfejsów (merge)
+
+Jeżeli w tym samym pliku mamy interfejsy o tej samej nazwie to będą mergowane do jednego interfejsu (złączenie atrybutów)
+
+```ts
+interface Logger {
+    log(message: string, level: number): void;
+    a: string;
+}
+
+interface Logger {
+    log(message: string): void;
+    b: string;
+}
+
+// teraz Logger będzie miał ostatnią deklaracje log(), oraz a i b
+```
+
+#### Użycie Pick (wybranie tylko konkretnych pól z obiektu)
+
+To nam pozwala zachować jedno źródło wiedzy typów.
+
+```ts
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+}
+
+const fetchUser = async (): Promise<Pick<User, "email" | "name">> => {
+    const response = await fetch("/api/user");
+    const user = await response.json();
+    return user;
+};
+```
