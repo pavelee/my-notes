@@ -3860,7 +3860,7 @@ Techniczne jest to łatwy temat
 
 Częstym problemem modelowania jest potraktowanie modelu do odczytu jako modelu dziedzinowego
 
-Taki model do odczytu odczytują dane z różnych kontekstów. 
+Taki model do odczytu odczytują dane z różnych kontekstów.
 
 #### Pułapka modelownia - dokument Driven
 
@@ -3885,3 +3885,92 @@ DTO - nie mają zachowań
 Raporty często wymagają paradygmatu relacyjnego,
 
 a dla obiektów naturalnym sposobem zapisu jest dokumentowy
+
+### CqRS
+
+#### CqRS na ratunek
+
+to jest przeniesienie CQS na język obiektowy.
+
+-   Oddzielamy od siebie kwerendy i komendy na poziomie API ale też na poziomie modelu
+-   Komendy nie muszą być oparte o Command-Handler mogą to być service. Chodzi tutaj o sematykę.
+    -   Chodzi tutaj o intencje zmiany!
+    -   Komenda może zwracać wynik wykonania (np. bład) ale NIE ZWRACA NOWEGO STANU SYSTEMU
+-   Stan systemu możemy poznać tylko poprzez kwerendy, poprzez kwerende mamy na myśli odpytanie API a nie wykonanie bezpośrednio zapytania na bazie danych.
+-   Kwerendy zwracają dane które nie są odwzorowaniem 1-1 modelu dziedzinowego, ze względu na ich irrelewancje
+-   Kwerendy mogą być wykonywane przez serwisy które zwracają DTO czy json'a
+-   Kwerendy raczej są wykonywane synchronicznie
+
+![CQRS](./assets/CQrS_1.png);
+
+#### CqRS - podejście 1: Kwerenda do źródła prawdy
+
+![cqrs_podejscie_1](./assets/cqrs_podejscie_1.png)
+
+Najprostsza impelementacja to uderzenie do źródła prawdy i pobranie tych danych które są potrzebne dla widoku
+
+Jest to problematyczne bo jak się zmieni coś w modelu dziedzinowym (ale też w bazie) to nam się rozsypią te zapytania.
+
+Jest to raczej podejście początkowe, ale nie do utrzymania w dłuższej perspektywie.
+
+#### Udokumentuj swoją decyzje w ADR'ach
+
+-   Dlaczego podjęto taką decyzje?
+-   Jaki był wówczas ruch w systemie?
+-   Jakie były załozenia co do SLA?
+-   Jakie są możlwe kolejne kroki ewolucji architektury?
+
+#### Uwaga na sekcję krytyczną
+
+Krytyczna sekcją jest "write-model" czyli nasze agregaty itp.
+
+#### Świeżość danych
+
+Często świeżość danych jest kusząca aby odpytywać bezpośrednio źródło wiedzy.
+
+Dane już nie są świeże jak opuszczą transakcje z write-modelu.
+
+#### CqRS - podejście 2: Widoki bazodanowe
+
+![cqrs_podejscie_2](./assets/cqrs_podejscie_2.png)
+
+W przypadku problemów z wydajnościa mozemy przejść na inny poziom rozwiązania.
+
+Stworzenie osobnego Read Modelu z Write Model. Możesz meć kilka modeli, np. spłaszczenie jakiś danych.
+
+Może być inna reprezentacja np. graf
+
+NoSql dobieraj pod rodzaj odczytu.
+
+Pozwala to zastosować Event sorcing jako źródło danych które nie daje się do zastosowania do odczytu.
+
+#### Spójność danych
+
+-   Poziomy spójności
+    -   zapytanie do źródła danych - spójność natychmiastowa
+    -   widoki bazodanowe - spójność zależy od rodzaju widoku
+    -   osobny read model - evenual consistency (uwaga na monotinic read, każdy nowy read model może reprezentować inny stan z poziomu opóźnień, tutaj rozwiazaniem jest przwiązanie sesji użytkownika do konkretnej instancji read-model)
+
+Read Your Own Writes - problem polega na tym że klient nie widzi zmian po wykonaniu komendy (opóźnienie w generowaniu ReadModel)
+
+#### Odświeżanie read modeli
+
+Możemy też odswieżać modele poprzez zdarzenia np. dokonanie jakieś zmiany na rekordzie itp.
+
+#### Wygaszanie cache
+
+![ttl_zdarzenie](./assets/ttl_zdarzenie.png)
+
+Jeżeli mamy zdarzenia którę mogą się kiedyś skończyć np. zblokowano zasób to najlepszym sposobem jest dodanie TTL do zdarzenia tak aby sugerowało kiedy ma wygasnąć.
+
+#### Single source of truth
+
+-   Musi istnieć jedno źródło prawdy odnośnie każdego ważnego pytania biznesowego
+    -   mogą isnieć cache ze względów wydajnościowych
+-   wszelkie zmiany stanu (komenda) wpyłwające na odpowiedź na to pytanie muszą najpierw przejść przez to miejsce
+
+#### Zalety read modelu
+
+-   wydajność
+-   uwolnienie modeli dziedzinowych od kwerend, umożliwiając swobodny refaktoring domeny
+-   niski koszt utrzymania
