@@ -533,3 +533,18 @@ const fetchUser = async (): Promise<Pick<User, "email" | "name">> => {
     return user;
 };
 ```
+
+#### Omit jako sposób na wyrzucenie jakiegoś parametry a pozostawienie reszty
+
+```ts
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    description: string;
+}
+
+const addProduct = (productInfo: Omit<Product, "id">) => {
+    // Do something with the productInfo
+};
+```
