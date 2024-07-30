@@ -3974,3 +3974,31 @@ Jeżeli mamy zdarzenia którę mogą się kiedyś skończyć np. zblokowano zas�
 -   wydajność
 -   uwolnienie modeli dziedzinowych od kwerend, umożliwiając swobodny refaktoring domeny
 -   niski koszt utrzymania
+
+### L03. Przykłady
+
+#### Read model jako zewnętrzny index
+
+![read_model_przyklad_1](./assets/read_model_przyklad_1.png)
+
+przykład gdzie budujemy graf na podstawie zdarzeń z CRM'a i jest używany jako szybki read model który umożliwia trzymanie tego w optymalny sposób np. graf
+
+**Read model nie musi sie opierać o dane z jendnej domeny**
+
+### Read Model - Podsumowanie
+
+-   użyteczne drivery
+    -   skalowalność
+    -   tolerancja na partycjonowanie
+        -   możesz szybko tworzyć kolejne modele które są dostosowane pod szybki dostęp do danych (optymalizacja pod dane)
+-   użyteczne metryki
+    -   częstotliwość zmian read modelu względem ilości odczytów
+-   strategia testowania
+    -   indirect state-based
+
+źródło prawdy: write model i to jest jedyne prawdziwe źródło wiedzy.
+
+**Read model możesz zawsze usunąc i odtworzyć na podstawie write modelu**
+
+#### Przykład
+
