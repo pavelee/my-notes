@@ -574,3 +574,24 @@ type OmitStrict<T, K extends keyof T> = T extends any
     ? Pick<T, Exclude<keyof T, K>>
     : never;
 ```
+
+#### Omit i uniony
+
+Omit ma problem z unionami, nie potrafi ich czytać prawidłowo przez to możemy mieć buga w kodzie (albo zupełnie nie oczekiwane zachowanie)
+
+```ts
+type Entity = User | Organisation | Product;
+
+// tutaj będziemy mieć tylko wspólne pola, z tej unii mimo że chcieliśmy tylko usunąć pole id z unii
+type EntityWithoutId = Omit<Entity, "id">;
+```
+
+rozwiazaniem jest specjalny typ `DistributiveOmit` który możemy sami dodać do repo
+
+```ts
+type DistributiveOmit<T, K extends PropertyKey> = T extends any
+    ? Omit<T, K>
+    : never;
+```
+
+to umożliwia uzyskanie takiego zachowania jakie oczekujemy.
