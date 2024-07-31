@@ -4002,3 +4002,28 @@ przykład gdzie budujemy graf na podstawie zdarzeń z CRM'a i jest używany jako
 
 #### Przykład
 
+### L05. Saga i Process Manager ze Stanem - Part 1
+
+zajmowanie się klasą problemu integracyjnego
+
+To, że znasz taktyczne DDD nie znaczy że w każdym sytemie znajdziesz agregat
+
+![saga_1](./assets/saga_1.png)
+
+sporo logiki nie oznacza potrzeby agregatu, ponieważ musisz zadać sobie pytanie gdzie tutaj jest miejsce na rywalizacje o zasoby
+
+"Po otrzymaniu informacji o wypłacie, należy poinformować biuro informacji kredytowej" -> **to jest problem integracyjny (procesowy), nie potrzeba tutaj agregatu**
+
+Aby tutaj był potrzebny agregat to musimy mieć wymaganie rywalizacji o jakeieś dane objęte jakaś regułą, np. "Możemy komunikować się z API biura informacji kredytowej tylko 10 razy na godzinę"
+
+Problem integracyjny prawie zawsze występuje, najprostszym przykładem jest obsługa bazy danych, czyli odczyt, modyfikacja i zapis.
+
+#### Procesy przecinające różne moduły
+
+Z jaką klasą problemu masz do czynienia?
+
+-   integracja - gdy wywołujemy kolejne komponenty systemu
+-   transformacja - gdy liczymy, co i jak, nalezy zawołać w następnym kroku
+
+Nie realnym jest oczekiwanie że stworzonych autonomicznych modeli nie będziemy musieli integrować
+
