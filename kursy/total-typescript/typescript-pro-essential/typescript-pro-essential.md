@@ -548,3 +548,29 @@ const addProduct = (productInfo: Omit<Product, "id">) => {
     // Do something with the productInfo
 };
 ```
+
+#### Omit nie weryfikuje przekazywanych kluczy w parametrach
+
+W odróżnieniu od Pick, Ommit nie weryfikuje czy przekazany klucz realnie istnieje na obiekcie. To wynika z technicznych decyzji w TS.
+
+```ts
+type User = {
+    id: number;
+    name: string;
+    email: string;
+};
+
+// You can omit properties which don't exist!
+type UserWithoutPhoneNumber = Omit<User, "phoneNumber">;
+
+// But you CAN'T pick properties which don't exist
+type UserWithOnlyPhoneNumber = Pick<User, "phoneNumber">;
+```
+
+Na ratunek możliwość zbudowania własnego typu który będzie strict
+
+```ts
+type OmitStrict<T, K extends keyof T> = T extends any
+    ? Pick<T, Exclude<keyof T, K>>
+    : never;
+```
