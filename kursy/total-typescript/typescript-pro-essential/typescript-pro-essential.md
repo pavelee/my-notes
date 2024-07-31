@@ -595,3 +595,32 @@ type DistributiveOmit<T, K extends PropertyKey> = T extends any
 ```
 
 to umożliwia uzyskanie takiego zachowania jakie oczekujemy.
+
+#### Partial - ustawienie na obiekcie wszystkich pól jako opcjonalne
+
+```ts
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    description: string;
+}
+
+const updateProduct = (
+    id: number,
+    productInfo: Partial<Omit<Product, "id">>
+) => {
+    // Do something with the productInfo
+};
+```
+
+#### Required - odwrotność Partial czyli ustawienie wszystkich pól wymaganych
+
+```ts
+type Coordinates = {
+    x?: number;
+    y?: number;
+};
+
+type CoordinatesRequired = Required<Coordinates>;
+```
