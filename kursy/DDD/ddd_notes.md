@@ -4027,3 +4027,64 @@ Z jaką klasą problemu masz do czynienia?
 
 Nie realnym jest oczekiwanie że stworzonych autonomicznych modeli nie będziemy musieli integrować
 
+### Saga i Process Manager ze Stanem - Part 2
+
+#### Choreografia vs orkiestracja
+
+Choreografia - kiedy nie ma jednej odpowiedzialności, temat wygląda kusząco ale ma konsekwnecje w tym że jakakolwiek zmiana w procesie angażuje wszystkie zespoły (różne konteksty). Szczególnie trudnym przypadkiem może być zmiana kolejności.
+
+Prowadzi do tzw. zdarzeń opresyjnych czyli takie które ma tylko jednego słuchacza i zostało rzucone tylko po to aby pchać dalej proces. To tworzy pytanie dlaczego mam rzucać takie zdarzenie i udawać że zupełnie nie jesteśmy zainteresowani dalszym przeprocesowaniem tego zdarzenia..
+
+Dodatkowo jak monitorować taki proces? Trzeba go śledzić po wszystkich serwisach, np. przypadek kiedy proces się zatrzyma to trzeba teraz śledzić każde miejsce.
+
+Dodatkowy skrajny przypadek kiedy jednym zdarzeniem interesuje się kilka komponentów i teraz mamy problem z kolejnością przetwarzania tych informacji.
+
+![brak_odpowiedzialnosci](./assets/brak_odpowiedzialnosci.png)
+
+definicja
+
+Choreografia - sposób integracji komponentów, które działają niezależnie, ale współpracują, reagujac na zdarzenia generowane przez siebie nawzajem.
+
+Nie jest to problem z samą architekturą ale z tym że jest źle stosowania, ona ma sens jeżeli mam proces którego nie muszę kontrolować, kolejność nie ma znaczenia itp.
+
+Problem wynika z tego że programiści pchają ten kierunek z powodów zachwytu architekturą bez przemyślenia konsekwencji
+
+Pytania analityzczne przed wybraniem tej architektury
+
+-   Czy interesuje mnie kolejność wykonywania kroków procesu?
+-   Czy interesuje mnie atomowość procesu?
+    -   to znaczy: czy chcę dokończyć wszystkie kroki, a jeśli się nie uda, to czy mogę wycofać kroki dotychczasowe?
+-   Czy muszę ten proces monitorować?
+-   Czy jest szansa na jego często zmianę? Czy jest szansa na skalowanie z przyczyn wydajnościowych?
+-   Czy muszę ten proces wersjonować? Czy może on jednego klienta wyglądać inaczej niż u drugiego?
+-   Czy implementacja zdarzeniami Kończy się zdarzeniami opresyjny mi z jednym słuchaczem?
+-   Czy logikę wyliczającą kolejny krok w zależności od wielu czynników?
+
+**jeżeli na jakiekolwiek pytanie powyżej odpowiadamy tak, to oznacza że tutaj powinniśmy zastosować orkiestracje.**
+
+![orkiestracja_procesu](./assets/orkiestracja_procesu.png)
+
+Orkiestrator to coś co nadzoruje cały proces, to może być ale nie musi osobna jednostka wdrożeniowa, może to też być dobrze wydzielony moduł w monolicie.
+
+Co istotne teraz mamy:
+-   jedno miejsce do śledzenia procesu
+-   jedno miejsce do jego zmiany
+-   jedno miejsce do ewentualnego wersjonowania i skalowania
+-   jedno miejsce gdzie mamy gwarancje że wydarzy się wszustko albo nic, tutaj będzimy mieć kompensacje
+
+Taki wewnętrzny proces często nazwa się Saga / Process Manager
+
+#### Saga vs Process Manager
+
+![process_manager](./assets/process_manager.png)
+
+![saga](./assets/saga.png)
+
+W świecie bazy danych kompensacją jest rollback, w świecie biznesowym odwrotna akcja biznesowa
+
+Podsumowanie:
+
+-   Process Manager - wzorzec, który wylicza następny krok procesu biznesowego
+-   Saga - wzorzec, który zapewnia "atomowość procesu" poprzez kompensację
+
+Często w praktyce mamy process manager który ma w środku sage, przez to programiści często używają tych pojęć wymiennie
