@@ -4067,6 +4067,7 @@ Pytania analityzczne przed wybraniem tej architektury
 Orkiestrator to coś co nadzoruje cały proces, to może być ale nie musi osobna jednostka wdrożeniowa, może to też być dobrze wydzielony moduł w monolicie.
 
 Co istotne teraz mamy:
+
 -   jedno miejsce do śledzenia procesu
 -   jedno miejsce do jego zmiany
 -   jedno miejsce do ewentualnego wersjonowania i skalowania
@@ -4088,3 +4089,23 @@ Podsumowanie:
 -   Saga - wzorzec, który zapewnia "atomowość procesu" poprzez kompensację
 
 Często w praktyce mamy process manager który ma w środku sage, przez to programiści często używają tych pojęć wymiennie
+
+#### Zdarzeniowowść w prostym serwisie aplikacyjnym
+
+Jeżeli na siłe wyciągniemy logikę z serwisu na rzecz zdarzenia to stworzymy tzw. ukryty coupling czyli listener który obsługuje to zdarzenie może wpłynąć na całą transakcje (proces) wykonywany w serwisie
+
+Jeżeli wysyłamy zdarzenie z serwisu to powinniśmy mieć założenie że nie wiemy czy ktoś się zainteresuje tym procesem, to nie powinno dla nas być istotne (z punktu kontrlowania procesu)
+
+#### Gwarancje dostarczania wiadomości
+
+-   at-most-once delivery - czyli dostarczymy raz lub wcale
+    -   łatwa w implementacji
+    -   nieodporna na różne awarie
+
+![outbox_pattern](./assets/outbox_pattern.png)
+
+outbox pattern - gdzie wykonujemy jakaś operacje i wysyłamy na zewnątrz wykonanie jakieś operacji asynchronicznie np. wysłanie maila, podzielenie na mniejsze kroki transakcji
+
+**Komepensacja - wycofanie wcześniej udanej zmiany**
+
+Najlepiej dzielić sobie zmiany stanu (saga) i wykonywanie konkretnej operacji (komunikacji z modułami) czyli handlery
