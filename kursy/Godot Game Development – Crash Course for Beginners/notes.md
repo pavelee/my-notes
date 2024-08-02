@@ -1,3 +1,5 @@
+https://www.youtube.com/watch?v=S8lMTwSRoRg
+
 -   Dodanie nowego node, umozliwia dodawanie nowych elementow do sceny w tym przyciskow itp.
 -   TextureButton - to jest button który został stworzony przez designera
 -   Zduplikowanie buttona -> ctrl + D lub prawy i duplikuj
@@ -110,6 +112,8 @@ func _ready():
 
     -   Odwrócenie gracza (lustrzane odbicie)
         -   Można to zrobić manualnie (dla testu), AnimatedSprite2D i potem "Offset" i "Flip H"
-    -   
+    -   Ustawienie strefy kolizji
+        -   Tutaj 
 
 ### Tworzenie tła gry
+
