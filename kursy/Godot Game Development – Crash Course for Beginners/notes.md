@@ -113,7 +113,30 @@ func _ready():
     -   Odwrócenie gracza (lustrzane odbicie)
         -   Można to zrobić manualnie (dla testu), AnimatedSprite2D i potem "Offset" i "Flip H"
     -   Ustawienie strefy kolizji
-        -   Tutaj 
+        -   Tutaj
 
 ### Tworzenie tła gry
 
+-   Dodajemy nową scene z innym node: ParallaxBackground
+
+    -   następnie do niego dodajemy ParallaxLayer
+    -   Dodajemy grafikę tła (drag and drop)
+    -   Następnie dodaną grafikę zapisujemy jako scene np. BG
+    -   Następnie przeciągamy ją jako dziecko ParallaxLayer
+    -   Możemy szybko rozszerzyć naszą mapę (powielić) poprzez wykonanie mirroring
+        -   na ParallaxBackground klikamy i w "Motion" wpisujemy w sekcji "Mirroring" pozycje X gdzie kończy się grafika, to spowoduje powielenie jej jako lustro
+    -   Następnie możemy dodać efekt "przesuwania" się tła poprzez dodanie skryptu do ParallaxBackground
+
+        -   ```ts
+            extends ParallaxBackground
+
+
+            var scrollingSpeed = 100
+
+            func _process(delta):
+                scroll_offset.x -= scrollingSpeed * delta
+            ```
+    -   Możemy też uzyskać efekt innej prędkości przesuwania warstw, możemy na drugiej warstwie ParallaxBackground w zakładce "motion" ustawić Scale X: 0.7 a y: 1
+
+-   Skopiowanie tła do innej sceny i przekształcenie na lokalne aby było możliwe przerobienie
+    -   możemy to uzyskać poprzez wrzucenie naszej sceny BG i następnie prawym -> "ustaw jako lokalne", to nam umożliwi usunięcie czy zmiany w już istniejącym tle
