@@ -4109,3 +4109,62 @@ outbox pattern - gdzie wykonujemy jakaś operacje i wysyłamy na zewnątrz wyko
 **Komepensacja - wycofanie wcześniej udanej zmiany**
 
 Najlepiej dzielić sobie zmiany stanu (saga) i wykonywanie konkretnej operacji (komunikacji z modułami) czyli handlery
+
+### L05. Saga i Process Manager ze Stanem - Part 3
+
+#### Zdarzenia prywatne vs zdarzenia publiczne
+
+Jak możemy uniknąć tego że inny zespół chce edytować zdarzenie na którym oparty jest inny mechanizm w innym kontekście?
+
+minimalizacją problemu może być rozróżnianie prywatnych od publicznych zdarzeń.
+
+prywatne zdarzenia są tylko używane w ramach konkretnego modułu, na przykład na potrzeby logów wewnętrznych itp, dzielenie się tymi zdarzeniami z innymi modułami to jak dzielenie się schematem bazy danych. W momencie jak dzielimy się malutki zdarzeniami to niestety prowadzi to do problemów.
+
+Jak rozpoznać że zdarzenie jest prywatne?
+
+Jeśli naturalnie dla nas jest to że jak to zdarzenie emitujemy to musi istnieć jakiś listener który musi nasłuchiwać tego zdarzenia. To znak że moglibyśmy tego nie robić w taki sposób tylko wyliczyć to w środku modułu z prywatnym zdarzeniem.
+
+![prywatne_zdarzenia](./assets/prywatne_zdarzenia.png)
+
+#### Kolejność zdarzeń
+
+Problem ze zdarzeniami jest taki że zdarzenia mogą się zadziać w "nierozsądnej" kolejności.
+
+![zdarzenia_nierozsadka_kolejnosc](./assets/zdarzenia_nierozsadka_kolejnosc.png)
+
+może to wnikać z:
+
+-   opóźnień
+-   złych granic
+-   ustawień na brokerze
+-   wysyłamy na różne kolejki
+
+Zdarzenie do tego może być zdublowane itp.
+
+**zabezpieczenie przed zdublowaniem zdarzeń: Idempotentny konsument (np. za pomocą deduplikacji) + producent z gwarancją at-least-once = exactly-once processing**
+
+Powinniśmy o tych problemach myśleć nawet jeżeli piszemy w architekturze monolitowej przetwarzanej synchronicznie, to prowadzi do leszpej architektury ogólnie
+
+#### Czy możemy polegać na kolejności?
+
+Jeżeli jakiś moduł próbuje rozwiazać po swojej stronie problem przyjmowanych zdarzeń, to raczej na pewno probelm leży na złych granicach modeli i rozbicia spójności na kilka modułów
+
+#### Podsumowanie
+
+-   użyteczna metafora
+    -   koordynator
+-   użyteczne metryki
+    -   liczba obsługiwanych komend i zdarzeń
+-   użyteczne drivery
+    -   latencja
+    -   konkretna gwarancja na dostarczenie wiadomości
+-   strategia testowania
+    -   interaction-based (stubs, mocks)
+    -   output-based
+-   użyteczne elementy konstrukcyjne DDD
+    -   zdarzenia
+    -   komendy
+    -   serwisy aplikacyjne z kodem proceduralnym
+    -   saga/process manager
+-   paradygmat
+    -   obiektowy
