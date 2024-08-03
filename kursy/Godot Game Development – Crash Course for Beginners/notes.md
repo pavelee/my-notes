@@ -140,3 +140,34 @@ func _ready():
 
 -   Skopiowanie tła do innej sceny i przekształcenie na lokalne aby było możliwe przerobienie
     -   możemy to uzyskać poprzez wrzucenie naszej sceny BG i następnie prawym -> "ustaw jako lokalne", to nam umożliwi usunięcie czy zmiany w już istniejącym tle
+
+### TileMaps i TileSets
+
+#### Rysowanie TileMap
+
+-   Dodajemy TileMap jako node dla naszej sceny np. "World"
+-   Następnie przesuwamy ją jako pierwsze dziecko dla World
+-   Następnie na dole przechodzimy do TileSet
+-   Dodajemy poprzez przeciągniecie swoje "tileset" i klikamy tak na wyskakujacy popup
+-   Następnie przechodzimy do zakładki "TileMap", wchodzimy tryb malowania i dodajemy do mapy elementy
+-   Możemy skorzystać z opcji "prostokata" tak aby szybko narysować cały obszar
+
+#### Dodanie kolizji dla TileMap
+
+-   Wchodzimy w node TileMap
+-   Klikamy na "TileSet"
+-   Wchodzimy w "Physic Layers"
+-   dodajemy warstwę
+-   Przechodzimy do "TileSet"
+-   Przechodzimy do sekcji "Maluj"
+-   W maluj właściwości wybieramy Fizyka -> warstwa fizyki 0
+-   Zaznaczamy wybrany tile do którego chcemy dodać warstwę kolizji
+-   Co istotne, możemy kolizje kształtować tak aby dopasować do grafiki np. skosu itp.
+
+
+### Ograniczenie widoczności kamery gracza do sceny (tak aby nie widział co jest poza mapą)
+
+-   Wchodzimy w scene gracza
+-   Przechodzimy do Camera2D
+-   Otwieramy sekcje "Limit"
+-   Dla Left i Top dajemy po wartość 0
