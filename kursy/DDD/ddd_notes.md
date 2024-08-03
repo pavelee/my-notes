@@ -4168,3 +4168,41 @@ Jeżeli jakiś moduł próbuje rozwiazać po swojej stronie problem przyjmowanyc
     -   saga/process manager
 -   paradygmat
     -   obiektowy
+
+## Moduł 11 - Breakthrough i Architektura Aplikacyjna
+
+### L01. Nowe wymagania rzucające wyzwanie modelowi
+
+Projektowanie prawdziwych dużych systemów ma więcej zakrętów niż zakopianka. Wszystkiego nie przewidzisz.
+
+**Pierwsze wymagania są tylko pierwszymi wymaganiami. Kolejne wymagania często łamią początkowe założenia.**
+
+**Modularyzacja zwieksza prawdopodobieństwo bezstresowego otwierania nowych potenchałów biznesowych, ale nie eleminuje go!**
+
+Dwa rodzaje przełomowych wymagań
+
+-   przełomowe dla biznesu
+-   przełomowe (łamiące) dla architektury
+
+przełomowe to takie które zmieniają reguły gry.
+
+Jeżeli zmiana jest przełomowa dla archietktury a dla bizensu to niewielka zmiana to dobrym pomysłem jest pokazanie biznesowi ile będzie nas kosztować zmiana na mapie kontekstów (zmiany w modelach itp.)
+
+Możemy mówić o ewentualnych biznesowych konsekwencjach krótkowzrocznej implementacji.
+
+**Róbmy tak aby nasza arhichtektura robiła więcej niż musiała.**
+
+#### Plan gry
+
+Zadaniem świadomego programisty:
+
+Dowiezeienie tematu oraz wzięcie odpowiedzialności za swoje decyzja i ich uargumentowanie (nawet jeśli łamią jakieś ogólne przyjęte dobre praktyki)
+
+Zawsze zadaj sobie pytanie przed podjęciem decyzji:
+
+**Jakbym to zrobił gdybym miał więcej czasu**, w ten sposób już masz dodatkowe rozwiązanie i poprzez zawężanie stożka możliwości możesz wybrać to optymalne
+
+Pytania pomocniczne:
+
+-   jak można byłby to zrobić, gdyby czasu było więcej?
+-   jak można byłoby to zrobić, gdyby nie było problemu synchonizacjia zespołów?
