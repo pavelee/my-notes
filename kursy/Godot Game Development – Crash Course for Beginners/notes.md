@@ -171,3 +171,5 @@ func _ready():
 -   Przechodzimy do Camera2D
 -   Otwieramy sekcje "Limit"
 -   Dla Left i Top dajemy po wartość 0
+
+### Dodanie przeciwnika do gry
