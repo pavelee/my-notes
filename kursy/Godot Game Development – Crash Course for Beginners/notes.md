@@ -1,5 +1,33 @@
 https://www.youtube.com/watch?v=S8lMTwSRoRg
 
+#### GitIgnore dla Godot
+
+https://www.toptal.com/developers/gitignore/api/godot
+
+```
+# Created by https://www.toptal.com/developers/gitignore/api/godot
+# Edit at https://www.toptal.com/developers/gitignore?templates=godot
+
+### Godot ###
+# Godot 4+ specific ignores
+.godot/
+
+# Godot-specific ignores
+.import/
+export.cfg
+export_presets.cfg
+
+# Imported translations (automatically generated from CSV files)
+*.translation
+
+# Mono-specific ignores
+.mono/
+data_*/
+mono_crash.*.json
+
+# End of https://www.toptal.com/developers/gitignore/api/godot
+```
+
 -   Dodanie nowego node, umozliwia dodawanie nowych elementow do sceny w tym przyciskow itp.
 -   TextureButton - to jest button który został stworzony przez designera
 -   Zduplikowanie buttona -> ctrl + D lub prawy i duplikuj
@@ -136,6 +164,7 @@ func _ready():
             func _process(delta):
                 scroll_offset.x -= scrollingSpeed * delta
             ```
+
     -   Możemy też uzyskać efekt innej prędkości przesuwania warstw, możemy na drugiej warstwie ParallaxBackground w zakładce "motion" ustawić Scale X: 0.7 a y: 1
 
 -   Skopiowanie tła do innej sceny i przekształcenie na lokalne aby było możliwe przerobienie
@@ -164,7 +193,6 @@ func _ready():
 -   Zaznaczamy wybrany tile do którego chcemy dodać warstwę kolizji
 -   Co istotne, możemy kolizje kształtować tak aby dopasować do grafiki np. skosu itp.
 
-
 ### Ograniczenie widoczności kamery gracza do sceny (tak aby nie widział co jest poza mapą)
 
 -   Wchodzimy w scene gracza
@@ -173,3 +201,125 @@ func _ready():
 -   Dla Left i Top dajemy po wartość 0
 
 ### Dodanie przeciwnika do gry
+
+-   Dodajemy nową scenę
+-   Dodajemy CharacterBody2D
+    -   Dodajemy CollisionShape2D
+        -   Ustawiamy kształt
+    -   AnimatedShape2D
+        -   ustawiany nowy spriteFrame
+        -   dodajemy animacje do postaci: Idle, Jump, Death itp.
+-   Dodajemy Area2D
+    -   Dodajemy CollisionShape2D, kształt owalny
+-   Do Area2D dodajemy node (zakładka węzeł) -> body_entered 
+-   Dodanie wykrywanie kolizji z graczem
+    -   ```ts
+            func _on_player_detection_body_entered(body):
+                if body.name == "Player":
+                    print("KOLIZJA")
+        ```
+-   Dodanie grawitacji do postaci
+    -   ```ts
+            func _physics_process(delta):
+                if not is_on_floor():
+                    velocity.y += gravity * delta
+                move_and_slide()
+        ```
+
+#### Grupowanie obiektów po Node2d
+
+Obiekty możemy grupować poprzez dodanie Node2D i następnie do niego już konkretnych postaci
+
+
+#### Rozpoczęcie ruchu przeciwnika w kierunku gracza
+
+-   Mozemy pobrać pozycje gracza poprzez:
+    ```ts
+        print(player.global_position);
+    ```
+-   Przykładowa implementacja "podążania" za graczem jak jest w obrębie Area2D
+    -   ```ts
+        extends CharacterBody2D
+
+        func isPlayerJumpingUp():
+            return velocity.y != 0
+
+        func isPlayerFalling():
+            return velocity.y > 0;
+
+        func turnMobLeft():
+            get_node("AnimatedSprite2D").flip_h = false
+
+        func turnMobRight():
+            get_node("AnimatedSprite2D").flip_h = true
+
+        func getPlayerDirection():
+            return Input.get_axis("ui_left", "ui_right")
+
+        func isPlayerMovingLeft():
+            return getPlayerDirection() == -1
+
+        func isPlayerMovingRight():
+            return getPlayerDirection() == 1
+
+        func getAnimationSprite():
+            return get_node("AnimatedSprite2D")
+
+        func playAnimation(sprite, animation):
+            sprite.play(animation);
+
+        func playJump():
+            playAnimation(getAnimationSprite(), 'Jump')
+
+        func playIdle():
+            playAnimation(getAnimationSprite(), 'Idle')
+
+        func getPlayer():
+            return get_node("../../Player/Player")
+
+        func getObjectSideRelationDirection(node, node1):
+            var direction = (node.position - node1.position).normalized()
+            return direction;
+
+        func getObjectSideRelationWithObject(node, node1):
+            var direction = getObjectSideRelationDirection(node, node1)
+            var directionString = 'left'
+            if (direction.x > 0):
+                return 'right';
+
+        const SPEED = 50
+        const JUMP_VELOCITY = -400.0
+
+        # Get the gravity from the project settings to be synced with RigidBody nodes.
+        var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+        var chase = false
+
+        func _physics_process(delta):
+            if not is_on_floor():
+                velocity.y += gravity * delta
+            
+            if chase:
+                playJump()
+                var player = getPlayer()
+                var isPlayerOnRight = getObjectSideRelationWithObject(player, self) == 'right'
+                if isPlayerOnRight:
+                    turnMobRight()
+                else:
+                    turnMobLeft()
+                # start moving in player direction
+                velocity.x = getObjectSideRelationDirection(player, self).x * SPEED
+            else:
+                # stop moving
+                velocity.x = 0
+                playIdle()
+            
+            move_and_slide()
+
+        func _on_player_detection_body_entered(body):
+            if body.name == "Player":
+                chase = true
+
+        func _on_player_detection_body_exited(body):
+            if body.name == "Player":
+                chase = false
+        ```
