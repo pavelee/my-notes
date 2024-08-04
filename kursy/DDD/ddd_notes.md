@@ -4206,3 +4206,43 @@ Pytania pomocniczne:
 
 -   jak można byłby to zrobić, gdyby czasu było więcej?
 -   jak można byłoby to zrobić, gdyby nie było problemu synchonizacjia zespołów?
+
+#### L02. Zabrakło czasu czy zabrakło skilla? Konsekwencje decyzji podejmowanych w stresie
+
+#### Małe decyzje, wielkie sktuki
+
+Czas to potężny driver architektoczniczy
+
+W momencie stresu nas umysł robi to co zna, nie jest kreatywny. Dlatego warto poszerzać swoją bibliteke możliwych rozwiazań aby radzić sobie w takiej sytuacji
+
+#### Mapa modeli wyjaśnia niesmak
+
+Często wszystko zaczyna się od emocji: "Łączenie niezależnych konceptów jest złe".
+
+W takim przypadku najlepiej powrócić do mapy modeli, tak aby spojrzeć i pamiętać o tym że modele mają być kontekstowe i dopasowane do specyficznych problemów.
+
+Przy projektowaniu autonomicznych modeli chcemy zapobiec:
+
+-   duplikacji odpowiedzialności
+    -   bo zminiejsza to sprawczość zespołów
+    -   bo wymaga ich synchronizacji
+    -   bo nie ma pojedyńczego źródła prawdy
+-   modelom mającym zbyt wiele odpowiedzialności 
+    -   bo zwiększa to ryzyko zmiany
+    -   bo zwiększa to przeładowanie kognitywne
+
+**Mapa modeli pozwala nam sprawdzić czy dwa modele zaczynają nam odpowiadać na to samo pytanie**
+
+Jeżeli masz nowe pytanie i model na nie odpowiada bez żadnych dodatkowych danych to znaczy że to jest parafraza już istniejącego pytania na jakie odpowiada
+
+#### Suma niestabilności
+
+Prawdopopodobnieństwo zmiany modulu = suma prawdopodobieństwa zmian małych modułów z których się składa
+
+Pochopna i wygodna zmiana niesie ryzyko
+
+-   przeładowanie kognitywne
+    -   generyki powinny zostać generykami
+-   zwiększa prawdopodobieństwa błędu lub przyszłej zmiany pojedyńczego modelu
+-   ziększenie prawdopodobieństwa zmiany wielu modelu jednocześnie
+    -   co często powoduje synchonizację zespołów
