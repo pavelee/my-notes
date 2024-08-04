@@ -211,7 +211,7 @@ func _ready():
         -   dodajemy animacje do postaci: Idle, Jump, Death itp.
 -   Dodajemy Area2D
     -   Dodajemy CollisionShape2D, kształt owalny
--   Do Area2D dodajemy node (zakładka węzeł) -> body_entered 
+-   Do Area2D dodajemy node (zakładka węzeł) -> body_entered
 -   Dodanie wykrywanie kolizji z graczem
     -   ```ts
             func _on_player_detection_body_entered(body):
@@ -230,14 +230,14 @@ func _ready():
 
 Obiekty możemy grupować poprzez dodanie Node2D i następnie do niego już konkretnych postaci
 
-
 #### Rozpoczęcie ruchu przeciwnika w kierunku gracza
 
 -   Mozemy pobrać pozycje gracza poprzez:
     ```ts
-        print(player.global_position);
+    print(player.global_position);
     ```
 -   Przykładowa implementacja "podążania" za graczem jak jest w obrębie Area2D
+
     -   ```ts
         extends CharacterBody2D
 
@@ -297,7 +297,7 @@ Obiekty możemy grupować poprzez dodanie Node2D i następnie do niego już kon
         func _physics_process(delta):
             if not is_on_floor():
                 velocity.y += gravity * delta
-            
+
             if chase:
                 playJump()
                 var player = getPlayer()
@@ -312,7 +312,7 @@ Obiekty możemy grupować poprzez dodanie Node2D i następnie do niego już kon
                 # stop moving
                 velocity.x = 0
                 playIdle()
-            
+
             move_and_slide()
 
         func _on_player_detection_body_entered(body):
@@ -323,3 +323,81 @@ Obiekty możemy grupować poprzez dodanie Node2D i następnie do niego już kon
             if body.name == "Player":
                 chase = false
         ```
+
+#### Śmierć moba
+
+-   Dodajemy kolejne Area2D z CollisionShape2d
+-   Dodajemy kodzik na zdarzenie body_entered
+
+    -   ```ts
+        func waitUntilAnimationFinished(sprite):
+            await sprite.animation_finished
+
+        func playJump():
+            # odpalamy animacje tylko w momencie jak nie jest aktualnie odpalona animacja smierci tak aby jej nie nadpisac
+            if getAnimationSprite().animation != 'Death':
+                playAnimation(getAnimationSprite(), 'Jump')
+
+        func playIdle():
+            # odpalamy animacje tylko w momencie jak nie jest aktualnie odpalona animacja smierci tak aby jej nie nadpisac
+            if getAnimationSprite().animation != 'Death':
+                playAnimation(getAnimationSprite(), 'Idle')
+
+        func _on_player_death_body_entered(body):
+            if body.name == "Player":
+                # ustawiamy aby mob przestal juz podazac za graczem (jest martwy)
+                chase = false
+                # odpalamy animacje śmierci
+                playDeath()
+                # czekamy az skonczy sie animacja na sprite
+                await waitUntilAnimationFinished(getAnimationSprite())
+                # usuwamy moba z planszy
+                self.queue_free()
+        ```
+
+#### Dodanie zdrowia gracza i zmiana tej wartości
+
+-   Do gracza (skrypt) dodajemy zmienna przetrzymujaca zdrowie gracza
+    -   ```ts
+        var health = 10;
+        ```
+
+#### Dodanie UI do wyświetlania informacji dla gracza
+
+-   Do sceny głównej dodajmy CanvasLayer
+    -   Do tego dodajmy Label
+    -   Do label dodajemy skrypt
+        -   ```ts
+            func _process(delta):
+                text = "HP: " + str(getPlayer().health)
+            ```
+    -   właściwości wyświetlania label można ustawić w "Theme Overrides"
+
+#### Śmierć gracza
+
+    -   Dodajemy do moba nową Area2D z CollisionShape2D
+    -   Dodajemy węzeł on_body_entered
+    -   kodzik
+        -   ```ts
+            func death():
+                # ustawiamy aby mob przestal juz podazac za graczem (jest martwy)
+                chase = false
+                # odpalamy animacje śmierci
+                playDeath()
+                # czekamy az skonczy sie animacja na sprite
+                await waitUntilAnimationFinished(getAnimationSprite())
+                # usuwamy moba z planszy
+                self.queue_free()
+
+            func _on_player_collision_body_entered(body):
+                if body.name == "Player":
+                    # zabranie graczowi zycie
+                    (body as Player).health -= 3
+                    death()
+            ```
+    -   Następnie do gracza dodajemy śmierć i koniec gry:
+        -   ```ts
+                if health <= 0:
+                    queue_free();
+                    get_tree().change_scene_to_file("res://main.tscn")
+            ```
