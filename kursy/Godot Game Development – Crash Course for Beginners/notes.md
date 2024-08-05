@@ -401,3 +401,45 @@ Obiekty możemy grupować poprzez dodanie Node2D i następnie do niego już kon
                     queue_free();
                     get_tree().change_scene_to_file("res://main.tscn")
             ```
+
+#### Globalne skrypty
+
+Aby dodać skrypt globalny należy:
+
+-   Wejść w ustawienia projektu
+-   W sekcje "autoładowanie"
+-   Dodać skrypt który ma być ładowany globalnie dla gry
+
+#### Zapis i odczyt gry
+
+-   Zapis i odczyt możemy wykonać poprzez zapis do pliku naszych danych np. w formacie json
+
+```ts
+extends Node
+
+const SAVE_PATH = "res://savegame.json"
+
+# in real world we shoulse use user://
+# const SAVE_PATH = "user://savegame.bin"
+
+func saveGame():
+	# otwieramy plik do zapisu
+	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	var data: Dictionary = {
+		"playerHP": Game.playerHP,
+		"gold": Game.gold
+	}
+	var js = JSON.stringify(data)
+	file.store_line(js)
+	file.close()
+
+func loadGame():
+	# otwieramy plik do odczytu
+	var file = FileAccess.open(SAVE_PATH, FileAccess.READ);
+	if FileAccess.file_exists(SAVE_PATH):
+		var rawData = file.get_as_text()
+		var data = JSON.parse_string(rawData)
+		Game.playerHP = data['playerHP']
+		Game.gold = data['gold']
+		file.close()
+```
