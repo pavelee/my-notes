@@ -6,4 +6,4 @@ owner i parent to dwa odmienne pojęcia
 
 parent - jest rodzicem w rozumieniu struktury jsx natomiast nie może przekazywać props bo nie zarządza życiem komponentu 
 
-owner - zaradzą generowanym jsx, może wstrzyknąć proso
+owner - zaradzą generowanym jsx, może wstrzyknąć do komponentu
