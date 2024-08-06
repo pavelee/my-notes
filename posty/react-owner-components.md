@@ -1,1 +1,1 @@
-react-owner-components
+https://reacttraining.com/blog/react-owner-components
