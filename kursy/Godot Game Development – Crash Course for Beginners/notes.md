@@ -443,3 +443,63 @@ func loadGame():
 		Game.gold = data['gold']
 		file.close()
 ```
+
+#### Dodanie zbieralnych elementów w grze
+
+-   Dodajemy nową scene z cherry
+-   Dodajemy Area2D (bo będzie wykrywać kolizje z graczem)
+    -   Dodajemy CollisionShape2D
+        -   ustawiamy okrąg jako kształt
+    -   Dodajemy
+
+#### Dodanie tween do obiektu (wykonanie operacji zmiany parametrow w czasie np. przesuniecie, znikniecie itp)
+
+```ts
+func _on_body_entered(body):
+	if body.name == "Player":
+		Game.gold += 1
+		# tworzymy dwa teeny tak aby mogły się wykonać jednoczesnie, inaczej zostana wykonane jeden po drugim
+		var tween = get_tree().create_tween()
+		var tween1 = get_tree().create_tween()
+		# efekt przesuniecia do gory
+		tween.tween_property(self, 'position', position - Vector2(0, 50), 0.5)
+		# efekt zanikania (opacity)
+		tween1.tween_property(self, 'modulate:a', 0, 0.5)
+		# element zostanie finlanie usuniety z mapy
+		tween.tween_callback(queue_free)
+```
+
+#### Dodanie timera do gry (czasowe wywołanie itp)
+
+-   Możemy to zrobić poprzez dodanie Node: "Timer"
+-   Następnie na nim ustawiamy węzeł: "\_on_timer_timeout" i podpinamy pod wybrany node który ma reagować na to
+
+#### Dodawanie dynamicznie elementów do sceny
+
+Przykład:
+
+```ts
+# pobieramy zrodlo elementu np. postaci
+var cherry: PackedScene = preload("res://cherry.tscn")
+
+func _on_timer_timeout():
+	# iniciujemy
+	var c: Cherry = cherry.instantiate()
+	# ustawiamy parametry, w tym przypadku pozycje
+	c.position = Vector2(200, 300)
+	# dodajemy do node
+	add_child(c)
+
+    # mozemy tez dodac do wybranego node
+	# get_node(TWOJ_NODE).add_child(c)
+```
+
+#### Generowanie randowowych wartosci
+
+```ts
+	# tworzymy generator
+	var random = RandomNumberGenerator.new()
+	# pobieramy randowe liczby
+	var randomX = random.randi_range(200, 500)
+	var randomY = random.randi_range(300, 315)
+```
