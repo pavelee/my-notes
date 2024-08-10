@@ -90,6 +90,7 @@ func _ready():
 ### Ustawienie kamery gry
 
 -   Dodajemy node Camera2D do gracza, tak aby zblokowało widok na nim (podążanie kamery)
+-   Aby ograniczyć widok gracza (bliżej gracza) ustawiamy Zoom na Camera2D
 
 ### Dodanie animacji poprzez AnimationTree
 
