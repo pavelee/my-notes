@@ -4246,3 +4246,23 @@ Pochopna i wygodna zmiana niesie ryzyko
 -   zwiększa prawdopodobieństwa błędu lub przyszłej zmiany pojedyńczego modelu
 -   ziększenie prawdopodobieństwa zmiany wielu modelu jednocześnie
     -   co często powoduje synchonizację zespołów
+
+### L03. Ukryty model (kontekst) mapujący 
+
+Musimy zawsze tak projektować aby móc potem zmieniać decyzje. Na poziomie startegicznym jak i taktycznym
+
+Implementacja nowych, przełomowych wymagań uwidacznia defekty i może:
+
+-   albo usprawnić architekturę
+-   albo totalnie pogrążyć architekture
+
+Idykatory dobrej architektury logicznej
+
+-   brak haków i brak tony powiązań
+-   prostota implementacji
+-   obecność generyków
+-   łatwość mapowania problemów biznesowychh do odseparowanych znanych algorytmów, i małych agregatów, transformat etc.
+
+![proces_main_quesiton](./assets/proces_main_quesiton.png)
+
+### Startegie implementacji nowego wymagania
