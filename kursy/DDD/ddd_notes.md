@@ -4227,7 +4227,7 @@ Przy projektowaniu autonomicznych modeli chcemy zapobiec:
     -   bo zminiejsza to sprawczość zespołów
     -   bo wymaga ich synchronizacji
     -   bo nie ma pojedyńczego źródła prawdy
--   modelom mającym zbyt wiele odpowiedzialności 
+-   modelom mającym zbyt wiele odpowiedzialności
     -   bo zwiększa to ryzyko zmiany
     -   bo zwiększa to przeładowanie kognitywne
 
@@ -4247,7 +4247,7 @@ Pochopna i wygodna zmiana niesie ryzyko
 -   ziększenie prawdopodobieństwa zmiany wielu modelu jednocześnie
     -   co często powoduje synchonizację zespołów
 
-### L03. Ukryty model (kontekst) mapujący 
+### L03. Ukryty model (kontekst) mapujący
 
 Musimy zawsze tak projektować aby móc potem zmieniać decyzje. Na poziomie startegicznym jak i taktycznym
 
@@ -4266,3 +4266,38 @@ Idykatory dobrej architektury logicznej
 ![proces_main_quesiton](./assets/proces_main_quesiton.png)
 
 ### Startegie implementacji nowego wymagania
+
+Jeżeli mamy wymaganie którego zrealizowanie wymaga danych z jednego i drubego modelu (niezależnych), to rozwiązaniem może być pośredni model który będzie to mapował i rozwiązywał problem.
+
+Może się zdarzyć że podczas analizy umknie nam ukryty model pośredni, często powiązany z jakimś pivotujacym zdarzeniem
+
+Jak można dodać nowe wymaganie?
+
+-   wcale (jest ono parafrazą zaimplementowanego już wymagania)
+    -   tutaj nam pomaga mapa modeli, pomaga zrozumieć czy już mamy takie capbility
+-   modyfikując modele i połączenia pomiędzy nimi
+-   wprowadzając nowy model i dostrojenie połączenia do niego
+-   wcale (bo system nie jest na to w ogóle gotowy)
+
+Główne pytania nie zawsze będą miały pojedyńcze źródło prawdy
+
+-   pojedyńcze źródło prawdy jest kluczowe przy zmianie stanu pilnowanym regułą spójną natychmiastowo, czyli wtedy gdy zakładamy locka
+    -   np. czy zasób jest dostępny? (odpowiedzialny moduł: availability)
+-   dla wielu pytań kluczowe będzie posiadanie jednego modelu, który na to odpowiada, ale ze względu na możliwość szybkiej zmiany, a nie ze względu na spójność transakcyjną
+    -   np. czy opłaca się przenieść zasób do projektu B?
+
+Główne pytania nie zawsze będą miały pojedyńcze źródło prawdy
+
+-   często pytania będą naturalną kompozycją informacji z róznych modułów
+    -   np. ile jest dostępnych zielonych koparek
+
+Przy dodawaniu nowego wymagania:
+
+-   zwróć punkt wejściowy nowej odpowiedzialności
+-   unikaj pochopnych zmian generyków
+    -   **chyba, że funkcja jest... generyczna**
+
+Mimo że biznesy mają podobne archetypy modeli to co je odróżnia to inne sposoby mapowania i relacji tych modeli
+
+### Model (kontekst) mapujący
+
