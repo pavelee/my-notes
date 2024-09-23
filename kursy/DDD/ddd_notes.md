@@ -4301,3 +4301,26 @@ Mimo że biznesy mają podobne archetypy modeli to co je odróżnia to inne spos
 
 ### Model (kontekst) mapujący
 
+To jest opcja kiedy nie chcemy dodawać specjalistycznych rzeczy do generyków. Czyli wydzielamy
+osobny moduł mapujący który ma przetłumaczyć język jednego modelu na drugi.
+
+### Ukrytry Pivotal Event
+
+Przydatne jest szukanie komend które nie są parafrazą komendy
+
+### Generyk nie jest celem, jest środkiem
+
+![model_mapujacy](./assets/model_mapujacy.png)
+
+Tutaj jest istotna decyzja, pamietaj ze architektura ma służyć. Jeżeli dla zespołu korzystającego z Twojego modułu jest łatwiej aby mapownie było w środku Twojego modułu, idź w tym kierunku.
+
+![komenda_mapujaca](./assets/komenda_mapujaca.png)
+
+Podjęcie decyzji o umiejscowieniu kawałka kodu może być złożone:
+
+-   Jak wyglądają zespoły
+-   Generyczność modelu
+-   Przyszłe wymagania
+
+## L04. Implementacja Modelu Mapującego
+
