@@ -4324,3 +4324,17 @@ Podjęcie decyzji o umiejscowieniu kawałka kodu może być złożone:
 
 ## L04. Implementacja Modelu Mapującego
 
+### Model opisujący wszystkie przypadki
+
+Generyki powinny zostać generykami, czyli kierowanie się zasadą stabilności
+
+ale dużo można zyskać w różny sposób mapując inne modele do tychże generyków
+
+uogólnianie poprzez usuwanie przypadków szczególnych
+
+### Implementacja prostego przypadku
+
+[M11L04_mapa_modeli](./assets/M11L04_mapa_modeli.pdf)
+
+### Nieunikniona zmiana wielu modeli
+
