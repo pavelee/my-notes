@@ -4338,3 +4338,26 @@ uogólnianie poprzez usuwanie przypadków szczególnych
 
 ### Nieunikniona zmiana wielu modeli
 
+Nawet najlepsza architekutra nie będzie taka że zmiana będzie zamknięta w jednym module.
+
+Przy zmianie generyka zastanów się czy zmiana jest pozytywna
+
+Przy zmianie generyków zadaj sobie pytania:
+
+-   czy dodanie pojęcie jest generyczne i pasuje do wielu innych modeli czy nie?
+-   czy dodawane pojęcie będzie użyteczne gdyby użyć generyka w innym biznesie?
+
+### Podsumowanie
+
+Zaproponowany sposób zależy od:
+
+-   dostępnego czasu
+-   topologii zespołów
+-   strategii przedsiębiorstwa (czy to kliczowy produkt?)
+
+## L05. Międzymodułowy model wielkiej skali
+
+Przy projektowaniu miedzymodułowego modelu wielkiej skali zwróc uwagę:
+
+-   dotychczasowe zależności między zespołami/modelami
+-   czy coś, co mogłoby być potencjałem, nagle nie przejmuje roli wyższego rzędu
