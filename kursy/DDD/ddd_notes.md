@@ -4361,3 +4361,8 @@ Przy projektowaniu miedzymodułowego modelu wielkiej skali zwróc uwagę:
 
 -   dotychczasowe zależności między zespołami/modelami
 -   czy coś, co mogłoby być potencjałem, nagle nie przejmuje roli wyższego rzędu
+
+
+## L06. Code rev
+
+## L07. Warstwy, porty i adaptery
