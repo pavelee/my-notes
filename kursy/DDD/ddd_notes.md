@@ -4362,7 +4362,17 @@ Przy projektowaniu miedzymodułowego modelu wielkiej skali zwróc uwagę:
 -   dotychczasowe zależności między zespołami/modelami
 -   czy coś, co mogłoby być potencjałem, nagle nie przejmuje roli wyższego rzędu
 
-
 ## L06. Code rev
 
 ## L07. Warstwy, porty i adaptery
+
+Korzyści architektury warstwowej
+
+-   rozwijalność
+-   enkapsulacja (UI Layer nie wie JAK działa Domain Layer, wie tylko CO on robi)
+-   testowalność
+    -   niższe warstwy mogę mockować w pamięci
+
+Warstwy to różne poziomy abstracji
+
+### Porty i adaptery to tylko wariacja achitektury warstwowej
