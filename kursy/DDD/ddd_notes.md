@@ -4376,3 +4376,17 @@ Korzyści architektury warstwowej
 Warstwy to różne poziomy abstracji
 
 ### Porty i adaptery to tylko wariacja achitektury warstwowej
+
+też nazywana architekturą hexagonalną, nazwa wynika z historii samej achitektury.
+
+Przez to że do domeny przenosimy interfejs to niższa warstwa tworzy adapter aby się dostosować do wyższej warstwy
+
+Zalety architektury hexagonalnej
+
+-   możliwość eksperymentowania i walidowania swoich pomysłów w modelu, bez potrzeby walki z infrastrukturą
+-   testowalność
+-   wymienialność
+
+### Czy testować w pamięci?
+
+Jeżeli to co zastępuje (udzerzenie do bazy) nie posiada logiki
