@@ -4390,3 +4390,27 @@ Zalety architektury hexagonalnej
 ### Czy testować w pamięci?
 
 Jeżeli to co zastępuje (udzerzenie do bazy) nie posiada logiki
+
+# Moduł 12 - DDD Lean
+
+## L01. Wstęp
+
+### Kiedy pełen zestaw to zbyt dużo
+
+### Lean DDD - wybrane techniki taktyczne
+
+Zwykle brak czasu jest wymówką, jeżeli ktoś tak mówi to zapytaj:
+
+"Co byś zmienił gdybyś miał więcej czasu?"
+
+### Life coaching
+
+**Szęście sprzyja ale tylko przygotowanym**
+
+Umiejętności miękkie i mindset konsultata to niszowe umiejętności na rynku
+
+## L02. Problem biznesowy
+
+## L03A. Analiza przestrzeni problemu - rzeczowniki i reguły
+
+
