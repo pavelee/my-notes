@@ -4426,3 +4426,6 @@ wyciagamy z wymagań:
 Dlaczego obiektówka?
 
 Bo mamy problem stanowy, gdzie reguły i zachowania są oparte (ściśle powiązane) o ten stan (decyzja)
+
+regiły domenowe - czyli obowiązują zawsze
+reguły aplikacyjne - tylko w konkretnym use case
