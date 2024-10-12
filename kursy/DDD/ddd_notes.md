@@ -4413,4 +4413,16 @@ Umiejętności miękkie i mindset konsultata to niszowe umiejętności na rynku
 
 ## L03A. Analiza przestrzeni problemu - rzeczowniki i reguły
 
+wyciagamy z wymagań:
 
+-   pojęcia
+    -   np. rezygnacja, wniosek, proces rezygnacji
+-   reguły biznesowe
+    -   tylko zarejstrowany użytkownik może wykonać rezygnacje
+-   klasywifikacja reguł biznesowych na:
+    -   reguły biznesowe obowiązujące zawsze
+    -   reguły specificzne dla konkretnego use case
+
+Dlaczego obiektówka?
+
+Bo mamy problem stanowy, gdzie reguły i zachowania są oparte (ściśle powiązane) o ten stan (decyzja)
