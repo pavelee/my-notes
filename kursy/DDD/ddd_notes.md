@@ -4429,3 +4429,27 @@ Bo mamy problem stanowy, gdzie reguły i zachowania są oparte (ściśle powiąz
 
 regiły domenowe - czyli obowiązują zawsze
 reguły aplikacyjne - tylko w konkretnym use case
+
+które rzeczowniki wpływają na które reguły
+
+Przy każdej regule musi się zastanowić co się stanie jeśli w momencie weryfikacji reguły system nie będzie w spójnym stanie.
+
+
+Dla każdej reguły określ:
+
+- Czy zawsze jest używana?
+- Czy musi być spójna natychmiastowo?
+
+Np. reguły które muszą być zawsze używane oraz spójne natychmiastowo:
+
+"Wysłana rezygnacja musi zawsze posiadać konkretny zestaw danych ..."
+
+### Metodyka
+
+-   Indetyfikacja kluczowych pojęć i reguł
+-   Klasyfikacja reguł według ich stosowalności
+-   Indetyfikacaj relacji pomiędzy regułami i rzeczownikami
+-   Klasyfikacja reguł według granic spójności i indetyfikacja problemu dostępu współbieżnego
+
+
+Indetyfikacja reguł które muszą być spójne natychmiastowo jest najtrudniejsza
