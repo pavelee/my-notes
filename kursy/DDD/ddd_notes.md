@@ -4450,6 +4450,20 @@ Np. reguły które muszą być zawsze używane oraz spójne natychmiastowo:
 -   Klasyfikacja reguł według ich stosowalności
 -   Indetyfikacaj relacji pomiędzy regułami i rzeczownikami
 -   Klasyfikacja reguł według granic spójności i indetyfikacja problemu dostępu współbieżnego
+-   Określenie granic modelu
+-   Indetyfikacja zachowań (moża wywnioskować z zachowania)
+-   Dookreślenie znaczeń pojęć (zakresu danych)
+-   
 
 
 Indetyfikacja reguł które muszą być spójne natychmiastowo jest najtrudniejsza
+
+## L03B. Zmiana stanu - rywalizacja o zasoby
+
+reguła następstwa to taka reguła która zostanie sprawdzona w przypadku uprzednio wykonanych czynności
+
+Wzorzec polityki - ukrycie zmiennych elementów za stabilnym intefejsem
+
+Możesz nie znać DDD i projekotwać dobre 
+
+Możęsz też znać DDD, a Twoje rozwiązanie może być dalekie od optimum
