@@ -4434,11 +4434,10 @@ które rzeczowniki wpływają na które reguły
 
 Przy każdej regule musi się zastanowić co się stanie jeśli w momencie weryfikacji reguły system nie będzie w spójnym stanie.
 
-
 Dla każdej reguły określ:
 
-- Czy zawsze jest używana?
-- Czy musi być spójna natychmiastowo?
+-   Czy zawsze jest używana?
+-   Czy musi być spójna natychmiastowo?
 
 Np. reguły które muszą być zawsze używane oraz spójne natychmiastowo:
 
@@ -4453,8 +4452,8 @@ Np. reguły które muszą być zawsze używane oraz spójne natychmiastowo:
 -   Określenie granic modelu
 -   Indetyfikacja zachowań (moża wywnioskować z zachowania)
 -   Dookreślenie znaczeń pojęć (zakresu danych)
--   
-
+-   zabezpieczenie dostępu do modelu interfejsem repozytorium
+-   projekt mapowania modeli
 
 Indetyfikacja reguł które muszą być spójne natychmiastowo jest najtrudniejsza
 
@@ -4464,6 +4463,22 @@ reguła następstwa to taka reguła która zostanie sprawdzona w przypadku uprze
 
 Wzorzec polityki - ukrycie zmiennych elementów za stabilnym intefejsem
 
-Możesz nie znać DDD i projekotwać dobre 
+Możesz nie znać DDD i projekotwać dobre
 
 Możęsz też znać DDD, a Twoje rozwiązanie może być dalekie od optimum
+
+## L04. Modularyzacja na bazie odkrytych pojęć
+
+serwsisy odpowiedzialne za:
+
+-   sprawdzenie reguł
+-   orkiestracje procesów biznesowych
+
+Istotne aby model nie był obciążony koniecznością wiedzy o jakimklowiek mapowaniu
+
+Co brać pod uwagę wybierając miejsce implementacji mapowania modeli?
+
+-   stosowalność reguł biznesowych (reguła obowiązująca zawsze vs reguła typowa dla przypadku użycia)
+-   możliwość zpewnienia enkapsulacji modelu
+-   elastyczność
+-   skalowalność
