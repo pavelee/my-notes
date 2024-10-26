@@ -4454,6 +4454,19 @@ Np. reguły które muszą być zawsze używane oraz spójne natychmiastowo:
 -   Dookreślenie znaczeń pojęć (zakresu danych)
 -   zabezpieczenie dostępu do modelu interfejsem repozytorium
 -   projekt mapowania modeli
+-   Trójpodział logiki
+    -   nie każdy element systemu charaketeryzuje się taką samą zmiennością
+    -   to prowadzi do podziału na trze elementy logiki
+        -   niska zmienność i wysoki poziom abstrakcji (logika stabilna)
+        -   średnia zmienność i mniejsza abstrakcja, czyli dostrajanie naszego modelu (dopełnienie logiki)
+            -   wybranie strategii z modelu, czyli tak zwany wybór domknięcia
+            -   to pozwala odsparować od siebie rzeczy które zmienieją się z różnych powodów
+                -   zwiększenie testowalności, skalowalności i elastyczności
+-   Destylacja modeli zewnętrznych
+    -   dzielenie na logikę może pokazać że możemy to wydzielić do osobnego modelu
+    -   model reklamacji tylko chce wiedzieć jaka ma być strategia rozwiązania reklamacji ale już źródło go nie interesuje
+    
+
 
 Indetyfikacja reguł które muszą być spójne natychmiastowo jest najtrudniejsza
 
@@ -4482,3 +4495,6 @@ Co brać pod uwagę wybierając miejsce implementacji mapowania modeli?
 -   możliwość zpewnienia enkapsulacji modelu
 -   elastyczność
 -   skalowalność
+
+## L05. Trzy poziomy logiki
+
